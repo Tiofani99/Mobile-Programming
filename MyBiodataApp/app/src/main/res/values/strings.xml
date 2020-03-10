@@ -1,0 +1,12 @@
+<resources>
+    <string name="app_name">MyBiodataApp</string>
+    <string name="social_media">Social Media</string>
+    <string name="address">Address</string>
+    <string name="hobby">Hobby</string>
+    <string name="quotes">Quotes</string>
+    <string name="my_quotes">Eat to live, not live to eat</string>
+    <string name="my_hobby">Playing a video game</string>
+    <string name="my_address">Jalan Gn Slamet Grendeng Purwokerto Utara</string>
+    <string name="name">Tio Fani</string>
+    <string name="mahasiswa_it_telkom_purwokerto">Mahasiswa IT Telkom Purwokerto</string>
+</resources>
