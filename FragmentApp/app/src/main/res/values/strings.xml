@@ -1,0 +1,43 @@
+<resources>
+    <string name="app_name">FragmentApp</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="Fragment_favorite">Fragment Favorite</string>
+    <string name="fragment_home">Fragment Home</string>
+    <string name="fragment_profile">Fragment Profile</string>
+    <string name="social_media">Social Media</string>
+    <string name="address">Address</string>
+    <string name="hobby">Hobby</string>
+    <string name="quotes">Quotes</string>
+    <string name="my_quotes">Eat to live, not live to eat</string>
+    <string name="my_hobby">Playing a video game</string>
+    <string name="my_address">Jalan Gn Slamet Grendeng Purwokerto Utara</string>
+    <string name="name">Tio Fani</string>
+    <string name="mahasiswa_it_telkom_purwokerto">Mahasiswa IT Telkom Purwokerto</string>
+    <string name="ig_name">tio.fani</string>
+    <string name="github_name">tiofani99</string>
+    <string name="title_movie">Movies</string>
+    <string name="title_tv">TV Series</string>
+    <string name="item_list_movie">Item list Movie</string>
+    <string name="title_list">Avenger Infinity War</string>
+    <string name="rating">9,3</string>
+    <string name="type">Type</string>
+    <string name="time">Duration</string>
+    <string name="director">Directors</string>
+    <string name="desc">Avengers: Endgame dimulai tepat saat Thanos menjentikan jarinya, menghabisi setengah penduduk bumi. Hawkeye yang absen dalam Avengers: Infinity War, muncul paling awal dalam film ini.</string>
+    <string name="title">Avengers:  \nEndgame</string>
+    <string name="type_detail">Action, Adventure, Drama</string>
+    <string name="hour_detail">3 Hour 1 min</string>
+    <string name="director_detail">Anthony Russo, Joe Russo</string>
+    <string name="image_detail">Image Detail</string>
+    <string name="change_language_settings">Change language setting</string>
+    <string name="episodes">Episodes</string>
+    <string name="riwayat_pendidikan">Riwayat Pendidikan</string>
+    <string name="SD">Sekolah Dasar</string>
+    <string name="SMP">SMP</string>
+    <string name="SMA">SMA</string>
+    <string name="sd_saya">SD Negeri 4 Grendeng</string>
+    <string name="smp_saya">SMP Negeri 9 Purwokerto</string>
+    <string name="sma_saya">SMA Negeri 4 Purwokerto</string>
+</resources>
