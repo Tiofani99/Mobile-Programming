@@ -39,4 +39,5 @@ ext {
     materialVersion = '1.1.0'
     recyclerViewVersion = '1.1.0'
     glideVersion = '4.11.0'
+    archLifecycleVersion = '2.1.0'
 }

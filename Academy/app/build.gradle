@@ -49,4 +49,5 @@ dependencies {
     testImplementation "junit:junit:$junitVersion"
     androidTestImplementation "junit:junit:$junitVersion"
     androidTestImplementation "androidx.test.espresso:espresso-core:$espressoVersion"
+    implementation "androidx.lifecycle:lifecycle-viewmodel:$archLifecycleVersion"
 }
