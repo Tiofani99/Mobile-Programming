@@ -5,6 +5,8 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModel;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -48,7 +50,10 @@ public class AcademyFragment extends Fragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         if(getActivity() != null){
-            List<CourseEntity> courses = DataDummy.generateDummyCourses();
+            AcademyViewModel viewModel  = new ViewModelProvider(this,new ViewModelProvider.NewInstanceFactory()).get(AcademyViewModel.class);
+            List<CourseEntity> courses = viewModel.getCourses();
+
+
             Log.d("Woe","Academy Jalan "+courses.size());
 
             AcademyAdapter academyAdapter = new AcademyAdapter();
