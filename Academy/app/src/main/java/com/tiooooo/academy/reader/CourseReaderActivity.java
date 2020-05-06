@@ -1,8 +1,9 @@
-package com.tiooooo.academy;
+package com.tiooooo.academy.reader;
 
 import android.os.Bundle;
 import android.util.Log;
 
+import com.tiooooo.academy.R;
 import com.tiooooo.academy.reader.CourseReaderCallback;
 import com.tiooooo.academy.reader.content.ModuleContentFragment;
 import com.tiooooo.academy.reader.list.ModuleListFragment;
@@ -10,6 +11,7 @@ import com.tiooooo.academy.reader.list.ModuleListFragment;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.lifecycle.ViewModelProvider;
 
 public class CourseReaderActivity extends AppCompatActivity implements CourseReaderCallback {
 
@@ -20,12 +22,16 @@ public class CourseReaderActivity extends AppCompatActivity implements CourseRea
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_course_reader);
 
+        CourseReaderViewModel viewModel = new ViewModelProvider(this,new ViewModelProvider.NewInstanceFactory()).get(CourseReaderViewModel.class);
+
+
 
         Bundle bundle = getIntent().getExtras();
         if (bundle != null) {
             Log.d("Woe","Ini btnStart "+bundle.getString(EXTRA_COURSE_ID));
             String courseId = bundle.getString(EXTRA_COURSE_ID);
             if (courseId != null) {
+                viewModel.setSelectedCourse(courseId);
                 populateFragment();
             }
         }
