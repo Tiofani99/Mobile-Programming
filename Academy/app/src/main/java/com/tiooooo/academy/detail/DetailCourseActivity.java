@@ -9,16 +9,16 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
-import com.tiooooo.academy.CourseReaderActivity;
+import com.tiooooo.academy.reader.CourseReaderActivity;
 import com.tiooooo.academy.R;
 import com.tiooooo.academy.data.CourseEntity;
 import com.tiooooo.academy.data.ModuleEntity;
-import com.tiooooo.academy.utils.DataDummy;
 
 import java.util.List;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -54,21 +54,20 @@ public class DetailCourseActivity extends AppCompatActivity {
 
         DetailCourseAdapter adapter = new DetailCourseAdapter();
 
+        DetailCourseViewModel viewModel = new ViewModelProvider(this,new ViewModelProvider.NewInstanceFactory()).get(DetailCourseViewModel.class);
         Bundle extras = getIntent().getExtras();
 
         if (extras != null) {
             Log.d("Woe",extras.getString(EXTRA_COURSE));
             String courseId = extras.getString(EXTRA_COURSE);
             if (courseId != null) {
-                List<ModuleEntity> modules = DataDummy.generateDummyModules(courseId);
-                adapter.setModules(modules);
 
-                for (int i = 0; i < DataDummy.generateDummyCourses().size(); i++) {
-                    CourseEntity courseEntity = DataDummy.generateDummyCourses().get(i);
-                    if (courseEntity.getCourseId().equals(courseId)) {
-                        populateCourse(courseEntity);
-                    }
-                }
+                viewModel.setSelectedCourse(courseId);
+                List<ModuleEntity> modules = viewModel.getModules();
+                adapter.setModules(modules);
+                populateCourse(viewModel.getCourse());
+
+
             }
         }
 
