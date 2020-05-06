@@ -20,7 +20,7 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".home.HomeActivity"/>
         </activity>
-        <activity android:name=".CourseReaderActivity" />
+        <activity android:name=".reader.CourseReaderActivity" />
         <activity
             android:name=".home.HomeActivity">
             <intent-filter>
