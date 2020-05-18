@@ -1,3 +1,24 @@
 <resources>
     <string name="app_name">MyMovie</string>
+    <string name="movie">Movies</string>
+    <string name="tv_series">Tv Series</string>
+    <string name="title_list">Avenger Infinity War</string>
+    <string name="rating">9,3</string>
+    <string name="popularity">Popularity</string>
+    <string name="vote_count">Votes</string>
+    <string name="director">Directors</string>
+    <string name="desc">Avengers: Endgame dimulai tepat saat Thanos menjentikan jarinya, menghabisi setengah penduduk bumi. Hawkeye yang absen dalam Avengers: Infinity War, muncul paling awal dalam film ini.</string>
+    <string name="title">Avengers:  \nEndgame</string>
+    <string name="type_detail">Action, Adventure, Drama</string>
+    <string name="hour_detail">3 Hour 1 min</string>
+    <string name="director_detail">Anthony Russo, Joe Russo</string>
+    <string name="image_list">Image List</string>
+    <string name="image_detail">Image Detail</string>
+    <string name="change_language_settings">Change language setting</string>
+    <string name="episodes">Episodes</string>
+    <string name="language_code">en-US</string>
+    <string name="release_date">Release Date</string>
+    <string name="item_list_movie">Item list Movie</string>
+
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
