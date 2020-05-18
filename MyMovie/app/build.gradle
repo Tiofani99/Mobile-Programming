@@ -13,6 +13,10 @@ android {
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables.useSupportLibrary = true
+
+        buildConfigField "String", "NEWS_BASE_URL", "\"https://api.themoviedb.org/3/\""
+        buildConfigField "String", "API_KEY", "\"015a0e5537965d19010f5e96314052c5\""
+        buildConfigField "String", "LINK_IMAGE", "\"https://image.tmdb.org/t/p/w185/\""
     }
 
     buildTypes {
@@ -61,4 +65,12 @@ dependencies {
     //Smart Tab Library
     implementation 'com.ogaclejapan.smarttablayout:library:2.0.0@aar'
     implementation 'com.ogaclejapan.smarttablayout:utils-v4:2.0.0@aar'
+
+    //gson
+    // retrofit, gson
+    implementation 'com.google.code.gson:gson:2.8.6'
+    implementation 'com.squareup.retrofit2:converter-gson:2.7.0'
+
+    //Retrofit
+    implementation 'com.squareup.retrofit2:retrofit:2.7.1'
 }
