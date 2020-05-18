@@ -1,7 +1,6 @@
 package com.tiooooo.mymovie.ui.main;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -12,8 +11,8 @@ import com.ogaclejapan.smarttablayout.SmartTabLayout;
 import com.ogaclejapan.smarttablayout.utils.v4.FragmentPagerItemAdapter;
 import com.ogaclejapan.smarttablayout.utils.v4.FragmentPagerItems;
 import com.tiooooo.mymovie.R;
-import com.tiooooo.mymovie.ui.main.fragment.FragmentMovie;
-import com.tiooooo.mymovie.ui.main.fragment.Fragment_TvSeries;
+import com.tiooooo.mymovie.ui.main.fragment.FragmentMovies;
+import com.tiooooo.mymovie.ui.main.fragment.FragmentTvSeries;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -32,8 +31,8 @@ public class MainActivity extends AppCompatActivity {
 
         FragmentPagerItemAdapter adapter = new FragmentPagerItemAdapter(
                 getSupportFragmentManager(), FragmentPagerItems.with(this)
-                .add(R.string.movie, FragmentMovie.class)
-                .add(R.string.tv_series, Fragment_TvSeries.class)
+                .add(R.string.movie, FragmentMovies.class)
+                .add(R.string.tv_series, FragmentTvSeries.class)
                 .create()
         );
 
