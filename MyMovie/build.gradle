@@ -43,4 +43,9 @@ ext {
     androidXTestVersion = '1.2.0'
     butterKnifeVersion = '10.2.1'
 
+    gsonVersion = '2.8.6'
+    converterGsonVersion = '2.7.0'
+    retrofitVersion = '2.7.1'
+
+
 }
