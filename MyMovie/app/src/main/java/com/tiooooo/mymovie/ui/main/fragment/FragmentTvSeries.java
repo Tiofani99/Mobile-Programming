@@ -7,6 +7,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import retrofit2.Call;
@@ -19,6 +20,7 @@ import android.view.ViewGroup;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.facebook.shimmer.ShimmerFrameLayout;
 import com.tiooooo.mymovie.BuildConfig;
 import com.tiooooo.mymovie.R;
 import com.tiooooo.mymovie.entity.tvseries.ItemsTvSeries;
@@ -39,12 +41,13 @@ public class FragmentTvSeries extends Fragment {
     private TvSeriesAdapter adapter;
     private ArrayList<TvSeries> tvSeriesList;
 
-    @BindView(R.id.progress_bar)
-     ProgressBar progressBar;
+
     @BindView(R.id.rv_tv_series)
      RecyclerView rvTvSeries;
     @BindView(R.id.tv_information)
      TextView tvInformationData;
+    @BindView(R.id.shimmerFrameLayout)
+    ShimmerFrameLayout shimmerFrameLayout;
 
 
     public FragmentTvSeries() {
@@ -63,6 +66,8 @@ public class FragmentTvSeries extends Fragment {
         ButterKnife.bind(this,view);
         initAdapter();
         getTvSeries();
+
+
     }
 
     private void initAdapter() {
@@ -73,9 +78,9 @@ public class FragmentTvSeries extends Fragment {
 
     private void showLoading(Boolean state){
         if(state){
-            progressBar.setVisibility(View.VISIBLE);
+            shimmerFrameLayout.setVisibility(View.VISIBLE);
         }else{
-            progressBar.setVisibility(View.GONE);
+            shimmerFrameLayout.setVisibility(View.GONE);
         }
     }
 

@@ -7,6 +7,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import retrofit2.Call;
@@ -19,6 +20,7 @@ import android.view.ViewGroup;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.facebook.shimmer.ShimmerFrameLayout;
 import com.tiooooo.mymovie.BuildConfig;
 import com.tiooooo.mymovie.R;
 import com.tiooooo.mymovie.entity.movie.ItemsMovie;
@@ -39,12 +41,13 @@ public class FragmentMovies extends Fragment {
     private ArrayList<Movie> movieList;
 
 
-    @BindView(R.id.progress_bar)
-    ProgressBar progressBar;
+
     @BindView(R.id.rv_movies)
     RecyclerView rvMovies;
     @BindView(R.id.tv_information)
     TextView tvInformationData;
+    @BindView(R.id.shimmerFrameLayout)
+    ShimmerFrameLayout shimmerFrameLayout;
 
     public FragmentMovies() {
         // Required empty public constructor
@@ -72,9 +75,9 @@ public class FragmentMovies extends Fragment {
 
     private void showLoading(Boolean state){
         if(state){
-            progressBar.setVisibility(View.VISIBLE);
+            shimmerFrameLayout.setVisibility(View.VISIBLE);
         }else{
-            progressBar.setVisibility(View.GONE);
+            shimmerFrameLayout.setVisibility(View.GONE);
         }
     }
 

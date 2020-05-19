@@ -6,17 +6,41 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".ui.main.fragment.FragmentTvSeries">
 
-    <ProgressBar
-        android:id="@+id/progress_bar"
-        android:layout_width="wrap_content"
+    <com.facebook.shimmer.ShimmerFrameLayout
+        android:id="@+id/shimmerFrameLayout"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true"
+        android:clipToPadding="false"
         android:visibility="gone"
-        app:layout_constraintBottom_toBottomOf="@+id/rv_tv_series"
-        app:layout_constraintEnd_toEndOf="@+id/rv_tv_series"
-        app:layout_constraintStart_toStartOf="@+id/rv_tv_series"
-        app:layout_constraintTop_toTopOf="@+id/rv_tv_series" />
+        android:paddingTop="4dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <include
+            layout="@layout/list_items_shimmer"/>
+
+        <include
+            layout="@layout/list_items_shimmer"/>
+
+        <include
+            layout="@layout/list_items_shimmer"/>
+
+        <include
+            layout="@layout/list_items_shimmer"/>
+
+        <include
+            layout="@layout/list_items_shimmer"/>
+
+
+    </LinearLayout>
+
+    </com.facebook.shimmer.ShimmerFrameLayout>
 
     <TextView
         android:id="@+id/tv_information"
