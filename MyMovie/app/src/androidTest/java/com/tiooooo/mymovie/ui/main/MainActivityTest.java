@@ -60,14 +60,14 @@ public class MainActivityTest {
 
     @Test
     public void loadTvSeries() {
-        onView(withText("TV SERIES")).perform(click());
+        onView(withId(R.id.viewpager)).perform(swipeLeft());
         onView(withId(R.id.rv_tv_series)).check(matches(isDisplayed()));
         onView(withId(R.id.rv_tv_series)).perform(RecyclerViewActions.scrollToPosition(dummyTvSeries.size()));
     }
 
     @Test
     public void loadDetailTvSeries(){
-        onView(withText("TV SERIES")).perform(click());
+        onView(withId(R.id.viewpager)).perform(swipeLeft());
         onView(withId(R.id.rv_tv_series)).perform(RecyclerViewActions.actionOnItemAtPosition(0, click()));
         onView(withId(R.id.tv_title)).check(matches(isDisplayed()));
         onView(withId(R.id.tv_title_detail)).check(matches(withText(dummyTvSeries.get(0).getName())));
