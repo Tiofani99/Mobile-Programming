@@ -10,12 +10,11 @@ import androidx.lifecycle.ViewModel;
 
 public class DetailViewModel extends ViewModel {
     private String id;
-    Movie movie;
-    TvSeries tvSeries;
+    private Movie movie;
+    private TvSeries tvSeries;
 
     Movie getMovieDetails() {
-        ArrayList<Movie> movieArrayList = new ArrayList<>();
-        movieArrayList.addAll(DataDummy.getMovies());
+        ArrayList<Movie> movieArrayList = new ArrayList<>(DataDummy.getMovies());
         for (int i = 0; i < movieArrayList.size(); i++) {
             Movie mEntity = movieArrayList.get(i);
             if (mEntity.getId().equals(id)) {
@@ -27,8 +26,7 @@ public class DetailViewModel extends ViewModel {
     }
 
     TvSeries getTvSeriesDetails() {
-        ArrayList<TvSeries> tvSeriesArrayList = new ArrayList<>();
-        tvSeriesArrayList.addAll(DataDummy.getTvSeries());
+        ArrayList<TvSeries> tvSeriesArrayList = new ArrayList<>(DataDummy.getTvSeries());
         for (int i = 0; i < tvSeriesArrayList.size(); i++) {
             TvSeries mEntity = tvSeriesArrayList.get(i);
             if (mEntity.getId().equals(id)) {

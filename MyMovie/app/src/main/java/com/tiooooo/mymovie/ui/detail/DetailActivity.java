@@ -10,7 +10,6 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.google.android.material.appbar.AppBarLayout;
 import com.google.android.material.appbar.CollapsingToolbarLayout;
-import com.tiooooo.mymovie.BuildConfig;
 import com.tiooooo.mymovie.R;
 import com.tiooooo.mymovie.entity.movie.Movie;
 import com.tiooooo.mymovie.entity.tvseries.TvSeries;

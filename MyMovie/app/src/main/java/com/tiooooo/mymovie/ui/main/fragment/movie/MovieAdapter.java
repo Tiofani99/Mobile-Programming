@@ -28,11 +28,11 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHol
     private Context context;
     private static final int EXTRA_CATEGORY = 1;
 
-    public MovieAdapter(Context context ){
+    MovieAdapter(Context context){
         this.context = context;
     }
 
-    public void setMovies(ArrayList<Movie> items){
+    void setMovies(ArrayList<Movie> items){
         listMovies.clear();
         listMovies.addAll(items);
         notifyDataSetChanged();

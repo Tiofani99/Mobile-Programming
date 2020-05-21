@@ -25,7 +25,6 @@ import butterknife.ButterKnife;
 public class FragmentMovies extends Fragment {
 
 
-    private static final String MOVIE_KEY = "MOVIE_KEY";
     private MovieAdapter adapter;
 
     @BindView(R.id.rv_movies)

@@ -7,8 +7,8 @@ import java.util.ArrayList;
 
 import androidx.lifecycle.ViewModel;
 
-public class TvViewModel extends ViewModel {
-    public ArrayList<TvSeries> getTvSeries() {
+class TvViewModel extends ViewModel {
+    ArrayList<TvSeries> getTvSeries() {
         return DataDummy.getTvSeries();
     }
 }

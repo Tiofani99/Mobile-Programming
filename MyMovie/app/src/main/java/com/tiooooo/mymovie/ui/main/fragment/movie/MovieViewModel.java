@@ -7,8 +7,8 @@ import java.util.ArrayList;
 
 import androidx.lifecycle.ViewModel;
 
-public class MovieViewModel extends ViewModel {
-    public ArrayList<Movie> getMovies() {
+class MovieViewModel extends ViewModel {
+    ArrayList<Movie> getMovies() {
         return DataDummy.getMovies();
     }
 }

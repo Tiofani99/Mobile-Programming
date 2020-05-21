@@ -8,11 +8,7 @@ import android.widget.TextView;
 
 import com.facebook.shimmer.ShimmerFrameLayout;
 import com.tiooooo.mymovie.R;
-import com.tiooooo.mymovie.entity.movie.Movie;
 import com.tiooooo.mymovie.entity.tvseries.TvSeries;
-import com.tiooooo.mymovie.rest.ApiClient;
-import com.tiooooo.mymovie.rest.ApiInterface;
-import com.tiooooo.mymovie.ui.main.fragment.movie.MovieViewModel;
 
 import java.util.ArrayList;
 
@@ -30,10 +26,7 @@ import butterknife.ButterKnife;
  */
 public class FragmentTvSeries extends Fragment {
 
-    private static final String EXTRA_TV_SERIES = "TvSeries";
-    private final ApiInterface apiInterface = ApiClient.getClient().create(ApiInterface.class);
     private TvSeriesAdapter adapter;
-    private ArrayList<TvSeries> tvSeriesList;
 
 
     @BindView(R.id.rv_tv_series)

@@ -12,7 +12,6 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.tiooooo.mymovie.BuildConfig;
 import com.tiooooo.mymovie.R;
-import com.tiooooo.mymovie.entity.movie.Movie;
 import com.tiooooo.mymovie.entity.tvseries.TvSeries;
 import com.tiooooo.mymovie.ui.detail.DetailActivity;
 
@@ -29,11 +28,11 @@ public class TvSeriesAdapter extends RecyclerView.Adapter<TvSeriesAdapter.TvSeri
     private Context context;
     private static final int EXTRA_CATEGORY = 2;
 
-    public TvSeriesAdapter(Context context){
+    TvSeriesAdapter(Context context){
         this.context = context;
     }
 
-    public void setTvSeries(ArrayList<TvSeries> list){
+    void setTvSeries(ArrayList<TvSeries> list){
         listTvSeries.clear();
         listTvSeries.addAll(list);
         notifyDataSetChanged();
