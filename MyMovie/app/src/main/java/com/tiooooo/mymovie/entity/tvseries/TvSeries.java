@@ -4,6 +4,9 @@ import com.google.gson.annotations.SerializedName;
 
 public class TvSeries {
 
+    @SerializedName("id")
+    private String id;
+
     @SerializedName("name")
     private String name;
 
@@ -24,6 +27,15 @@ public class TvSeries {
 
     @SerializedName("popularity")
     private Double popularity;
+
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
 
     public String getName() {
         return name;

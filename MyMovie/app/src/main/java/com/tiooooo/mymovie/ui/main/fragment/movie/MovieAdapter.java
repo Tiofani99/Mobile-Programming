@@ -1,6 +1,7 @@
-package com.tiooooo.mymovie.ui.main.adapter;
+package com.tiooooo.mymovie.ui.main.fragment.movie;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,6 +13,7 @@ import com.bumptech.glide.Glide;
 import com.tiooooo.mymovie.BuildConfig;
 import com.tiooooo.mymovie.R;
 import com.tiooooo.mymovie.entity.movie.Movie;
+import com.tiooooo.mymovie.ui.detail.DetailActivity;
 
 import java.util.ArrayList;
 
@@ -24,6 +26,7 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHol
 
     private ArrayList<Movie> listMovies = new ArrayList<>();
     private Context context;
+    private static final int EXTRA_CATEGORY = 1;
 
     public MovieAdapter(Context context ){
         this.context = context;
@@ -72,7 +75,6 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHol
         MovieViewHolder(@NonNull View itemView) {
             super(itemView);
             ButterKnife.bind(this,itemView);
-
             itemView.setOnClickListener(this);
         }
 
@@ -109,7 +111,12 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHol
 
         @Override
         public void onClick(View view) {
-
+            int position = getAdapterPosition();
+            Movie movie = listMovies.get(position);
+            Intent intent = new Intent(context, DetailActivity.class);
+            intent.putExtra(DetailActivity.EXTRA_MOVIE,movie.getId());
+            intent.putExtra(DetailActivity.EXTRA_CATEGORY,EXTRA_CATEGORY);
+            context.startActivity(intent);
         }
 
         String changeFormatDate(String date) {

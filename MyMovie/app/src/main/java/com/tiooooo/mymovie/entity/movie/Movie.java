@@ -3,6 +3,9 @@ package com.tiooooo.mymovie.entity.movie;
 import com.google.gson.annotations.SerializedName;
 
 public class Movie {
+    @SerializedName("id")
+    private String id;
+
     @SerializedName("title")
     private String title;
 
@@ -23,6 +26,14 @@ public class Movie {
 
     @SerializedName("popularity")
     private Double popularity;
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
 
     public String getTitle() {
         return title;

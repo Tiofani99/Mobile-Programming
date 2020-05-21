@@ -1,6 +1,7 @@
-package com.tiooooo.mymovie.ui.main.adapter;
+package com.tiooooo.mymovie.ui.main.fragment.tv;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,7 +12,9 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.tiooooo.mymovie.BuildConfig;
 import com.tiooooo.mymovie.R;
+import com.tiooooo.mymovie.entity.movie.Movie;
 import com.tiooooo.mymovie.entity.tvseries.TvSeries;
+import com.tiooooo.mymovie.ui.detail.DetailActivity;
 
 import java.util.ArrayList;
 
@@ -24,6 +27,7 @@ public class TvSeriesAdapter extends RecyclerView.Adapter<TvSeriesAdapter.TvSeri
 
     private ArrayList<TvSeries> listTvSeries = new ArrayList<>();
     private Context context;
+    private static final int EXTRA_CATEGORY = 2;
 
     public TvSeriesAdapter(Context context){
         this.context = context;
@@ -52,7 +56,7 @@ public class TvSeriesAdapter extends RecyclerView.Adapter<TvSeriesAdapter.TvSeri
         return listTvSeries.size();
     }
 
-    public static class TvSeriesViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
+    public  class TvSeriesViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
 
         @BindView(R.id.img_item)
         ImageView ivImg;
@@ -96,6 +100,12 @@ public class TvSeriesAdapter extends RecyclerView.Adapter<TvSeriesAdapter.TvSeri
 
         @Override
         public void onClick(View view) {
+            int position = getAdapterPosition();
+            TvSeries tvSeries = listTvSeries.get(position);
+            Intent intent = new Intent(context, DetailActivity.class);
+            intent.putExtra(DetailActivity.EXTRA_MOVIE,tvSeries.getId());
+            intent.putExtra(DetailActivity.EXTRA_CATEGORY,EXTRA_CATEGORY);
+            context.startActivity(intent);
 
         }
     }

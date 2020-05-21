@@ -11,8 +11,8 @@ import com.ogaclejapan.smarttablayout.SmartTabLayout;
 import com.ogaclejapan.smarttablayout.utils.v4.FragmentPagerItemAdapter;
 import com.ogaclejapan.smarttablayout.utils.v4.FragmentPagerItems;
 import com.tiooooo.mymovie.R;
-import com.tiooooo.mymovie.ui.main.fragment.FragmentMovies;
-import com.tiooooo.mymovie.ui.main.fragment.FragmentTvSeries;
+import com.tiooooo.mymovie.ui.main.fragment.movie.FragmentMovies;
+import com.tiooooo.mymovie.ui.main.fragment.tv.FragmentTvSeries;
 
 public class MainActivity extends AppCompatActivity {
 
