@@ -13,6 +13,7 @@ import com.tiooooo.academy.ui.reader.CourseReaderActivity;
 import com.tiooooo.academy.R;
 import com.tiooooo.academy.data.CourseEntity;
 import com.tiooooo.academy.data.ModuleEntity;
+import com.tiooooo.academy.viewmodel.ViewModelFactory;
 
 import java.util.List;
 
@@ -54,7 +55,8 @@ public class DetailCourseActivity extends AppCompatActivity {
 
         DetailCourseAdapter adapter = new DetailCourseAdapter();
 
-        DetailCourseViewModel viewModel = new ViewModelProvider(this,new ViewModelProvider.NewInstanceFactory()).get(DetailCourseViewModel.class);
+        ViewModelFactory factory = ViewModelFactory.getInstance(this);
+        DetailCourseViewModel viewModel = new ViewModelProvider(this,factory).get(DetailCourseViewModel.class);
         Bundle extras = getIntent().getExtras();
 
         if (extras != null) {

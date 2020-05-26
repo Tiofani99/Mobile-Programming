@@ -18,6 +18,7 @@ import android.widget.ProgressBar;
 
 import com.tiooooo.academy.R;
 import com.tiooooo.academy.data.CourseEntity;
+import com.tiooooo.academy.viewmodel.ViewModelFactory;
 
 import java.util.List;
 
@@ -51,7 +52,8 @@ public class BookmarkFragment extends Fragment implements BookmarkFragmentCallba
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         if(getActivity() != null){
-            BookmarkViewModel viewModel = new ViewModelProvider(this,new ViewModelProvider.NewInstanceFactory()).get(BookmarkViewModel.class);
+            ViewModelFactory factory = ViewModelFactory.getInstance(getActivity());
+            BookmarkViewModel viewModel = new ViewModelProvider(this,factory).get(BookmarkViewModel.class);
             List<CourseEntity> courses = viewModel.getBookmarks();
             Log.d("Woe","Bookmark Jalan"+courses.size());
 

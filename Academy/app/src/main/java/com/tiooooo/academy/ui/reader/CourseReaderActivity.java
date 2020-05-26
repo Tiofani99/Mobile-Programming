@@ -6,6 +6,7 @@ import android.util.Log;
 import com.tiooooo.academy.R;
 import com.tiooooo.academy.ui.reader.content.ModuleContentFragment;
 import com.tiooooo.academy.ui.reader.list.ModuleListFragment;
+import com.tiooooo.academy.viewmodel.ViewModelFactory;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
@@ -21,7 +22,8 @@ public class CourseReaderActivity extends AppCompatActivity implements CourseRea
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_course_reader);
 
-        CourseReaderViewModel viewModel = new ViewModelProvider(this,new ViewModelProvider.NewInstanceFactory()).get(CourseReaderViewModel.class);
+        ViewModelFactory factory = ViewModelFactory.getInstance(this);
+        CourseReaderViewModel viewModel = new ViewModelProvider(this,factory).get(CourseReaderViewModel.class);
 
 
 

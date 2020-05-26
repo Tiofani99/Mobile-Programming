@@ -17,6 +17,7 @@ import android.widget.ProgressBar;
 
 import com.tiooooo.academy.R;
 import com.tiooooo.academy.data.CourseEntity;
+import com.tiooooo.academy.viewmodel.ViewModelFactory;
 
 import java.util.List;
 
@@ -48,7 +49,8 @@ public class AcademyFragment extends Fragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         if(getActivity() != null){
-            AcademyViewModel viewModel  = new ViewModelProvider(this,new ViewModelProvider.NewInstanceFactory()).get(AcademyViewModel.class);
+            ViewModelFactory factory = ViewModelFactory.getInstance(getActivity());
+            AcademyViewModel viewModel  = new ViewModelProvider(this,factory).get(AcademyViewModel.class);
             List<CourseEntity> courses = viewModel.getCourses();
 
 

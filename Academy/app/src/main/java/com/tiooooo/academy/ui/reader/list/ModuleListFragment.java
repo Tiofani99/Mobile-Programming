@@ -21,6 +21,7 @@ import com.tiooooo.academy.R;
 import com.tiooooo.academy.data.ModuleEntity;
 import com.tiooooo.academy.ui.reader.CourseReaderCallback;
 import com.tiooooo.academy.ui.reader.CourseReaderViewModel;
+import com.tiooooo.academy.viewmodel.ViewModelFactory;
 
 import java.util.List;
 
@@ -66,7 +67,8 @@ public class ModuleListFragment extends Fragment implements MyAdapterClickListen
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         if(getActivity()!=null){
-            viewModel = new ViewModelProvider(requireActivity(),new ViewModelProvider.NewInstanceFactory()).get(CourseReaderViewModel.class);
+            ViewModelFactory factory = ViewModelFactory.getInstance(requireActivity());
+            viewModel = new ViewModelProvider(requireActivity(),factory).get(CourseReaderViewModel.class);
             adapter = new ModuleListAdapter(this);
             populateRecyclerView(viewModel.getModules());
         }
