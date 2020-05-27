@@ -3,16 +3,24 @@ package com.tiooooo.academy.ui.reader;
 import com.tiooooo.academy.data.ContentEntity;
 import com.tiooooo.academy.data.CourseEntity;
 import com.tiooooo.academy.data.ModuleEntity;
+import com.tiooooo.academy.data.source.AcademyRepository;
 import com.tiooooo.academy.utils.DataDummy;
 
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.mockito.Mock;
+import org.mockito.junit.MockitoJUnitRunner;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import static junit.framework.TestCase.assertNotNull;
 import static org.junit.Assert.assertEquals;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
+@RunWith(MockitoJUnitRunner.class)
 public class CourseReaderViewModelTest {
 
     private CourseReaderViewModel viewModel;
@@ -22,9 +30,12 @@ public class CourseReaderViewModelTest {
     private List<ModuleEntity> dummyModules = DataDummy.generateDummyModules(courseId);
     private String moduleId = dummyModules.get(0).getmModuleId();
 
+    @Mock
+    AcademyRepository academyRepository;
+
     @Before
     public void setUp() {
-        viewModel = new CourseReaderViewModel();
+        viewModel = new CourseReaderViewModel(academyRepository);
         viewModel.setSelectedCourse(courseId);
         viewModel.setSelectedModule(moduleId);
 
@@ -36,21 +47,24 @@ public class CourseReaderViewModelTest {
 
     @Test
     public void getModules(){
+        when(academyRepository.getAllModulesByCourse(courseId)).thenReturn((ArrayList<ModuleEntity>) dummyModules);
         List<ModuleEntity> moduleEntities = viewModel.getModules();
+        verify(academyRepository).getAllModulesByCourse(courseId);
         assertNotNull(moduleEntities);
         assertEquals(7, moduleEntities.size());
     }
 
     @Test
     public void getSelectedModule(){
+        when(academyRepository.getContent(courseId, moduleId)).thenReturn(dummyModules.get(0));
         ModuleEntity moduleEntity = viewModel.getSelectedModule();
+        verify(academyRepository).getContent(courseId, moduleId);
         assertNotNull(moduleEntity);
         ContentEntity contentEntity = moduleEntity.contentEntity;
         assertNotNull(contentEntity);
-
         String content = contentEntity.getContent();
         assertNotNull(content);
-        assertEquals(content,dummyModules.get(0).contentEntity);
+        assertEquals(content,  dummyModules.get(0).contentEntity.getContent());
 
     }
 
