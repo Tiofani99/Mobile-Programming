@@ -12,7 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 public class WeatherAdapter extends RecyclerView.Adapter<WeatherAdapter.WeatherViewHolder> {
 
-    private ArrayList<WeatherItems> mData;
+    private ArrayList<WeatherItems> mData = new ArrayList<>();
 
     public void setData(ArrayList<WeatherItems> data) {
         mData.clear();
