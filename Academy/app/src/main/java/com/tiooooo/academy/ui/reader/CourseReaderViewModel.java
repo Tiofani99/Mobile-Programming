@@ -5,6 +5,7 @@ import com.tiooooo.academy.data.source.AcademyRepository;
 
 import java.util.ArrayList;
 
+import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModel;
 
 public class CourseReaderViewModel extends ViewModel {
@@ -24,11 +25,11 @@ public class CourseReaderViewModel extends ViewModel {
         this.moduleId = moduleId;
     }
 
-    public ArrayList<ModuleEntity> getModules() {
+    public LiveData<ArrayList<ModuleEntity>> getModules() {
         return academyRepository.getAllModulesByCourse(courseId);
     }
 
-    public ModuleEntity getSelectedModule() {
+    public LiveData<ModuleEntity> getSelectedModule() {
         return academyRepository.getContent(courseId, moduleId);
     }
 }

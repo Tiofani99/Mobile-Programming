@@ -2,10 +2,10 @@ package com.tiooooo.academy.ui.bookmark;
 
 import com.tiooooo.academy.data.CourseEntity;
 import com.tiooooo.academy.data.source.AcademyRepository;
-import com.tiooooo.academy.utils.DataDummy;
 
 import java.util.List;
 
+import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModel;
 
 public class BookmarkViewModel extends ViewModel {
@@ -15,7 +15,7 @@ public class BookmarkViewModel extends ViewModel {
         this.academyRepository = academyRepository;
     }
 
-    public List<CourseEntity> getBookmarks(){
+    public LiveData<List<CourseEntity>> getBookmarks(){
         return academyRepository.getBookmarkedCourses();
     }
 }

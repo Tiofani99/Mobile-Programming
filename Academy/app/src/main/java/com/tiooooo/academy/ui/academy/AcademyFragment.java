@@ -1,14 +1,6 @@
 package com.tiooooo.academy.ui.academy;
 
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
-import androidx.lifecycle.ViewModelProvider;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,10 +8,14 @@ import android.view.ViewGroup;
 import android.widget.ProgressBar;
 
 import com.tiooooo.academy.R;
-import com.tiooooo.academy.data.CourseEntity;
 import com.tiooooo.academy.viewmodel.ViewModelFactory;
 
-import java.util.List;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 
 public class AcademyFragment extends Fragment {
@@ -42,22 +38,24 @@ public class AcademyFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         rvCourse = view.findViewById(R.id.rv_academy);
         progressBar = view.findViewById(R.id.progress_bar);
-        Log.d("Woe","Academy Jalan");
+        Log.d("Woe", "Academy Jalan");
     }
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        if(getActivity() != null){
+        if (getActivity() != null) {
             ViewModelFactory factory = ViewModelFactory.getInstance(getActivity());
-            AcademyViewModel viewModel  = new ViewModelProvider(this,factory).get(AcademyViewModel.class);
-            List<CourseEntity> courses = viewModel.getCourses();
-
-
-            Log.d("Woe","Academy Jalan "+courses.size());
+            AcademyViewModel viewModel = new ViewModelProvider(this, factory).get(AcademyViewModel.class);
 
             AcademyAdapter academyAdapter = new AcademyAdapter();
-            academyAdapter.setCourses(courses);
+            progressBar.setVisibility(View.VISIBLE);
+            viewModel.getCourses().observe(getViewLifecycleOwner(), courses -> {
+                        progressBar.setVisibility(View.GONE);
+                        academyAdapter.setCourses(courses);
+                        academyAdapter.notifyDataSetChanged();
+                    }
+            );
             rvCourse.setLayoutManager(new LinearLayoutManager(getContext()));
             rvCourse.setHasFixedSize(true);
             rvCourse.setAdapter(academyAdapter);

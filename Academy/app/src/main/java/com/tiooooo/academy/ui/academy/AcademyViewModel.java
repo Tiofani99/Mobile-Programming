@@ -2,10 +2,10 @@ package com.tiooooo.academy.ui.academy;
 
 import com.tiooooo.academy.data.CourseEntity;
 import com.tiooooo.academy.data.source.AcademyRepository;
-import com.tiooooo.academy.utils.DataDummy;
 
 import java.util.List;
 
+import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModel;
 
 public class AcademyViewModel extends ViewModel {
@@ -15,7 +15,7 @@ public class AcademyViewModel extends ViewModel {
         this.academyRepository = academyRepository;
     }
 
-    public List<CourseEntity> getCourses(){
+    public LiveData<List<CourseEntity>> getCourses(){
         return academyRepository.getAllCourses();
     }
 }

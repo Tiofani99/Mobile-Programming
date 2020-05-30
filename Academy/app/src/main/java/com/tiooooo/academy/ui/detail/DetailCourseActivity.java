@@ -3,19 +3,18 @@ package com.tiooooo.academy.ui.detail;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
-import com.tiooooo.academy.ui.reader.CourseReaderActivity;
 import com.tiooooo.academy.R;
 import com.tiooooo.academy.data.CourseEntity;
-import com.tiooooo.academy.data.ModuleEntity;
+import com.tiooooo.academy.ui.reader.CourseReaderActivity;
 import com.tiooooo.academy.viewmodel.ViewModelFactory;
-
-import java.util.List;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -32,6 +31,7 @@ public class DetailCourseActivity extends AppCompatActivity {
     private TextView textDesc;
     private TextView textDate;
     private ImageView imagePoster;
+    private ProgressBar progressBar;
 
 
     @Override
@@ -41,7 +41,7 @@ public class DetailCourseActivity extends AppCompatActivity {
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        if(getSupportActionBar()!= null){
+        if (getSupportActionBar() != null) {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
 
@@ -52,22 +52,27 @@ public class DetailCourseActivity extends AppCompatActivity {
         textDate = findViewById(R.id.text_date);
         RecyclerView rvModule = findViewById(R.id.rv_module);
         imagePoster = findViewById(R.id.image_poster);
+        progressBar = findViewById(R.id.progress_bar);
 
         DetailCourseAdapter adapter = new DetailCourseAdapter();
 
         ViewModelFactory factory = ViewModelFactory.getInstance(this);
-        DetailCourseViewModel viewModel = new ViewModelProvider(this,factory).get(DetailCourseViewModel.class);
+        DetailCourseViewModel viewModel = new ViewModelProvider(this, factory).get(DetailCourseViewModel.class);
         Bundle extras = getIntent().getExtras();
 
         if (extras != null) {
-            Log.d("Woe",extras.getString(EXTRA_COURSE));
+            Log.d("Woe", extras.getString(EXTRA_COURSE));
             String courseId = extras.getString(EXTRA_COURSE);
             if (courseId != null) {
-
                 viewModel.setSelectedCourse(courseId);
-                List<ModuleEntity> modules = viewModel.getModules();
-                adapter.setModules(modules);
-                populateCourse(viewModel.getCourse());
+                progressBar.setVisibility(View.VISIBLE);
+                viewModel.getModules().observe(this, modules -> {
+                    progressBar.setVisibility(View.GONE);
+                    adapter.setModules(modules);
+                    adapter.notifyDataSetChanged();
+                });
+
+                viewModel.getCourse().observe(this, course ->populateCourse((CourseEntity) course));
 
 
             }
@@ -78,15 +83,15 @@ public class DetailCourseActivity extends AppCompatActivity {
         rvModule.setLayoutManager(new LinearLayoutManager(this));
         rvModule.setHasFixedSize(true);
         rvModule.setAdapter(adapter);
-        DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(rvModule.getContext(),DividerItemDecoration.VERTICAL);
+        DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(rvModule.getContext(), DividerItemDecoration.VERTICAL);
         rvModule.addItemDecoration(dividerItemDecoration);
 
     }
 
-    private void populateCourse(CourseEntity courseEntity){
+    private void populateCourse(CourseEntity courseEntity) {
         textTitle.setText(courseEntity.getTitle());
         textDesc.setText(courseEntity.getDescription());
-        textDate.setText(getResources().getString(R.string.deadline_date,courseEntity.getDeadline()));
+        textDate.setText(getResources().getString(R.string.deadline_date, courseEntity.getDeadline()));
 
         Glide.with(this)
                 .load(courseEntity.getImagePath())
@@ -95,7 +100,7 @@ public class DetailCourseActivity extends AppCompatActivity {
 
         btnStart.setOnClickListener(view -> {
             Intent intent = new Intent(DetailCourseActivity.this, CourseReaderActivity.class);
-            intent.putExtra(CourseReaderActivity.EXTRA_COURSE_ID,courseEntity.getCourseId());
+            intent.putExtra(CourseReaderActivity.EXTRA_COURSE_ID, courseEntity.getCourseId());
             startActivity(intent);
         });
 

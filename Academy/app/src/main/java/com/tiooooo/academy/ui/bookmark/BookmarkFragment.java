@@ -10,7 +10,6 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,7 +19,6 @@ import com.tiooooo.academy.R;
 import com.tiooooo.academy.data.CourseEntity;
 import com.tiooooo.academy.viewmodel.ViewModelFactory;
 
-import java.util.List;
 
 
 /**
@@ -54,11 +52,14 @@ public class BookmarkFragment extends Fragment implements BookmarkFragmentCallba
         if(getActivity() != null){
             ViewModelFactory factory = ViewModelFactory.getInstance(getActivity());
             BookmarkViewModel viewModel = new ViewModelProvider(this,factory).get(BookmarkViewModel.class);
-            List<CourseEntity> courses = viewModel.getBookmarks();
-            Log.d("Woe","Bookmark Jalan"+courses.size());
 
             BookmarkAdapter bookmarkAdapter = new BookmarkAdapter(this);
-            bookmarkAdapter.setCourses(courses);
+            progressBar.setVisibility(View.VISIBLE);
+            viewModel.getBookmarks().observe(getViewLifecycleOwner(), courses ->{
+                progressBar.setVisibility(View.GONE);
+                bookmarkAdapter.setCourses(courses);
+                bookmarkAdapter.notifyDataSetChanged();
+            });
 
             rvBookmark.setLayoutManager(new LinearLayoutManager(getContext()));
             rvBookmark.setHasFixedSize(true);

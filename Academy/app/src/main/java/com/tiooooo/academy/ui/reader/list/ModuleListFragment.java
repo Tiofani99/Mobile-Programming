@@ -70,7 +70,12 @@ public class ModuleListFragment extends Fragment implements MyAdapterClickListen
             ViewModelFactory factory = ViewModelFactory.getInstance(requireActivity());
             viewModel = new ViewModelProvider(requireActivity(),factory).get(CourseReaderViewModel.class);
             adapter = new ModuleListAdapter(this);
-            populateRecyclerView(viewModel.getModules());
+
+            progressBar.setVisibility(View.VISIBLE);
+            viewModel.getModules().observe(getViewLifecycleOwner(),module ->{
+                progressBar.setVisibility(View.GONE);
+                populateRecyclerView(module);
+            });
         }
     }
 

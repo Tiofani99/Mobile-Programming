@@ -49,8 +49,12 @@ public class ModuleContentFragment extends Fragment {
         if(getActivity() != null){
             ViewModelFactory factory = ViewModelFactory.getInstance(requireActivity());
             CourseReaderViewModel viewModel = new ViewModelProvider(requireActivity(), factory).get(CourseReaderViewModel.class);
-            ModuleEntity module = viewModel.getSelectedModule();
-            populateWebView(module);
+
+            viewModel.getSelectedModule().observe(getViewLifecycleOwner(), module ->{
+                if(module != null){
+                    populateWebView(module);
+                }
+            });
         }
     }
 

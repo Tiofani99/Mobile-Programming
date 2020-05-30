@@ -10,6 +10,8 @@ import com.tiooooo.academy.data.source.remote.response.ModuleResponse;
 import java.util.ArrayList;
 import java.util.List;
 
+import androidx.lifecycle.LiveData;
+
 public class FakeAcademyRepository implements AcademyDataSource {
 
     private volatile static FakeAcademyRepository INSTANCE = null;
@@ -38,7 +40,7 @@ public class FakeAcademyRepository implements AcademyDataSource {
     }
 
     @Override
-    public ArrayList<CourseEntity> getBookmarkedCourses() {
+    public LiveData<List<CourseEntity>> getBookmarkedCourses() {
         List<CourseResponse> courseResponses = remoteDataSource.getAllCourses();
         ArrayList<CourseEntity> courseList = new ArrayList<>();
         for (CourseResponse response : courseResponses) {
@@ -54,7 +56,7 @@ public class FakeAcademyRepository implements AcademyDataSource {
     }
 
     @Override
-    public CourseEntity getCourseWithModules(final String courseId) {
+    public LiveData<CourseEntity> getCourseWithModules(final String courseId) {
         List<CourseResponse> courseResponses = remoteDataSource.getAllCourses();
         CourseEntity course = null;
         for (CourseResponse response : courseResponses) {
@@ -71,7 +73,7 @@ public class FakeAcademyRepository implements AcademyDataSource {
     }
 
     @Override
-    public ArrayList<ModuleEntity> getAllModulesByCourse(String courseId) {
+    public LiveData<ArrayList<ModuleEntity>> getAllModulesByCourse(String courseId) {
         List<ModuleResponse> moduleResponses = remoteDataSource.getModules(courseId);
         ArrayList<ModuleEntity> moduleList = new ArrayList<>();
         for (ModuleResponse response : moduleResponses) {

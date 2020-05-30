@@ -3,18 +3,21 @@ package com.tiooooo.academy.data.source;
 import com.tiooooo.academy.data.CourseEntity;
 import com.tiooooo.academy.data.ModuleEntity;
 
+import java.util.ArrayList;
 import java.util.List;
+
+import androidx.lifecycle.LiveData;
 
 public interface AcademyDataSource {
 
-    List<CourseEntity> getAllCourses();
+    LiveData<List<CourseEntity>> getAllCourses();
 
-    CourseEntity getCourseWithModules(String courseID);
+    LiveData<CourseEntity> getCourseWithModules(String courseID);
 
-    List<ModuleEntity> getAllModulesByCourse(String courseId);
+    LiveData<ArrayList<ModuleEntity>> getAllModulesByCourse(String courseId);
 
-    List<CourseEntity> getBookmarkedCourses();
+    LiveData<List<CourseEntity>> getBookmarkedCourses();
 
-    ModuleEntity getContent(String courseId, String moduleId);
+    LiveData<ModuleEntity> getContent(String courseId, String moduleId);
 
 }
