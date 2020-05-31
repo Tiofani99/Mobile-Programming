@@ -14,7 +14,8 @@ public class DataDummy {
                     "6",
                     "The near future, a time when both hope and hardships drive humanity to look to the stars and beyond. While a mysterious phenomenon menaces to destroy life on planet Earth, astronaut Roy McBride undertakes a mission across the immensity of space and its many perils to uncover the truth about a lost expedition that decades before boldly faced emptiness and silence in search of the unknown.",
                     "2019-09-17",
-                    "507.351",},
+                    "507.351",
+                    "/5BwqwxMEjeFtdknRV792Svo0K1v.jpg"},
             {"m02",
                     "Scoob!",
                     "/zG2l9Svw4PTldWJAzC171Y3d6G8.jpg",
@@ -22,7 +23,8 @@ public class DataDummy {
                     "8.1",
                     "In Scooby-Doo’s greatest adventure yet, see the never-before told story of how lifelong friends Scooby and Shaggy first met and how they joined forces with young detectives Fred, Velma, and Daphne to form the famous Mystery Inc. Now, with hundreds of cases solved, Scooby and the gang face their biggest, toughest mystery ever: an evil plot to unleash the ghost dog Cerberus upon the world. As they race to stop this global “dogpocalypse,” the gang discovers that Scooby has a secret legacy and an epic destiny greater than anyone ever imagined.",
                     "2020-05-15",
-                    "258.564"},
+                    "258.564",
+                    "/b5Fej0UT6gPFd2GcGEWw4SAwGUM.jpg"},
             {"m03",
                     "Bloodshot",
                     "/8WUVHemHFH2ZIP6NWkwlHWsyrEL.jpg",
@@ -30,7 +32,8 @@ public class DataDummy {
                     "7.1",
                     "After he and his wife are murdered, marine Ray Garrison is resurrected by a team of scientists. Enhanced with nanotechnology, he becomes a superhuman, biotech killing machine—'Bloodshot'. As Ray first trains with fellow super-soldiers, he cannot recall anything from his former life. But when his memories flood back and he remembers the man that killed both him and his wife, he breaks out of the facility to get revenge, only to discover that there's more to the conspiracy than he thought.",
                     "2020-03-05",
-                    "160"},
+                    "160",
+                    "/ocUrMYbdjknu2TwzMHKT9PBBQRw.jpg"},
             {"m04",
                     "The Wrong Missy",
                     "/A2YlIrzypvhS3vTFMcDkG3xLvac.jpg",
@@ -38,7 +41,8 @@ public class DataDummy {
                     "6.1",
                     "A guy meets the woman of his dreams and invites her to his company's corporate retreat, but realizes he sent the invite to the wrong person.",
                     "2020-05-13",
-                    "107.286"},
+                    "107.286",
+                    "/1R6cvRtZgsYCkh8UFuWFN33xBP4.jpg"},
             {"m05",
                     "Extraction",
                     "/wlfDxbGEsW58vGhFljKkcR5IxDj.jpg",
@@ -46,7 +50,8 @@ public class DataDummy {
                     "7.5",
                     "Tyler Rake, a fearless mercenary who offers his services on the black market, embarks on a dangerous mission when he is hired to rescue the kidnapped son of a Mumbai crime lord…",
                     "2020-04-24",
-                    "114.479"},
+                    "114.479",
+                    "/1R6cvRtZgsYCkh8UFuWFN33xBP4.jpg"},
             {"m06",
                     "1917",
                     "/AuGiPiGMYMkSosOJ3BQjDEAiwtO.jpg",
@@ -54,7 +59,8 @@ public class DataDummy {
                     "7.9",
                     "At the height of the First World War, two young British soldiers must cross enemy territory and deliver a message that will stop a deadly attack on hundreds of soldiers.",
                     "2019-12-25",
-                    "104.871"},
+                    "104.871",
+                    "/2lBOQK06tltt8SQaswgb8d657Mv.jpg",},
             {"m07",
                     "Sonic the Hedgehog",
                     "/aQvJ5WPzZgYVDrxLX4R6cLJCEaQ.jpg",
@@ -62,7 +68,8 @@ public class DataDummy {
                     "7.5",
                     "Based on the global blockbuster videogame franchise from Sega, Sonic the Hedgehog tells the story of the world’s speediest hedgehog as he embraces his new home on Earth. In this live-action adventure comedy, Sonic and his new best friend team up to defend the planet from the evil genius Dr. Robotnik and his plans for world domination.",
                     "2020-02-12",
-                    "107.574"},
+                    "107.574",
+                    "/stmYfCUGd8Iy6kAMBr6AmWqx8Bq.jpg",},
             {"m08",
                     "Birds of Prey (and the Fantabulous Emancipation of One Harley Quinn)",
                     "/kvbbK2rLGSJh9rf6gg1i1iVLYQS.jpg",
@@ -70,7 +77,8 @@ public class DataDummy {
                     "7.2",
                     "Harley Quinn joins forces with a singer, an assassin and a police detective to help a young girl who had a hit placed on her after she stole a rare diamond from a crime lord.",
                     "2020-02-05",
-                    "113.276"},
+                    "113.276",
+                    "/kvbbK2rLGSJh9rf6gg1i1iVLYQS.jpg"},
             {"m09",
                     "Justice League Dark: Apokolips War",
                     "/c01Y4suApJ1Wic2xLmaq1QYcfoZ.jpg",
@@ -78,7 +86,8 @@ public class DataDummy {
                     "8.5",
                     "Earth is decimated after intergalactic tyrant Darkseid has devastated the Justice League in a poorly executed war by the DC Super Heroes. Now the remaining bastions of good – the Justice League, Teen Titans, Suicide Squad and assorted others – must regroup, strategize and take the war to Darkseid in order to save the planet and its surviving inhabitants.",
                     "2020-05-05",
-                    "89.083"},
+                    "89.083",
+                    "/5it4jfiyPRty2vUnKPK9Qy7KfAu.jpg"},
             {"m10",
                     "Star Wars: The Rise of Skywalker",
                     "/db32LaOibwEliAmSL2jjDF6oDdj.jpg",
@@ -86,7 +95,8 @@ public class DataDummy {
                     "6.5",
                     "The surviving Resistance faces the First Order once again as the journey of Rey, Finn and Poe Dameron continues. With the power and knowledge of generations behind them, the final battle begins.",
                     "2019-12-18",
-                    "90.271"}
+                    "90.271",
+                    "/jOzrELAzFxtMx2I4uDGHOotdfsS.jpg",}
     };
     private static final String[][] tvSeriesData = {
 
@@ -195,6 +205,7 @@ public class DataDummy {
             movie.setDesc(data[5]);
             movie.setRelease_date(data[6]);
             movie.setPopularity(Double.valueOf(data[7]));
+            movie.setBackdrop_path(data[8]);
             movies.add(movie);
         }
         return movies;

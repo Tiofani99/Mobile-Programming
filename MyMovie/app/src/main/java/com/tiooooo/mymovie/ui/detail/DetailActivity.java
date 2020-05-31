@@ -45,6 +45,8 @@ public class DetailActivity extends AppCompatActivity {
     ImageView imgMovie;
     @BindView(R.id.toolbar)
     Toolbar toolbar;
+    @BindView(R.id.img_backdrop_detail)
+    ImageView ivBackdrop;
 
 
     @Override
@@ -143,6 +145,7 @@ public class DetailActivity extends AppCompatActivity {
         }
 
         String img = "https://image.tmdb.org/t/p/w500/" + movies.getImg();
+        String backdrop = "https://image.tmdb.org/t/p/w500/" + movies.getBackdrop_path();
 
         tvTitle.setText(movies.getTitle());
         rbRating.setRating(Float.parseFloat(rate));
@@ -151,6 +154,11 @@ public class DetailActivity extends AppCompatActivity {
                 .load(img)
                 .apply(new RequestOptions().centerCrop())
                 .into(imgMovie);
+
+        Glide.with(this)
+                .load(backdrop)
+                .apply(new RequestOptions().centerCrop())
+                .into(ivBackdrop);
 
         if (movies.getDesc().equals("")) {
             String desc = getResources().getString(R.string.no_desc);
