@@ -38,7 +38,7 @@ public class MainActivityInstrumentedTest {
 
         onView(withText(mActivityRule.getActivity().getString(R.string.start))).perform(click());
 
-        onView(withId(R.id.text_view)).check(matches(withText(mActivityRule.getActivity().getString(R.string.delay1))));
+        onView(withId(R.id.text_view)).check(matches(withText(mActivityRule.getActivity().getString(R.string.delay2))));
     }
 
 }
