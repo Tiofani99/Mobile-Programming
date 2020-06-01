@@ -5,6 +5,7 @@ import android.os.Handler;
 import com.tiooooo.academy.data.source.remote.response.ContentResponse;
 import com.tiooooo.academy.data.source.remote.response.CourseResponse;
 import com.tiooooo.academy.data.source.remote.response.ModuleResponse;
+import com.tiooooo.academy.utils.EspressoIdlingResource;
 import com.tiooooo.academy.utils.JsonHelper;
 
 import java.util.List;
@@ -28,15 +29,28 @@ public class RemoteDataSource {
     }
 
     public void getAllCourses(LoadCoursesCallback callback) {
-        handler.postDelayed(()-> callback.onAllCoursesReceived(jsonHelper.loadCourses()), SERVICE_LATENCY_IN_MILLIS);
+        EspressoIdlingResource.increment();
+        handler.postDelayed(()-> {
+            callback.onAllCoursesReceived(jsonHelper.loadCourses());
+            EspressoIdlingResource.decrement();
+        }, SERVICE_LATENCY_IN_MILLIS);
     }
 
     public void getModules(String courseId, LoadModulesCallback callback) {
-        handler.postDelayed(()-> callback.onAllModulesReceived(jsonHelper.loadModule(courseId)), SERVICE_LATENCY_IN_MILLIS);
+        EspressoIdlingResource.increment();
+        handler.postDelayed(()-> {
+            callback.onAllModulesReceived(jsonHelper.loadModule(courseId));
+            EspressoIdlingResource.decrement();
+        }, SERVICE_LATENCY_IN_MILLIS);
     }
 
     public void getContent(String moduleId, LoadContentCallback callback) {
-        handler.postDelayed(()-> callback.onContentReceived(jsonHelper.loadContent(moduleId)), SERVICE_LATENCY_IN_MILLIS);
+        EspressoIdlingResource.increment();
+        handler.postDelayed(()-> {
+            callback.onContentReceived(jsonHelper.loadContent(moduleId));
+            EspressoIdlingResource.decrement();
+        }, SERVICE_LATENCY_IN_MILLIS);
+
     }
 
     public interface LoadCoursesCallback {

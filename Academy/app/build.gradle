@@ -58,4 +58,7 @@ dependencies {
 
     //Mockito
     testImplementation "org.mockito:mockito-core:$mockitoVersion"
+
+    //Idling Resources
+    implementation "androidx.test.espresso:espresso-idling-resource:$idleResourceVersion"
 }
