@@ -7,6 +7,7 @@ import com.tiooooo.academy.data.source.AcademyRepository;
 import com.tiooooo.academy.utils.DataDummy;
 
 import org.junit.Before;
+import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
@@ -14,6 +15,10 @@ import org.mockito.junit.MockitoJUnitRunner;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import androidx.arch.core.executor.testing.InstantTaskExecutorRule;
+import androidx.lifecycle.MutableLiveData;
+import androidx.lifecycle.Observer;
 
 import static junit.framework.TestCase.assertNotNull;
 import static org.junit.Assert.assertEquals;
@@ -30,8 +35,17 @@ public class CourseReaderViewModelTest {
     private List<ModuleEntity> dummyModules = DataDummy.generateDummyModules(courseId);
     private String moduleId = dummyModules.get(0).getmModuleId();
 
+    @Rule
+    public InstantTaskExecutorRule instantTaskExecutorRule;
+
     @Mock
     AcademyRepository academyRepository;
+
+    @Mock
+    private Observer<List<ModuleEntity>> modulesObserver;
+
+    @Mock
+    private Observer<ModuleEntity> moduleObserver;
 
     @Before
     public void setUp() {
@@ -47,17 +61,24 @@ public class CourseReaderViewModelTest {
 
     @Test
     public void getModules(){
-        when(academyRepository.getAllModulesByCourse(courseId)).thenReturn((ArrayList<ModuleEntity>) dummyModules);
-        List<ModuleEntity> moduleEntities = viewModel.getModules();
+        MutableLiveData<ArrayList<ModuleEntity>> modules = new MutableLiveData<>();
+        modules.setValue((ArrayList<ModuleEntity>) dummyModules);
+        when(academyRepository.getAllModulesByCourse(courseId)).thenReturn(modules);
+        List<ModuleEntity> moduleEntities = viewModel.getModules().getValue();
         verify(academyRepository).getAllModulesByCourse(courseId);
         assertNotNull(moduleEntities);
         assertEquals(7, moduleEntities.size());
+
+        viewModel.getModules().observeForever(modulesObserver);
+        verify(modulesObserver).onChanged(dummyModules);
     }
 
     @Test
     public void getSelectedModule(){
-        when(academyRepository.getContent(courseId, moduleId)).thenReturn(dummyModules.get(0));
-        ModuleEntity moduleEntity = viewModel.getSelectedModule();
+        MutableLiveData<ModuleEntity> module = new MutableLiveData<>();
+        module.setValue(dummyModules.get(0));
+        when(academyRepository.getContent(courseId, moduleId)).thenReturn(module);
+        ModuleEntity moduleEntity = viewModel.getSelectedModule().getValue();
         verify(academyRepository).getContent(courseId, moduleId);
         assertNotNull(moduleEntity);
         ContentEntity contentEntity = moduleEntity.contentEntity;
@@ -65,6 +86,9 @@ public class CourseReaderViewModelTest {
         String content = contentEntity.getContent();
         assertNotNull(content);
         assertEquals(content,  dummyModules.get(0).contentEntity.getContent());
+
+        viewModel.getModules().observeForever(modulesObserver);
+        verify(moduleObserver).onChanged(dummyModules.get(0));
 
     }
 

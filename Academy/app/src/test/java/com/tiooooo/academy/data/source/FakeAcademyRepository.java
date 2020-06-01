@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MutableLiveData;
 
 public class FakeAcademyRepository implements AcademyDataSource {
 
@@ -22,87 +23,110 @@ public class FakeAcademyRepository implements AcademyDataSource {
         this.remoteDataSource = remoteDataSource;
     }
 
-
     @Override
-    public ArrayList<CourseEntity> getAllCourses() {
-        List<CourseResponse> courseResponses = remoteDataSource.getAllCourses();
-        ArrayList<CourseEntity> courseList = new ArrayList<>();
-        for (CourseResponse response : courseResponses) {
-            CourseEntity course = new CourseEntity(response.getId(),
-                    response.getTitle(),
-                    response.getDescription(),
-                    response.getDate(),
-                    false,
-                    response.getImagePath());
-            courseList.add(course);
-        }
-        return courseList;
-    }
-
-    @Override
-    public LiveData<List<CourseEntity>> getBookmarkedCourses() {
-        List<CourseResponse> courseResponses = remoteDataSource.getAllCourses();
-        ArrayList<CourseEntity> courseList = new ArrayList<>();
-        for (CourseResponse response : courseResponses) {
-            CourseEntity course = new CourseEntity(response.getId(),
-                    response.getTitle(),
-                    response.getDescription(),
-                    response.getDate(),
-                    false,
-                    response.getImagePath());
-            courseList.add(course);
-        }
-        return courseList;
-    }
-
-    @Override
-    public LiveData<CourseEntity> getCourseWithModules(final String courseId) {
-        List<CourseResponse> courseResponses = remoteDataSource.getAllCourses();
-        CourseEntity course = null;
-        for (CourseResponse response : courseResponses) {
-            if (response.getId().equals(courseId)) {
-                course = new CourseEntity(response.getId(),
+    public LiveData<List<CourseEntity>> getAllCourses() {
+        MutableLiveData<List<CourseEntity>> courseResults = new MutableLiveData<>();
+        remoteDataSource.getAllCourses(courseResponses ->{
+            ArrayList<CourseEntity> courseList = new ArrayList<>();
+            for (CourseResponse response : courseResponses) {
+                CourseEntity course = new CourseEntity(response.getId(),
                         response.getTitle(),
                         response.getDescription(),
                         response.getDate(),
                         false,
                         response.getImagePath());
+                courseList.add(course);
             }
-        }
-        return course;
+            courseResults.postValue(courseList);
+        } );
+
+
+        return courseResults;
+    }
+
+    @Override
+    public LiveData<List<CourseEntity>> getBookmarkedCourses() {
+        MutableLiveData<List<CourseEntity>> courseResults = new MutableLiveData<>();
+        remoteDataSource.getAllCourses(courseResponses -> {
+            ArrayList<CourseEntity> courseList = new ArrayList<>();
+            for (CourseResponse response : courseResponses) {
+                CourseEntity course = new CourseEntity(response.getId(),
+                        response.getTitle(),
+                        response.getDescription(),
+                        response.getDate(),
+                        false,
+                        response.getImagePath());
+                courseList.add(course);
+            }
+            courseResults.postValue(courseList);
+        });
+        return courseResults;
+    }
+
+    @Override
+    public LiveData<CourseEntity> getCourseWithModules(final String courseId) {
+        MutableLiveData<CourseEntity> courseResult = new MutableLiveData<>();
+        remoteDataSource.getAllCourses(courseResponses -> {
+            CourseEntity course = null;
+            for (CourseResponse response : courseResponses) {
+                if (response.getId().equals(courseId)) {
+                    course = new CourseEntity(response.getId(),
+                            response.getTitle(),
+                            response.getDescription(),
+                            response.getDate(),
+                            false,
+                            response.getImagePath());
+                }
+            }
+            courseResult.postValue(course);
+        });
+        return courseResult;
     }
 
     @Override
     public LiveData<ArrayList<ModuleEntity>> getAllModulesByCourse(String courseId) {
-        List<ModuleResponse> moduleResponses = remoteDataSource.getModules(courseId);
-        ArrayList<ModuleEntity> moduleList = new ArrayList<>();
-        for (ModuleResponse response : moduleResponses) {
-            ModuleEntity course = new ModuleEntity(response.getModuleId(),
-                    response.getCourseId(),
-                    response.getTitle(),
-                    response.getPosition(),
-                    false);
-            moduleList.add(course);
-        }
-        return moduleList;
-    }
+        MutableLiveData<ArrayList<ModuleEntity>> moduleResults = new MutableLiveData<>();
 
-
-    @Override
-    public ModuleEntity getContent(String courseId, String moduleId) {
-        ModuleEntity module = null;
-        List<ModuleResponse> moduleResponses = remoteDataSource.getModules(courseId);
-        for (ModuleResponse response : moduleResponses) {
-            if (response.getModuleId().equals(moduleId)) {
-                module = new ModuleEntity(response.getModuleId(),
+        remoteDataSource.getModules(courseId, moduleResponses -> {
+            ArrayList<ModuleEntity> moduleList = new ArrayList<>();
+            for (ModuleResponse response : moduleResponses) {
+                ModuleEntity course = new ModuleEntity(response.getModuleId(),
                         response.getCourseId(),
                         response.getTitle(),
                         response.getPosition(),
                         false);
-                module.contentEntity = new ContentEntity(remoteDataSource.getContent(moduleId).getContent());
-                break;
+                moduleList.add(course);
             }
-        }
-        return module;
+            moduleResults.postValue(moduleList);
+        });
+
+        return moduleResults;
+    }
+
+
+
+    @Override
+    public LiveData<ModuleEntity> getContent(String courseId, String moduleId) {
+        MutableLiveData<ModuleEntity> moduleResult = new MutableLiveData<>();
+
+        remoteDataSource.getModules(courseId,moduleResponses -> {
+            ModuleEntity module ;
+            for (ModuleResponse response : moduleResponses) {
+                if (response.getModuleId().equals(moduleId)) {
+                    module = new ModuleEntity(response.getModuleId(),
+                            response.getCourseId(),
+                            response.getTitle(),
+                            response.getPosition(),
+                            false);
+                    remoteDataSource.getContent(moduleId,contentResponse -> {
+                        module.contentEntity = new ContentEntity(contentResponse.getContent());
+                        moduleResult.postValue(module);
+                    });
+                    break;
+                }
+            }
+        });
+
+        return moduleResult;
     }
 }
