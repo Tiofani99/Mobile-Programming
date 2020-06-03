@@ -53,8 +53,6 @@ public class DetailActivity extends AppCompatActivity {
     ShimmerFrameLayout shimmerFrameLayout;
     @BindView(R.id.constraint_detail)
     ConstraintLayout constraintLayout;
-//    @BindView(R.id.img_backdrop_detail)
-//    ImageView ivBackdrop;
 
 
     @Override
@@ -130,7 +128,7 @@ public class DetailActivity extends AppCompatActivity {
         });
     }
 
-    public String changeFormatDate(String date) {
+    private String changeFormatDate(String date) {
         String[] splitDate = date.split("-");
         String part1 = splitDate[0];
         int part2 = Integer.parseInt(splitDate[1]);

@@ -3,7 +3,6 @@ package com.tiooooo.mymovie.ui.main;
 import com.tiooooo.mymovie.R;
 import com.tiooooo.mymovie.data.source.MovieResponse;
 import com.tiooooo.mymovie.data.source.TvSeriesResponse;
-import com.tiooooo.mymovie.utils.DataDummy;
 import com.tiooooo.mymovie.utils.EspressoIdlingResource;
 import com.tiooooo.mymovie.utils.FakeDataDummy;
 
@@ -15,7 +14,6 @@ import org.junit.Test;
 import java.util.ArrayList;
 
 import androidx.test.espresso.IdlingRegistry;
-import androidx.test.espresso.IdlingResource;
 import androidx.test.espresso.contrib.RecyclerViewActions;
 import androidx.test.rule.ActivityTestRule;
 

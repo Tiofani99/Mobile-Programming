@@ -1,6 +1,8 @@
 package com.tiooooo.mymovie.rest;
 
 import android.app.Application;
+import android.content.Context;
+import android.util.Log;
 
 import com.tiooooo.mymovie.BuildConfig;
 import com.tiooooo.mymovie.data.source.MovieResponse;
@@ -18,16 +20,17 @@ import retrofit2.Response;
 public class ApiCall {
     private static ApiCall INSTANCE;
     private static ApiInterface apiClient = ApiClient.getClient().create(ApiInterface.class);
+    private static final String TAG = ApiCall.class.getSimpleName();
 
-    private Application application;
+    private Context context;
 
-    public ApiCall(Application application) {
-        this.application = application;
+    public ApiCall(Context context) {
+        this.context = context;
     }
 
-    public static ApiCall getInstance(Application application) {
+    public static ApiCall getInstance(Context context) {
         if (INSTANCE == null) {
-            INSTANCE = new ApiCall(application);
+            INSTANCE = new ApiCall(context);
         }
 
         return INSTANCE;
@@ -47,7 +50,7 @@ public class ApiCall {
 
             @Override
             public void onFailure(Call<MovieResponse> call, Throwable t) {
-
+                Log.d(TAG,"Empty Data");
             }
         });
 
@@ -69,7 +72,7 @@ public class ApiCall {
 
             @Override
             public void onFailure(Call<MovieResponse> call, Throwable t) {
-
+                Log.d(TAG,"Empty Data");
             }
         });
 
@@ -92,7 +95,7 @@ public class ApiCall {
 
             @Override
             public void onFailure(Call<TvSeriesResponse> call, Throwable t) {
-
+                Log.d(TAG,"Empty Data");
             }
         });
 
@@ -113,7 +116,7 @@ public class ApiCall {
 
             @Override
             public void onFailure(Call<TvSeriesResponse> call, Throwable t) {
-
+                Log.d(TAG,"Empty Data");
             }
         });
 

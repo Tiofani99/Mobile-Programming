@@ -25,7 +25,7 @@ import butterknife.ButterKnife;
 public class TvSeriesAdapter extends RecyclerView.Adapter<TvSeriesAdapter.TvSeriesViewHolder> {
 
     private ArrayList<TvSeriesResponse> listTvSeries = new ArrayList<>();
-    private Context context;
+    private final Context context;
     private static final int EXTRA_CATEGORY = 2;
 
     TvSeriesAdapter(Context context){

@@ -9,8 +9,6 @@ import androidx.lifecycle.ViewModel;
 
 public class DetailViewModel extends ViewModel {
     private int id;
-    private MovieResponse movie;
-    private TvSeriesResponse tvSeries;
     private DataRepository repository;
 
     public DetailViewModel(DataRepository repository) {

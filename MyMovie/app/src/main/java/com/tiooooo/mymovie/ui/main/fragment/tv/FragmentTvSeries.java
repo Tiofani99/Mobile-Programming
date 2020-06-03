@@ -75,7 +75,7 @@ public class FragmentTvSeries extends Fragment {
 
     private void getTvSeries() {
         showLoading(true);
-        ViewModelFactory factory = ViewModelFactory.getInstance(getActivity().getApplication());
+        ViewModelFactory factory = ViewModelFactory.getInstance(getActivity());
         TvSeriesViewModel viewModel = new ViewModelProvider(this, factory).get(TvSeriesViewModel.class);
         viewModel.getTvSeries().observe(getViewLifecycleOwner(),tvSeries -> {
             adapter.setTvSeries((ArrayList<TvSeriesResponse>) tvSeries);

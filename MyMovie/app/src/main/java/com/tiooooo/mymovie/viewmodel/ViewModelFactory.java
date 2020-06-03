@@ -1,6 +1,7 @@
 package com.tiooooo.mymovie.viewmodel;
 
 import android.app.Application;
+import android.content.Context;
 
 import com.tiooooo.mymovie.data.DataRepository;
 import com.tiooooo.mymovie.di.Injection;
@@ -21,11 +22,11 @@ public class ViewModelFactory extends ViewModelProvider.NewInstanceFactory {
         this.dataRepository = academyRepository;
     }
 
-    public static ViewModelFactory getInstance(Application application){
+    public static ViewModelFactory getInstance(Context context){
         if(INSTANCE == null){
             synchronized (ViewModelFactory.class){
                 if(INSTANCE == null){
-                    INSTANCE = new ViewModelFactory(Injection.provideRepository(application));
+                    INSTANCE = new ViewModelFactory(Injection.provideRepository(context));
                 }
             }
         }

@@ -29,8 +29,6 @@ public class MovieResponse {
     @SerializedName("popularity")
     private Double popularity;
 
-    @SerializedName("backdrop_path")
-    private String backdrop_path;
 
     @SerializedName("results")
     private ArrayList<MovieResponse> list;
@@ -119,13 +117,5 @@ public class MovieResponse {
 
     public void setPopularity(Double popularity) {
         this.popularity = popularity;
-    }
-
-    public String getBackdrop_path() {
-        return backdrop_path;
-    }
-
-    public void setBackdrop_path(String backdrop_path) {
-        this.backdrop_path = backdrop_path;
     }
 }

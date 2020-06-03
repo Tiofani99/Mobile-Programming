@@ -75,7 +75,7 @@ public class FragmentMovies extends Fragment {
 
     private void getMovies() {
         showLoading(true);
-        ViewModelFactory factory = ViewModelFactory.getInstance(getActivity().getApplication());
+        ViewModelFactory factory = ViewModelFactory.getInstance(getActivity());
         MovieViewModel viewModel = new ViewModelProvider(this, factory).get(MovieViewModel.class);
         viewModel.getMovies().observe(getViewLifecycleOwner(),movies -> {
             showLoading(false);

@@ -26,7 +26,7 @@ import butterknife.ButterKnife;
 public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHolder> {
 
     private ArrayList<MovieResponse> listMovies = new ArrayList<>();
-    private Context context;
+    private final Context context;
     private static final int EXTRA_CATEGORY = 1;
 
     MovieAdapter(Context context){
