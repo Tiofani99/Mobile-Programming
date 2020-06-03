@@ -4,12 +4,18 @@ import com.tiooooo.mymovie.R;
 import com.tiooooo.mymovie.data.source.MovieResponse;
 import com.tiooooo.mymovie.data.source.TvSeriesResponse;
 import com.tiooooo.mymovie.utils.DataDummy;
+import com.tiooooo.mymovie.utils.EspressoIdlingResource;
+import com.tiooooo.mymovie.utils.FakeDataDummy;
 
+import org.junit.After;
+import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 
 import java.util.ArrayList;
 
+import androidx.test.espresso.IdlingRegistry;
+import androidx.test.espresso.IdlingResource;
 import androidx.test.espresso.contrib.RecyclerViewActions;
 import androidx.test.rule.ActivityTestRule;
 
@@ -24,12 +30,23 @@ import static androidx.test.espresso.matcher.ViewMatchers.withText;
 
 public class MainActivityTest {
 
-    private ArrayList<MovieResponse> dummyMovies = DataDummy.getMovies();
-    private ArrayList<TvSeriesResponse> dummyTvSeries = DataDummy.getTvSeries();
+    private ArrayList<MovieResponse> dummyMovies = FakeDataDummy.generateDummyMovies();
+    private ArrayList<TvSeriesResponse> dummyTvSeries = FakeDataDummy.generateDummyTvSeries();
 
 
     @Rule
     public ActivityTestRule activityRule = new ActivityTestRule<>(MainActivity.class);
+
+    @Before
+    public void setUp(){
+        IdlingRegistry.getInstance().register(EspressoIdlingResource.getEspressoIdlingResource());
+    }
+
+    @After
+    public void tearDown(){
+        IdlingRegistry.getInstance().unregister(EspressoIdlingResource.getEspressoIdlingResource());
+    }
+
 
     @Test
     public void swipePage() {
@@ -55,7 +72,6 @@ public class MainActivityTest {
         onView(withId(R.id.tv_title)).check(matches(isDisplayed()));
         onView(withId(R.id.tv_title_detail)).check(matches(withText(dummyMovies.get(0).getTitle())));
         onView(withId(R.id.tv_desc_detail)).check(matches(withText(dummyMovies.get(0).getDesc())));
-        onView(withId(R.id.tv_popularity_detail)).check(matches(withText(String.valueOf(dummyMovies.get(0).getPopularity()))));
     }
 
     @Test
@@ -72,7 +88,6 @@ public class MainActivityTest {
         onView(withId(R.id.tv_title)).check(matches(isDisplayed()));
         onView(withId(R.id.tv_title_detail)).check(matches(withText(dummyTvSeries.get(0).getName())));
         onView(withId(R.id.tv_desc_detail)).check(matches(withText(dummyTvSeries.get(0).getDesc())));
-        onView(withId(R.id.tv_popularity_detail)).check(matches(withText(String.valueOf(dummyTvSeries.get(0).getPopularity()))));
     }
 
 }
