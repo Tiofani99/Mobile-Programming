@@ -43,6 +43,20 @@ public class MovieResponse {
         this.list = list;
     }
 
+    public MovieResponse(int id, String title, String img, String vote_count, Double vote_avg, String desc, String release_date, Double popularity) {
+        this.id = id;
+        this.title = title;
+        this.img = img;
+        this.vote_count = vote_count;
+        this.vote_avg = vote_avg;
+        this.desc = desc;
+        this.release_date = release_date;
+        this.popularity = popularity;
+    }
+
+    public MovieResponse() {
+    }
+
     public int getId() {
         return id;
     }

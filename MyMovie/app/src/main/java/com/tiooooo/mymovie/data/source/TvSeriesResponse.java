@@ -34,6 +34,20 @@ public class TvSeriesResponse {
     private ArrayList<TvSeriesResponse> tvSeriesList;
 
 
+    public TvSeriesResponse(int id, String name, String img, String vote_count, Double vote_avg, String desc, String first_air_date, Double popularity) {
+        this.id = id;
+        this.name = name;
+        this.img = img;
+        this.vote_count = vote_count;
+        this.vote_avg = vote_avg;
+        this.desc = desc;
+        this.first_air_date = first_air_date;
+        this.popularity = popularity;
+    }
+
+    public TvSeriesResponse() {
+    }
+
     public int getId() {
         return id;
     }
