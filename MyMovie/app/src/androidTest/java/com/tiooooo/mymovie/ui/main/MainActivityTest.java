@@ -1,8 +1,8 @@
 package com.tiooooo.mymovie.ui.main;
 
 import com.tiooooo.mymovie.R;
-import com.tiooooo.mymovie.entity.movie.Movie;
-import com.tiooooo.mymovie.entity.tvseries.TvSeries;
+import com.tiooooo.mymovie.data.source.MovieResponse;
+import com.tiooooo.mymovie.data.source.TvSeriesResponse;
 import com.tiooooo.mymovie.utils.DataDummy;
 
 import org.junit.Rule;
@@ -24,8 +24,8 @@ import static androidx.test.espresso.matcher.ViewMatchers.withText;
 
 public class MainActivityTest {
 
-    private ArrayList<Movie> dummyMovies = DataDummy.getMovies();
-    private ArrayList<TvSeries> dummyTvSeries = DataDummy.getTvSeries();
+    private ArrayList<MovieResponse> dummyMovies = DataDummy.getMovies();
+    private ArrayList<TvSeriesResponse> dummyTvSeries = DataDummy.getTvSeries();
 
 
     @Rule

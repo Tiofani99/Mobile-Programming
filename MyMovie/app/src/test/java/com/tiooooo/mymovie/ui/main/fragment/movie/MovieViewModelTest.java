@@ -1,6 +1,6 @@
 package com.tiooooo.mymovie.ui.main.fragment.movie;
 
-import com.tiooooo.mymovie.entity.movie.Movie;
+import com.tiooooo.mymovie.data.source.MovieResponse;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -20,7 +20,7 @@ public class MovieViewModelTest {
 
     @Test
     public void getDataMovie(){
-        ArrayList<Movie> movie = viewModel.getMovies();
+        ArrayList<MovieResponse> movie = viewModel.getMovies();
         assertNotNull(movie);
         assertEquals(DATA_LENGTH,movie.size());
     }

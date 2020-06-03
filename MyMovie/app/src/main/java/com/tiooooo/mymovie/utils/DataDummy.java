@@ -1,7 +1,7 @@
 package com.tiooooo.mymovie.utils;
 
-import com.tiooooo.mymovie.entity.movie.Movie;
-import com.tiooooo.mymovie.entity.tvseries.TvSeries;
+import com.tiooooo.mymovie.data.source.MovieResponse;
+import com.tiooooo.mymovie.data.source.TvSeriesResponse;
 
 import java.util.ArrayList;
 
@@ -191,13 +191,12 @@ public class DataDummy {
                     "108.396"}
     };
 
-    public static ArrayList<Movie> getMovies() {
-        ArrayList<Movie> movies = new ArrayList<>();
-        Movie movie;
+    public static ArrayList<MovieResponse> getMovies() {
+        ArrayList<MovieResponse> movies = new ArrayList<>();
+        MovieResponse movie;
 
         for (String[] data : movieData) {
-            movie = new Movie();
-            movie.setId(data[0]);
+            movie = new MovieResponse();
             movie.setTitle(data[1]);
             movie.setImg(data[2]);
             movie.setVote_count(data[3]);
@@ -211,12 +210,11 @@ public class DataDummy {
         return movies;
     }
 
-    public static ArrayList<TvSeries> getTvSeries() {
-        ArrayList<TvSeries> tvSeries = new ArrayList<>();
-        TvSeries tvShow;
+    public static ArrayList<TvSeriesResponse> getTvSeries() {
+        ArrayList<TvSeriesResponse> tvSeries = new ArrayList<>();
+        TvSeriesResponse tvShow;
         for (String[] data : tvSeriesData) {
-            tvShow = new TvSeries();
-            tvShow.setId(data[0]);
+            tvShow = new TvSeriesResponse();
             tvShow.setName(data[1]);
             tvShow.setImg(data[2]);
             tvShow.setVote_count(data[3]);

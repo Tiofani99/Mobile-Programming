@@ -1,7 +1,7 @@
 package com.tiooooo.mymovie.ui.detail;
 
-import com.tiooooo.mymovie.entity.movie.Movie;
-import com.tiooooo.mymovie.entity.tvseries.TvSeries;
+import com.tiooooo.mymovie.data.source.MovieResponse;
+import com.tiooooo.mymovie.data.source.TvSeriesResponse;
 import com.tiooooo.mymovie.utils.DataDummy;
 
 import org.junit.Before;
@@ -11,8 +11,8 @@ import static org.junit.Assert.*;
 
 public class DetailViewModelTest {
     private DetailViewModel viewModel;
-    private Movie dummyMovie = DataDummy.getMovies().get(0);
-    private TvSeries dummyTvSeries = DataDummy.getTvSeries().get(0);
+    private MovieResponse dummyMovie = DataDummy.getMovies().get(0);
+    private TvSeriesResponse dummyTvSeries = DataDummy.getTvSeries().get(0);
     private String movieID = dummyMovie.getId();
     private String tvSeriesID = dummyTvSeries.getId();
 
@@ -24,7 +24,7 @@ public class DetailViewModelTest {
     @Test
     public void getMovieDetails(){
         viewModel.setId(movieID);
-        Movie movie = viewModel.getMovieDetails();
+        MovieResponse movie = viewModel.getMovieDetails();
         assertNotNull(movie);
         assertEquals(dummyMovie.getId(),movie.getId());
         assertEquals(dummyMovie.getTitle(),movie.getTitle());
@@ -36,7 +36,7 @@ public class DetailViewModelTest {
     @Test
     public void getTvSeriesDetail(){
         viewModel.setId(tvSeriesID);
-        TvSeries tvSeries = viewModel.getTvSeriesDetails();
+        TvSeriesResponse tvSeries = viewModel.getTvSeriesDetails();
         assertNotNull(tvSeries);
         assertEquals(dummyTvSeries.getId(),tvSeries.getId());
         assertEquals(dummyTvSeries.getName(),tvSeries.getName());
