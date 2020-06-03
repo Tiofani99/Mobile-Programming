@@ -1,11 +1,13 @@
-package com.tiooooo.mymovie.entity.tvseries;
+package com.tiooooo.mymovie.data.source;
 
 import com.google.gson.annotations.SerializedName;
 
-public class TvSeries {
+import java.util.ArrayList;
+
+public class TvSeriesResponse {
 
     @SerializedName("id")
-    private String id;
+    private int id;
 
     @SerializedName("name")
     private String name;
@@ -28,12 +30,15 @@ public class TvSeries {
     @SerializedName("popularity")
     private Double popularity;
 
+    @SerializedName("results")
+    private ArrayList<TvSeriesResponse> tvSeriesList;
 
-    public String getId() {
+
+    public int getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(int id) {
         this.id = id;
     }
 
@@ -91,5 +96,13 @@ public class TvSeries {
 
     public void setPopularity(Double popularity) {
         this.popularity = popularity;
+    }
+
+    public ArrayList<TvSeriesResponse> getTvSeriesList() {
+        return tvSeriesList;
+    }
+
+    public void setTvSeriesList(ArrayList<TvSeriesResponse> tvSeriesList) {
+        this.tvSeriesList = tvSeriesList;
     }
 }

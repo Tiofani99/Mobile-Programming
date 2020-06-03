@@ -1,10 +1,12 @@
-package com.tiooooo.mymovie.entity.movie;
+package com.tiooooo.mymovie.data.source;
 
 import com.google.gson.annotations.SerializedName;
 
-public class Movie {
+import java.util.ArrayList;
+
+public class MovieResponse {
     @SerializedName("id")
-    private String id;
+    private int id;
 
     @SerializedName("title")
     private String title;
@@ -30,11 +32,22 @@ public class Movie {
     @SerializedName("backdrop_path")
     private String backdrop_path;
 
-    public String getId() {
+    @SerializedName("results")
+    private ArrayList<MovieResponse> list;
+
+    public ArrayList<MovieResponse> getList() {
+        return list;
+    }
+
+    public void setList(ArrayList<MovieResponse> list) {
+        this.list = list;
+    }
+
+    public int getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(int id) {
         this.id = id;
     }
 
