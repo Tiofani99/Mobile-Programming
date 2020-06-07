@@ -10,6 +10,7 @@ import androidx.room.PrimaryKey;
 
 @Entity
 public class Note implements Parcelable {
+
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "id")
     private int id;
@@ -22,30 +23,6 @@ public class Note implements Parcelable {
 
     @ColumnInfo(name = "date")
     private String date;
-
-    protected Note(Parcel in) {
-        id = in.readInt();
-        title = in.readString();
-        description = in.readString();
-        date = in.readString();
-    }
-
-    @Ignore
-    public Note(){
-    }
-
-
-    public static final Creator<Note> CREATOR = new Creator<Note>() {
-        @Override
-        public Note createFromParcel(Parcel in) {
-            return new Note(in);
-        }
-
-        @Override
-        public Note[] newArray(int size) {
-            return new Note[size];
-        }
-    };
 
     public int getId() {
         return id;
@@ -79,16 +56,46 @@ public class Note implements Parcelable {
         this.date = date;
     }
 
+
     @Override
     public int describeContents() {
         return 0;
     }
 
     @Override
-    public void writeToParcel(Parcel parcel, int i) {
-        parcel.writeInt(id);
-        parcel.writeString(title);
-        parcel.writeString(description);
-        parcel.writeString(date);
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeInt(this.id);
+        dest.writeString(this.title);
+        dest.writeString(this.description);
+        dest.writeString(this.date);
     }
+
+    @Ignore
+    public Note() {
+    }
+
+    public Note(String title, String description, String date) {
+        this.title = title;
+        this.description = description;
+        this.date = date;
+    }
+
+    private Note(Parcel in) {
+        this.id = in.readInt();
+        this.title = in.readString();
+        this.description = in.readString();
+        this.date = in.readString();
+    }
+
+    public static final Parcelable.Creator<Note> CREATOR = new Parcelable.Creator<Note>() {
+        @Override
+        public Note createFromParcel(Parcel source) {
+            return new Note(source);
+        }
+
+        @Override
+        public Note[] newArray(int size) {
+            return new Note[size];
+        }
+    };
 }
