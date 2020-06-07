@@ -1,6 +1,9 @@
 package com.tiooooo.mynoteapps.ui.insert;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.lifecycle.ViewModelProviders;
 
 import android.os.Bundle;
 import android.widget.Button;
@@ -8,6 +11,7 @@ import android.widget.EditText;
 
 import com.tiooooo.mynoteapps.R;
 import com.tiooooo.mynoteapps.database.Note;
+import com.tiooooo.mynoteapps.ui.ViewModelFactory;
 
 public class NoteAddUpdateActivity extends AppCompatActivity {
     private EditText edtTitle;
@@ -29,8 +33,7 @@ public class NoteAddUpdateActivity extends AppCompatActivity {
     private Note note;
     private int position;
 
-
-
+    private NoteAddUpdateViewModel noteAddUpdateViewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,5 +43,16 @@ public class NoteAddUpdateActivity extends AppCompatActivity {
         edtTitle = findViewById(R.id.edt_title);
         edtDescription = findViewById(R.id.edt_description);;
         Button btnSubmit = findViewById(R.id.btn_submit);
+
+        noteAddUpdateViewModel = obtainViewModel(NoteAddUpdateActivity.this);
     }
+
+    @NonNull
+    private NoteAddUpdateViewModel obtainViewModel(NoteAddUpdateActivity noteAddUpdateActivity) {
+        ViewModelFactory factory = ViewModelFactory.getInstance(noteAddUpdateActivity.getApplication());
+
+        return ViewModelProviders.of(noteAddUpdateActivity,factory).get(NoteAddUpdateViewModel.class);
+    }
+
+
 }
