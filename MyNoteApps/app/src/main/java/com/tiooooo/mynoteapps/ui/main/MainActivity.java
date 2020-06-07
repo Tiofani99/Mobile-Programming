@@ -8,12 +8,16 @@ import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.snackbar.Snackbar;
 import com.tiooooo.mynoteapps.R;
 import com.tiooooo.mynoteapps.database.Note;
 import com.tiooooo.mynoteapps.ui.ViewModelFactory;
+import com.tiooooo.mynoteapps.ui.insert.NoteAddUpdateActivity;
 
 import java.util.List;
 
@@ -37,6 +41,15 @@ public class MainActivity extends AppCompatActivity {
         recyclerView.setAdapter(adapter);
 
         FloatingActionButton fabAdd = findViewById(R.id.fab_add);
+        fabAdd.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(view.getId() == R.id.fab_add){
+                    Intent intent = new Intent(MainActivity.this, NoteAddUpdateActivity.class);
+                    startActivityForResult(intent,NoteAddUpdateActivity.REQUEST_ADD);
+                }
+            }
+        });
 
         mainViewModel = obtainViewModel(MainActivity.this);
         mainViewModel.getAllNotes().observe(this,noteObserver);
@@ -55,5 +68,27 @@ public class MainActivity extends AppCompatActivity {
     private static MainViewModel obtainViewModel(AppCompatActivity activity) {
         ViewModelFactory factory = ViewModelFactory.getInstance(activity.getApplication());
         return ViewModelProviders.of(activity, factory).get(MainViewModel.class);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(data != null){
+            if(requestCode == NoteAddUpdateActivity.REQUEST_ADD){
+                if(resultCode == NoteAddUpdateActivity.RESULT_ADD){
+                    showSnackBarMessage(getString(R.string.added));
+                }
+            }else if(requestCode == NoteAddUpdateActivity.REQUEST_UPDATE){
+                if (resultCode == NoteAddUpdateActivity.RESULT_UPDATE){
+                    showSnackBarMessage(getString(R.string.changed));
+                }else if(resultCode == NoteAddUpdateActivity.RESULT_DELETE){
+                    showSnackBarMessage(getString(R.string.deleted));
+                }
+            }
+        }
+    }
+
+    private void showSnackBarMessage(String string) {
+        Snackbar.make(recyclerView,string,Snackbar.LENGTH_SHORT).show();
     }
 }

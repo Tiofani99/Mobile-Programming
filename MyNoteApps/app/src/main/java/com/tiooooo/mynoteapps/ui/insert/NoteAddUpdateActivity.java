@@ -68,7 +68,7 @@ public class NoteAddUpdateActivity extends AppCompatActivity {
             btnTitle = getString(R.string.update);
 
             if(note != null){
-                edtTitle.setText(note.getDescription());
+                edtTitle.setText(note.getTitle());
                 edtDescription.setText(note.getDescription());
             }
         }else{
