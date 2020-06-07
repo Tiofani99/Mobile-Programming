@@ -5,6 +5,7 @@ import android.os.Parcelable;
 
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
+import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
 @Entity
@@ -28,6 +29,11 @@ public class Note implements Parcelable {
         description = in.readString();
         date = in.readString();
     }
+
+    @Ignore
+    public Note(){
+    }
+
 
     public static final Creator<Note> CREATOR = new Creator<Note>() {
         @Override
