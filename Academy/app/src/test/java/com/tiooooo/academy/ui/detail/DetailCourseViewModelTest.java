@@ -1,7 +1,7 @@
 package com.tiooooo.academy.ui.detail;
 
-import com.tiooooo.academy.data.CourseEntity;
-import com.tiooooo.academy.data.ModuleEntity;
+import com.tiooooo.academy.data.source.local.entity.CourseEntity;
+import com.tiooooo.academy.data.source.local.entity.ModuleEntity;
 import com.tiooooo.academy.data.source.AcademyRepository;
 import com.tiooooo.academy.utils.DataDummy;
 
@@ -12,7 +12,6 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule;

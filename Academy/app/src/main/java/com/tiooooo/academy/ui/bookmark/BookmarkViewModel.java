@@ -1,6 +1,6 @@
 package com.tiooooo.academy.ui.bookmark;
 
-import com.tiooooo.academy.data.CourseEntity;
+import com.tiooooo.academy.data.source.local.entity.CourseEntity;
 import com.tiooooo.academy.data.source.AcademyRepository;
 
 import java.util.List;

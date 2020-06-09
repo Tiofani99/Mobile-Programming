@@ -1,8 +1,8 @@
 package com.tiooooo.academy.data.source;
 
-import com.tiooooo.academy.data.ContentEntity;
-import com.tiooooo.academy.data.CourseEntity;
-import com.tiooooo.academy.data.ModuleEntity;
+import com.tiooooo.academy.data.source.local.entity.ContentEntity;
+import com.tiooooo.academy.data.source.local.entity.CourseEntity;
+import com.tiooooo.academy.data.source.local.entity.ModuleEntity;
 import com.tiooooo.academy.data.source.remote.RemoteDataSource;
 import com.tiooooo.academy.data.source.remote.response.CourseResponse;
 import com.tiooooo.academy.data.source.remote.response.ModuleResponse;

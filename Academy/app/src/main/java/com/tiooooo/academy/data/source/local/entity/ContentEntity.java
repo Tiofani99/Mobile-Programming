@@ -1,7 +1,10 @@
-package com.tiooooo.academy.data;
+package com.tiooooo.academy.data.source.local.entity;
+
+import androidx.room.ColumnInfo;
 
 public class ContentEntity {
-        private String mContent;
+    @ColumnInfo(name = "content")
+    private String mContent;
 
     public ContentEntity(String content) {
         this.mContent = content;

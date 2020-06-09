@@ -6,7 +6,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.tiooooo.academy.R;
-import com.tiooooo.academy.data.ModuleEntity;
+import com.tiooooo.academy.data.source.local.entity.ModuleEntity;
 
 import java.util.ArrayList;
 import java.util.List;

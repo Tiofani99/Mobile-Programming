@@ -1,7 +1,7 @@
 package com.tiooooo.academy.data.source;
 
-import com.tiooooo.academy.data.CourseEntity;
-import com.tiooooo.academy.data.ModuleEntity;
+import com.tiooooo.academy.data.source.local.entity.CourseEntity;
+import com.tiooooo.academy.data.source.local.entity.ModuleEntity;
 import com.tiooooo.academy.data.source.remote.RemoteDataSource;
 import com.tiooooo.academy.data.source.remote.response.ContentResponse;
 import com.tiooooo.academy.data.source.remote.response.CourseResponse;
@@ -20,7 +20,6 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.doAnswer;
 import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
 
 public class AcademyRepositoryTest {
     private RemoteDataSource remote = Mockito.mock(RemoteDataSource.class);

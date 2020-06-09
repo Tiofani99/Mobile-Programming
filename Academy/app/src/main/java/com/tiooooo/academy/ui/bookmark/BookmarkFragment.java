@@ -16,7 +16,7 @@ import android.view.ViewGroup;
 import android.widget.ProgressBar;
 
 import com.tiooooo.academy.R;
-import com.tiooooo.academy.data.CourseEntity;
+import com.tiooooo.academy.data.source.local.entity.CourseEntity;
 import com.tiooooo.academy.viewmodel.ViewModelFactory;
 
 

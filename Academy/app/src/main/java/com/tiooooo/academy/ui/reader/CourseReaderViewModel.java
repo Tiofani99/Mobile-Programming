@@ -1,6 +1,6 @@
 package com.tiooooo.academy.ui.reader;
 
-import com.tiooooo.academy.data.ModuleEntity;
+import com.tiooooo.academy.data.source.local.entity.ModuleEntity;
 import com.tiooooo.academy.data.source.AcademyRepository;
 
 import java.util.ArrayList;

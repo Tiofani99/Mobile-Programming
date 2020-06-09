@@ -13,7 +13,7 @@ import android.view.ViewGroup;
 import android.webkit.WebView;
 
 import com.tiooooo.academy.R;
-import com.tiooooo.academy.data.ModuleEntity;
+import com.tiooooo.academy.data.source.local.entity.ModuleEntity;
 import com.tiooooo.academy.ui.reader.CourseReaderViewModel;
 import com.tiooooo.academy.viewmodel.ViewModelFactory;
 

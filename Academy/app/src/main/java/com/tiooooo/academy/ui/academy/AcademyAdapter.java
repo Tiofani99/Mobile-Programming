@@ -11,7 +11,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.tiooooo.academy.R;
-import com.tiooooo.academy.data.CourseEntity;
+import com.tiooooo.academy.data.source.local.entity.CourseEntity;
 import com.tiooooo.academy.ui.detail.DetailCourseActivity;
 
 import java.util.ArrayList;

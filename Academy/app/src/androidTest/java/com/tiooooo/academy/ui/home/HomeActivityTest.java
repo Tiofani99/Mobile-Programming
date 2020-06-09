@@ -1,7 +1,7 @@
 package com.tiooooo.academy.ui.home;
 
 import com.tiooooo.academy.R;
-import com.tiooooo.academy.data.CourseEntity;
+import com.tiooooo.academy.data.source.local.entity.CourseEntity;
 import com.tiooooo.academy.utils.DataDummy;
 import com.tiooooo.academy.utils.EspressoIdlingResource;
 
