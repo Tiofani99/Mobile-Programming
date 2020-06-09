@@ -1,4 +1,4 @@
-package com.tiooooo.academy.data.source.remote.response;
+package com.tiooooo.academy.data.source.remote;
 
 public enum  StatusResponse {
     SUCCESS,
