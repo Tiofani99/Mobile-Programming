@@ -44,4 +44,7 @@ ext {
 
     androidXTestVersion = '1.2.0'
     idleResourceVersion = '3.2.0'
+
+    roomVersion = '2.2.3'
+
 }
