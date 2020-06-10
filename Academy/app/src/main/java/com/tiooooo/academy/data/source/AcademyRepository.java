@@ -4,6 +4,7 @@ import com.tiooooo.academy.data.NetworkBoundResource;
 import com.tiooooo.academy.data.source.local.LocalDataSource;
 import com.tiooooo.academy.data.source.local.entity.ContentEntity;
 import com.tiooooo.academy.data.source.local.entity.CourseEntity;
+import com.tiooooo.academy.data.source.local.entity.CourseWithModule;
 import com.tiooooo.academy.data.source.local.entity.ModuleEntity;
 import com.tiooooo.academy.data.source.remote.ApiResponse;
 import com.tiooooo.academy.data.source.remote.RemoteDataSource;
@@ -102,23 +103,41 @@ public class AcademyRepository implements AcademyDataSource {
     }
 
     @Override
-    public LiveData<CourseEntity> getCourseWithModules(final String courseId) {
-        MutableLiveData<CourseEntity> courseResult = new MutableLiveData<>();
-        remoteDataSource.getAllCourses(courseResponses -> {
-            CourseEntity course = null;
-            for (CourseResponse response : courseResponses) {
-                if (response.getId().equals(courseId)) {
-                    course = new CourseEntity(response.getId(),
-                            response.getTitle(),
-                            response.getDescription(),
-                            response.getDate(),
-                            false,
-                            response.getImagePath());
-                }
+    public LiveData<Resource<CourseWithModule>> getCourseWithModules(final String courseId) {
+        return new NetworkBoundResource<CourseWithModule, List<ModuleResponse>>(appExecutors){
+
+            @Override
+            protected LiveData<CourseWithModule> loadFromDB() {
+                return localDataSource.getCourseWithModules(courseId);
             }
-            courseResult.postValue(course);
-        });
-        return courseResult;
+
+            @Override
+            protected Boolean shouldFetch(CourseWithModule data) {
+                return (data == null || data.mModules == null || (data.mModules.size() == 0));
+            }
+
+            @Override
+            protected LiveData<ApiResponse<List<ModuleResponse>>> createCall() {
+                return remoteDataSource.getModules(courseId);
+            }
+
+            @Override
+            protected void saveCallResult(List<ModuleResponse> data) {
+                ArrayList<ModuleEntity> moduleList = new ArrayList<>();
+                for(ModuleResponse response : data){
+                    ModuleEntity course = new ModuleEntity(response.getModuleId(),
+                            response.getCourseId(),
+                            response.getTitle(),
+                            response.getPosition(),
+                            false);
+
+                    moduleList.add(course);
+                }
+
+                localDataSource.insertModules(moduleList);
+            }
+        }.asLiveData();
+
     }
 
     @Override
