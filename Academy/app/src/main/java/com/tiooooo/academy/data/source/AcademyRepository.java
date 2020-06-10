@@ -141,23 +141,36 @@ public class AcademyRepository implements AcademyDataSource {
     }
 
     @Override
-    public LiveData<ArrayList<ModuleEntity>> getAllModulesByCourse(String courseId) {
-        MutableLiveData<ArrayList<ModuleEntity>> moduleResults = new MutableLiveData<>();
-
-        remoteDataSource.getModules(courseId, moduleResponses -> {
-            ArrayList<ModuleEntity> moduleList = new ArrayList<>();
-            for (ModuleResponse response : moduleResponses) {
-                ModuleEntity course = new ModuleEntity(response.getModuleId(),
-                        response.getCourseId(),
-                        response.getTitle(),
-                        response.getPosition(),
-                        false);
-                moduleList.add(course);
+    public LiveData<Resource<List<ModuleEntity>>> getAllModulesByCourse(String courseId) {
+        return new NetworkBoundResource<List<ModuleEntity>, List<ModuleResponse>>(appExecutors) {
+            @Override
+            protected LiveData<List<ModuleEntity>> loadFromDB() {
+                return localDataSource.getAllModulesByCourse(courseId);
             }
-            moduleResults.postValue(moduleList);
-        });
+            @Override
+            protected Boolean shouldFetch(List<ModuleEntity> modules) {
+                return (modules == null) || (modules.size() == 0);
+            }
+            @Override
+            protected LiveData<ApiResponse<List<ModuleResponse>>> createCall() {
+                return remoteDataSource.getModules(courseId);
+            }
+            @Override
+            protected void saveCallResult(List<ModuleResponse> moduleResponses) {
+                ArrayList<ModuleEntity> moduleList = new ArrayList<>();
+                for (ModuleResponse response : moduleResponses) {
+                    ModuleEntity course = new ModuleEntity(response.getModuleId(),
+                            response.getCourseId(),
+                            response.getTitle(),
+                            response.getPosition(),
+                            false);
 
-        return moduleResults;
+                    moduleList.add(course);
+                }
+
+                localDataSource.insertModules(moduleList);
+            }
+        }.asLiveData();
     }
 
 
