@@ -12,6 +12,7 @@ import com.tiooooo.academy.utils.AppExecutors;
 import java.util.ArrayList;
 import java.util.List;
 
+import androidx.annotation.NonNull;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
@@ -23,17 +24,18 @@ public class AcademyRepository implements AcademyDataSource {
     private final LocalDataSource localDataSource;
     private final AppExecutors appExecutors;
 
-    public AcademyRepository(RemoteDataSource remoteDataSource, LocalDataSource localDataSource, AppExecutors appExecutors) {
+    private AcademyRepository(@NonNull RemoteDataSource remoteDataSource, @NonNull LocalDataSource localDataSource, AppExecutors appExecutors) {
         this.remoteDataSource = remoteDataSource;
         this.localDataSource = localDataSource;
         this.appExecutors = appExecutors;
     }
 
-    public static AcademyRepository getInstance(RemoteDataSource remoteData) {
+
+    public static AcademyRepository getInstance(RemoteDataSource remoteData, LocalDataSource localDataSource, AppExecutors appExecutors) {
         if (INSTANCE == null) {
             synchronized (AcademyRepository.class) {
                 if (INSTANCE == null) {
-                    INSTANCE = new AcademyRepository(remoteData);
+                    INSTANCE = new AcademyRepository(remoteData, localDataSource, appExecutors);
                 }
             }
         }
@@ -43,7 +45,7 @@ public class AcademyRepository implements AcademyDataSource {
     @Override
     public LiveData<List<CourseEntity>> getAllCourses() {
         MutableLiveData<List<CourseEntity>> courseResults = new MutableLiveData<>();
-        remoteDataSource.getAllCourses(courseResponses ->{
+        remoteDataSource.getAllCourses(courseResponses -> {
             ArrayList<CourseEntity> courseList = new ArrayList<>();
             for (CourseResponse response : courseResponses) {
                 CourseEntity course = new CourseEntity(response.getId(),
@@ -55,7 +57,7 @@ public class AcademyRepository implements AcademyDataSource {
                 courseList.add(course);
             }
             courseResults.postValue(courseList);
-        } );
+        });
 
 
         return courseResults;
@@ -121,13 +123,12 @@ public class AcademyRepository implements AcademyDataSource {
     }
 
 
-
     @Override
     public LiveData<ModuleEntity> getContent(String courseId, String moduleId) {
         MutableLiveData<ModuleEntity> moduleResult = new MutableLiveData<>();
 
-        remoteDataSource.getModules(courseId,moduleResponses -> {
-            ModuleEntity module ;
+        remoteDataSource.getModules(courseId, moduleResponses -> {
+            ModuleEntity module;
             for (ModuleResponse response : moduleResponses) {
                 if (response.getModuleId().equals(moduleId)) {
                     module = new ModuleEntity(response.getModuleId(),
@@ -135,7 +136,7 @@ public class AcademyRepository implements AcademyDataSource {
                             response.getTitle(),
                             response.getPosition(),
                             false);
-                    remoteDataSource.getContent(moduleId,contentResponse -> {
+                    remoteDataSource.getContent(moduleId, contentResponse -> {
                         module.contentEntity = new ContentEntity(contentResponse.getContent());
                         moduleResult.postValue(module);
                     });
