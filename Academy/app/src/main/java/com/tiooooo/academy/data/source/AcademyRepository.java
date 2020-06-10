@@ -8,6 +8,7 @@ import com.tiooooo.academy.data.source.local.entity.CourseWithModule;
 import com.tiooooo.academy.data.source.local.entity.ModuleEntity;
 import com.tiooooo.academy.data.source.remote.ApiResponse;
 import com.tiooooo.academy.data.source.remote.RemoteDataSource;
+import com.tiooooo.academy.data.source.remote.response.ContentResponse;
 import com.tiooooo.academy.data.source.remote.response.CourseResponse;
 import com.tiooooo.academy.data.source.remote.response.ModuleResponse;
 import com.tiooooo.academy.utils.AppExecutors;
@@ -175,27 +176,24 @@ public class AcademyRepository implements AcademyDataSource {
 
 
     @Override
-    public LiveData<ModuleEntity> getContent(String courseId, String moduleId) {
-        MutableLiveData<ModuleEntity> moduleResult = new MutableLiveData<>();
-
-        remoteDataSource.getModules(courseId, moduleResponses -> {
-            ModuleEntity module;
-            for (ModuleResponse response : moduleResponses) {
-                if (response.getModuleId().equals(moduleId)) {
-                    module = new ModuleEntity(response.getModuleId(),
-                            response.getCourseId(),
-                            response.getTitle(),
-                            response.getPosition(),
-                            false);
-                    remoteDataSource.getContent(moduleId, contentResponse -> {
-                        module.contentEntity = new ContentEntity(contentResponse.getContent());
-                        moduleResult.postValue(module);
-                    });
-                    break;
-                }
+    public LiveData<Resource<ModuleEntity>> getContent(String moduleId) {
+        return new NetworkBoundResource<ModuleEntity, ContentResponse>(appExecutors) {
+            @Override
+            protected LiveData<ModuleEntity> loadFromDB() {
+                return localDataSource.getModuleWithContent(moduleId);
             }
-        });
-
-        return moduleResult;
+            @Override
+            protected Boolean shouldFetch(ModuleEntity moduleEntity) {
+                return (moduleEntity.contentEntity == null);
+            }
+            @Override
+            protected LiveData<ApiResponse<ContentResponse>> createCall() {
+                return remoteDataSource.getContent(moduleId);
+            }
+            @Override
+            protected void saveCallResult(ContentResponse contentResponse) {
+                localDataSource.updateContent(contentResponse.getContent(), moduleId);
+            }
+        }.asLiveData();
     }
 }
