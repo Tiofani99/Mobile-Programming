@@ -1,13 +1,16 @@
 package com.tiooooo.academy.data.source;
 
+import com.tiooooo.academy.data.NetworkBoundResource;
 import com.tiooooo.academy.data.source.local.LocalDataSource;
 import com.tiooooo.academy.data.source.local.entity.ContentEntity;
 import com.tiooooo.academy.data.source.local.entity.CourseEntity;
 import com.tiooooo.academy.data.source.local.entity.ModuleEntity;
+import com.tiooooo.academy.data.source.remote.ApiResponse;
 import com.tiooooo.academy.data.source.remote.RemoteDataSource;
 import com.tiooooo.academy.data.source.remote.response.CourseResponse;
 import com.tiooooo.academy.data.source.remote.response.ModuleResponse;
 import com.tiooooo.academy.utils.AppExecutors;
+import com.tiooooo.academy.vo.Resource;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -43,24 +46,40 @@ public class AcademyRepository implements AcademyDataSource {
     }
 
     @Override
-    public LiveData<List<CourseEntity>> getAllCourses() {
-        MutableLiveData<List<CourseEntity>> courseResults = new MutableLiveData<>();
-        remoteDataSource.getAllCourses(courseResponses -> {
-            ArrayList<CourseEntity> courseList = new ArrayList<>();
-            for (CourseResponse response : courseResponses) {
-                CourseEntity course = new CourseEntity(response.getId(),
-                        response.getTitle(),
-                        response.getDescription(),
-                        response.getDate(),
-                        false,
-                        response.getImagePath());
-                courseList.add(course);
+    public LiveData<Resource<List<CourseEntity>>> getAllCourses() {
+        return new NetworkBoundResource<List<CourseEntity>, List<CourseResponse>>(appExecutors) {
+            @Override
+            public LiveData<List<CourseEntity>> loadFromDB() {
+                return localDataSource.getAllCourses();
             }
-            courseResults.postValue(courseList);
-        });
 
+            @Override
+            public Boolean shouldFetch(List<CourseEntity> data) {
+                return (data == null) || (data.size() == 0);
+            }
 
-        return courseResults;
+            @Override
+            public LiveData<ApiResponse<List<CourseResponse>>> createCall() {
+                return remoteDataSource.getAllCourses();
+            }
+
+            @Override
+            public void saveCallResult(List<CourseResponse> courseResponses) {
+                ArrayList<CourseEntity> courseList = new ArrayList<>();
+                for (CourseResponse response : courseResponses) {
+                    CourseEntity course = new CourseEntity(response.getId(),
+                            response.getTitle(),
+                            response.getDescription(),
+                            response.getDate(),
+                            false,
+                            response.getImagePath());
+
+                    courseList.add(course);
+                }
+
+                localDataSource.insertCourses(courseList);
+            }
+        }.asLiveData();
     }
 
     @Override
