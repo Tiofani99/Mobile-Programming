@@ -86,21 +86,17 @@ public class AcademyRepository implements AcademyDataSource {
 
     @Override
     public LiveData<List<CourseEntity>> getBookmarkedCourses() {
-        MutableLiveData<List<CourseEntity>> courseResults = new MutableLiveData<>();
-        remoteDataSource.getAllCourses(courseResponses -> {
-            ArrayList<CourseEntity> courseList = new ArrayList<>();
-            for (CourseResponse response : courseResponses) {
-                CourseEntity course = new CourseEntity(response.getId(),
-                        response.getTitle(),
-                        response.getDescription(),
-                        response.getDate(),
-                        false,
-                        response.getImagePath());
-                courseList.add(course);
-            }
-            courseResults.postValue(courseList);
-        });
-        return courseResults;
+        return localDataSource.getBookmarkedCourses();
+    }
+
+    @Override
+    public void setCourseBookmark(CourseEntity course, boolean state) {
+        appExecutors.diskIO().execute(() -> localDataSource.setCourseBookmark(course, state));
+    }
+
+    @Override
+    public void setReadModule(ModuleEntity module) {
+        appExecutors.diskIO().execute(() -> localDataSource.setReadModule(module));
     }
 
     @Override
