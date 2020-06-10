@@ -10,11 +10,14 @@ import com.tiooooo.academy.utils.JsonHelper;
 
 import java.util.List;
 
+import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MutableLiveData;
+
 public class RemoteDataSource {
 
     private static RemoteDataSource INSTANCE;
     private JsonHelper jsonHelper;
-    private Handler handler  = new Handler();
+    private Handler handler = new Handler();
     private final long SERVICE_LATENCY_IN_MILLIS = 2000;
 
     private RemoteDataSource(JsonHelper jsonHelper) {
@@ -28,37 +31,45 @@ public class RemoteDataSource {
         return INSTANCE;
     }
 
-    public void getAllCourses(LoadCoursesCallback callback) {
+    public LiveData<ApiResponse<List<CourseResponse>>> getAllCourses() {
         EspressoIdlingResource.increment();
-        handler.postDelayed(()-> {
-            callback.onAllCoursesReceived(jsonHelper.loadCourses());
+        MutableLiveData<ApiResponse<List<CourseResponse>>> resultCourse = new MutableLiveData<>();
+        handler.postDelayed(() -> {
+            resultCourse.setValue(ApiResponse.success(jsonHelper.loadCourses()));
             EspressoIdlingResource.decrement();
         }, SERVICE_LATENCY_IN_MILLIS);
+        return resultCourse;
     }
 
-    public void getModules(String courseId, LoadModulesCallback callback) {
+    public LiveData<ApiResponse<List<ModuleResponse>>> getModules(String courseId) {
         EspressoIdlingResource.increment();
-        handler.postDelayed(()-> {
-            callback.onAllModulesReceived(jsonHelper.loadModule(courseId));
+        MutableLiveData<ApiResponse<List<ModuleResponse>>> resultModules = new MutableLiveData<>();
+        handler.postDelayed(() -> {
+            resultModules.setValue(ApiResponse.success(jsonHelper.loadModule(courseId)));
             EspressoIdlingResource.decrement();
         }, SERVICE_LATENCY_IN_MILLIS);
+
+        return resultModules;
     }
 
-    public void getContent(String moduleId, LoadContentCallback callback) {
+    public LiveData<ApiResponse<ContentResponse>> getContent(String moduleId) {
         EspressoIdlingResource.increment();
-        handler.postDelayed(()-> {
-            callback.onContentReceived(jsonHelper.loadContent(moduleId));
+        MutableLiveData<ApiResponse<ContentResponse>> resultContent = new MutableLiveData<>();
+        handler.postDelayed(() -> {
+            resultContent.setValue(ApiResponse.success(jsonHelper.loadContent(moduleId)));
             EspressoIdlingResource.decrement();
         }, SERVICE_LATENCY_IN_MILLIS);
-
+        return resultContent;
     }
 
     public interface LoadCoursesCallback {
         void onAllCoursesReceived(List<CourseResponse> courseResponses);
     }
+
     public interface LoadModulesCallback {
         void onAllModulesReceived(List<ModuleResponse> moduleResponses);
     }
+
     public interface LoadContentCallback {
         void onContentReceived(ContentResponse contentResponse);
     }
