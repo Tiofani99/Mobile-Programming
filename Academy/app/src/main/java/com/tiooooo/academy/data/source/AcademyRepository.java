@@ -1,11 +1,13 @@
 package com.tiooooo.academy.data.source;
 
+import com.tiooooo.academy.data.source.local.LocalDataSource;
 import com.tiooooo.academy.data.source.local.entity.ContentEntity;
 import com.tiooooo.academy.data.source.local.entity.CourseEntity;
 import com.tiooooo.academy.data.source.local.entity.ModuleEntity;
 import com.tiooooo.academy.data.source.remote.RemoteDataSource;
 import com.tiooooo.academy.data.source.remote.response.CourseResponse;
 import com.tiooooo.academy.data.source.remote.response.ModuleResponse;
+import com.tiooooo.academy.utils.AppExecutors;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,9 +20,13 @@ public class AcademyRepository implements AcademyDataSource {
     private volatile static AcademyRepository INSTANCE = null;
 
     private final RemoteDataSource remoteDataSource;
+    private final LocalDataSource localDataSource;
+    private final AppExecutors appExecutors;
 
-    private AcademyRepository(RemoteDataSource remoteDataSource) {
+    public AcademyRepository(RemoteDataSource remoteDataSource, LocalDataSource localDataSource, AppExecutors appExecutors) {
         this.remoteDataSource = remoteDataSource;
+        this.localDataSource = localDataSource;
+        this.appExecutors = appExecutors;
     }
 
     public static AcademyRepository getInstance(RemoteDataSource remoteData) {
