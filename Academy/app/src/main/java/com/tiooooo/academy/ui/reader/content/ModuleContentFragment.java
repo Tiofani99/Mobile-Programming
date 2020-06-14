@@ -11,6 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.WebView;
+import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
@@ -24,6 +25,9 @@ public class ModuleContentFragment extends Fragment {
     public static final String TAG = ModuleContentFragment.class.getSimpleName();
     private ProgressBar progressBar;
     private WebView webView;
+    private Button btnNext;
+    private Button btnPrev;
+    private CourseReaderViewModel viewModel;
 
     public ModuleContentFragment() {
         // Required empty public constructor
@@ -44,6 +48,8 @@ public class ModuleContentFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         webView = view.findViewById(R.id.web_view);
         progressBar = view.findViewById(R.id.progress_bar);
+        btnNext = view.findViewById(R.id.btn_next);
+        btnPrev = view.findViewById(R.id.btn_prev);
     }
 
     @Override
@@ -51,7 +57,7 @@ public class ModuleContentFragment extends Fragment {
         super.onActivityCreated(savedInstanceState);
         if(getActivity() != null){
             ViewModelFactory factory = ViewModelFactory.getInstance(requireActivity());
-            CourseReaderViewModel viewModel = new ViewModelProvider(requireActivity(), factory).get(CourseReaderViewModel.class);
+            viewModel = new ViewModelProvider(requireActivity(), factory).get(CourseReaderViewModel.class);
 
             viewModel.selectedModule.observe(getViewLifecycleOwner(),moduleEntity -> {
                 if(moduleEntity != null){
@@ -66,6 +72,10 @@ public class ModuleContentFragment extends Fragment {
                                 if(moduleEntity.data.contentEntity != null){
                                     populateWebView(moduleEntity.data);
                                 }
+                                setButtonNextPrevState(moduleEntity.data);
+                                if(!moduleEntity.data.ismRead()){
+                                    viewModel.readContent(moduleEntity.data);
+                                }
                             }
                             break;
 
@@ -73,8 +83,26 @@ public class ModuleContentFragment extends Fragment {
                             progressBar.setVisibility(View.GONE);
                             Toast.makeText(getContext(), "Terjadi kesalahan", Toast.LENGTH_SHORT).show();
                     }
+
+                    btnNext.setOnClickListener(v -> viewModel.setNextPage());
+                    btnPrev.setOnClickListener(v -> viewModel.setPrevPage());
                 }
             });
+        }
+    }
+
+    private void setButtonNextPrevState(ModuleEntity module) {
+        if(getActivity() != null){
+            if(module.getmPosition() == 0){
+                btnPrev.setEnabled(false);
+                btnNext.setEnabled(true);
+            }else if(module.getmPosition() == viewModel.getModuleSize() -1 ){
+                btnPrev.setEnabled(true);
+                btnNext.setEnabled(false);
+            }else{
+                btnPrev.setEnabled(true);
+                btnNext.setEnabled(true);
+            }
         }
     }
 
