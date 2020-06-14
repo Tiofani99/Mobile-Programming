@@ -24,23 +24,23 @@ public class ModuleEntity {
 
     @NonNull
     @ColumnInfo(name = "moduleId")
-    private String mModuleId;
+    public String mModuleId;
 
     @NonNull
     @ColumnInfo(name = "courseId")
-    private String mCourseId;
+    public String mCourseId;
 
     @NonNull
     @ColumnInfo(name = "title")
-    private String mTitle;
+    public String mTitle;
 
     @NonNull
     @ColumnInfo(name = "position")
-    private Integer mPosition;
+    public Integer mPosition;
 
     @NonNull
     @ColumnInfo(name = "read")
-    private boolean mRead = false;
+    public boolean mRead = false;
 
 
     public ModuleEntity(String moduleId, String courseId, String title, Integer position, Boolean read) {

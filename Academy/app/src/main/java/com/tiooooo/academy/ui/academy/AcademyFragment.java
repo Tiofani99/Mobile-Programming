@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
+import android.widget.Toast;
 
 import com.tiooooo.academy.R;
 import com.tiooooo.academy.viewmodel.ViewModelFactory;
@@ -49,13 +50,25 @@ public class AcademyFragment extends Fragment {
             AcademyViewModel viewModel = new ViewModelProvider(this, factory).get(AcademyViewModel.class);
 
             AcademyAdapter academyAdapter = new AcademyAdapter();
-            progressBar.setVisibility(View.VISIBLE);
             viewModel.getCourses().observe(getViewLifecycleOwner(), courses -> {
-                        progressBar.setVisibility(View.GONE);
-                        academyAdapter.setCourses(courses);
-                        academyAdapter.notifyDataSetChanged();
+                if (courses != null) {
+                    switch (courses.status) {
+                        case LOADING:
+                            progressBar.setVisibility(View.VISIBLE);
+                            break;
+
+                        case SUCCESS:
+                            progressBar.setVisibility(View.GONE);
+                            academyAdapter.setCourses(courses.data);
+                            academyAdapter.notifyDataSetChanged();
+                            break;
+
+                        case ERROR:
+                            progressBar.setVisibility(View.GONE);
+                            Toast.makeText(getContext(), "Terjadi kesalahan", Toast.LENGTH_SHORT).show();
                     }
-            );
+                }
+            });
             rvCourse.setLayoutManager(new LinearLayoutManager(getContext()));
             rvCourse.setHasFixedSize(true);
             rvCourse.setAdapter(academyAdapter);

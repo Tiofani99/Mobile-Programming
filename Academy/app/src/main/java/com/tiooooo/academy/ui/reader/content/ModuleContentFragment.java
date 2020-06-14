@@ -11,6 +11,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.WebView;
+import android.widget.ProgressBar;
+import android.widget.Toast;
 
 import com.tiooooo.academy.R;
 import com.tiooooo.academy.data.source.local.entity.ModuleEntity;
@@ -20,7 +22,7 @@ import com.tiooooo.academy.viewmodel.ViewModelFactory;
 public class ModuleContentFragment extends Fragment {
 
     public static final String TAG = ModuleContentFragment.class.getSimpleName();
-
+    private ProgressBar progressBar;
     private WebView webView;
 
     public ModuleContentFragment() {
@@ -41,6 +43,7 @@ public class ModuleContentFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         webView = view.findViewById(R.id.web_view);
+        progressBar = view.findViewById(R.id.progress_bar);
     }
 
     @Override
@@ -50,9 +53,26 @@ public class ModuleContentFragment extends Fragment {
             ViewModelFactory factory = ViewModelFactory.getInstance(requireActivity());
             CourseReaderViewModel viewModel = new ViewModelProvider(requireActivity(), factory).get(CourseReaderViewModel.class);
 
-            viewModel.getSelectedModule().observe(getViewLifecycleOwner(), module ->{
-                if(module != null){
-                    populateWebView(module);
+            viewModel.selectedModule.observe(getViewLifecycleOwner(),moduleEntity -> {
+                if(moduleEntity != null){
+                    switch (moduleEntity.status){
+                        case LOADING:
+                            progressBar.setVisibility(View.VISIBLE);
+                            break;
+
+                        case SUCCESS:
+                            if (moduleEntity != null){
+                                progressBar.setVisibility(View.GONE);
+                                if(moduleEntity.data.contentEntity != null){
+                                    populateWebView(moduleEntity.data);
+                                }
+                            }
+                            break;
+
+                        case ERROR:
+                            progressBar.setVisibility(View.GONE);
+                            Toast.makeText(getContext(), "Terjadi kesalahan", Toast.LENGTH_SHORT).show();
+                    }
                 }
             });
         }

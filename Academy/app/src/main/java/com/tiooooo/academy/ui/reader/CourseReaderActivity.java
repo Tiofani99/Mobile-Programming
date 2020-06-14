@@ -32,7 +32,7 @@ public class CourseReaderActivity extends AppCompatActivity implements CourseRea
             Log.d("Woe","Ini btnStart "+bundle.getString(EXTRA_COURSE_ID));
             String courseId = bundle.getString(EXTRA_COURSE_ID);
             if (courseId != null) {
-                viewModel.setSelectedCourse(courseId);
+                viewModel.setCourseId(courseId);
                 populateFragment();
             }
         }

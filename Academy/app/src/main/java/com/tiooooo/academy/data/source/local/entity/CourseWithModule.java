@@ -6,7 +6,8 @@ import androidx.room.Embedded;
 import androidx.room.Relation;
 
 public class CourseWithModule {
-    @Embedded CourseEntity mCourse;
+    @Embedded
+    public CourseEntity mCourse;
 
     @Relation(parentColumn = "courseId", entityColumn = "courseId")
     public List<ModuleEntity> mModules;

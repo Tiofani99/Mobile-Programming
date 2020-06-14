@@ -2,6 +2,20 @@ package com.tiooooo.academy.ui.reader.list;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ProgressBar;
+import android.widget.Toast;
+
+import com.tiooooo.academy.R;
+import com.tiooooo.academy.data.source.local.entity.ModuleEntity;
+import com.tiooooo.academy.ui.reader.CourseReaderActivity;
+import com.tiooooo.academy.ui.reader.CourseReaderCallback;
+import com.tiooooo.academy.ui.reader.CourseReaderViewModel;
+import com.tiooooo.academy.viewmodel.ViewModelFactory;
+
+import java.util.List;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -10,20 +24,6 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.ProgressBar;
-
-import com.tiooooo.academy.ui.reader.CourseReaderActivity;
-import com.tiooooo.academy.R;
-import com.tiooooo.academy.data.source.local.entity.ModuleEntity;
-import com.tiooooo.academy.ui.reader.CourseReaderCallback;
-import com.tiooooo.academy.ui.reader.CourseReaderViewModel;
-import com.tiooooo.academy.viewmodel.ViewModelFactory;
-
-import java.util.List;
 
 
 /**
@@ -43,7 +43,7 @@ public class ModuleListFragment extends Fragment implements MyAdapterClickListen
         // Required empty public constructor
     }
 
-    public static ModuleListFragment newInstance(){
+    public static ModuleListFragment newInstance() {
         return new ModuleListFragment();
     }
 
@@ -66,15 +66,28 @@ public class ModuleListFragment extends Fragment implements MyAdapterClickListen
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        if(getActivity()!=null){
+        if (getActivity() != null) {
             ViewModelFactory factory = ViewModelFactory.getInstance(requireActivity());
-            viewModel = new ViewModelProvider(requireActivity(),factory).get(CourseReaderViewModel.class);
+            viewModel = new ViewModelProvider(requireActivity(), factory).get(CourseReaderViewModel.class);
             adapter = new ModuleListAdapter(this);
 
-            progressBar.setVisibility(View.VISIBLE);
-            viewModel.getModules().observe(getViewLifecycleOwner(),module ->{
-                progressBar.setVisibility(View.GONE);
-                populateRecyclerView(module);
+            viewModel.modules.observe(getViewLifecycleOwner(),moduleEntities ->{
+                if(moduleEntities != null){
+                    switch (moduleEntities.status){
+                        case LOADING:
+                            progressBar.setVisibility(View.VISIBLE);
+                            break;
+
+                        case SUCCESS:
+                            progressBar.setVisibility(View.GONE);
+                            populateRecyclerView(moduleEntities.data);
+                            break;
+
+                        case ERROR:
+                            Toast.makeText(getContext(), "Terjadi kesalahan", Toast.LENGTH_SHORT).show();
+
+                    }
+                }
             });
         }
     }

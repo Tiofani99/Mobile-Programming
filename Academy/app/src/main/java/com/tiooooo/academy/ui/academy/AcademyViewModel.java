@@ -2,6 +2,7 @@ package com.tiooooo.academy.ui.academy;
 
 import com.tiooooo.academy.data.source.local.entity.CourseEntity;
 import com.tiooooo.academy.data.source.AcademyRepository;
+import com.tiooooo.academy.vo.Resource;
 
 import java.util.List;
 
@@ -15,7 +16,7 @@ public class AcademyViewModel extends ViewModel {
         this.academyRepository = academyRepository;
     }
 
-    public LiveData<List<CourseEntity>> getCourses(){
+    public LiveData<Resource<List<CourseEntity>>> getCourses(){
         return academyRepository.getAllCourses();
     }
 }
