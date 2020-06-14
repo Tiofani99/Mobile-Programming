@@ -24,27 +24,27 @@ import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
 public class BookmarkViewModelTest {
-
     private BookmarkViewModel viewModel;
 
     @Rule
-    public InstantTaskExecutorRule instantTaskExecutorRule;
+    public InstantTaskExecutorRule instantTaskExecutorRule = new InstantTaskExecutorRule();
 
     @Mock
-    AcademyRepository academyRepository;
+    private AcademyRepository academyRepository;
 
     @Mock
     private Observer<List<CourseEntity>> observer;
 
     @Before
-    public void setUp(){
+    public void setUp() {
         viewModel = new BookmarkViewModel(academyRepository);
     }
 
     @Test
-    public void getBookmark(){
+    public void getBookmark() {
         ArrayList<CourseEntity> dummyCourses = DataDummy.generateDummyCourses();
         MutableLiveData<List<CourseEntity>> courses = new MutableLiveData<>();
+        courses.setValue(dummyCourses);
 
         when(academyRepository.getBookmarkedCourses()).thenReturn(courses);
         List<CourseEntity> courseEntities = viewModel.getBookmarks().getValue();
@@ -55,6 +55,4 @@ public class BookmarkViewModelTest {
         viewModel.getBookmarks().observeForever(observer);
         verify(observer).onChanged(dummyCourses);
     }
-
-
 }

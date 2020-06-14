@@ -5,6 +5,7 @@ import com.tiooooo.academy.data.source.local.entity.CourseEntity;
 import com.tiooooo.academy.data.source.local.entity.ModuleEntity;
 import com.tiooooo.academy.data.source.AcademyRepository;
 import com.tiooooo.academy.utils.DataDummy;
+import com.tiooooo.academy.vo.Resource;
 
 import org.junit.Before;
 import org.junit.Rule;
@@ -29,71 +30,55 @@ import static org.mockito.Mockito.when;
 public class CourseReaderViewModelTest {
 
     private CourseReaderViewModel viewModel;
-
     private CourseEntity dummyCourse = DataDummy.generateDummyCourses().get(0);
     private String courseId = dummyCourse.getCourseId();
     private List<ModuleEntity> dummyModules = DataDummy.generateDummyModules(courseId);
     private String moduleId = dummyModules.get(0).getmModuleId();
 
     @Rule
-    public InstantTaskExecutorRule instantTaskExecutorRule;
+    public InstantTaskExecutorRule instantTaskExecutorRule = new InstantTaskExecutorRule();
 
     @Mock
-    AcademyRepository academyRepository;
+    private AcademyRepository academyRepository;
 
     @Mock
-    private Observer<List<ModuleEntity>> modulesObserver;
+    private Observer<Resource<List<ModuleEntity>>> modulesObserver;
 
     @Mock
-    private Observer<ModuleEntity> moduleObserver;
+    private Observer<Resource<ModuleEntity>> moduleObserver;
+
 
     @Before
     public void setUp() {
         viewModel = new CourseReaderViewModel(academyRepository);
-        viewModel.setSelectedCourse(courseId);
+        viewModel.setCourseId(courseId);
         viewModel.setSelectedModule(moduleId);
 
         ModuleEntity dummyModule = dummyModules.get(0);
         dummyModule.contentEntity = new ContentEntity("<h3 class=\\\"fr-text-bordered\\\">" + dummyModule.getmTitle() + "</h3><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>");
-
     }
 
-
     @Test
-    public void getModules(){
-        MutableLiveData<ArrayList<ModuleEntity>> modules = new MutableLiveData<>();
-        modules.setValue((ArrayList<ModuleEntity>) dummyModules);
+    public void getModules() {
+        MutableLiveData<Resource<List<ModuleEntity>>> modules = new MutableLiveData<>();
+        Resource<List<ModuleEntity>> resource = Resource.success(dummyModules);
+        modules.setValue(resource);
         when(academyRepository.getAllModulesByCourse(courseId)).thenReturn(modules);
-        List<ModuleEntity> moduleEntities = viewModel.getModules().getValue();
-        verify(academyRepository).getAllModulesByCourse(courseId);
-        assertNotNull(moduleEntities);
-        assertEquals(7, moduleEntities.size());
 
-        viewModel.getModules().observeForever(modulesObserver);
-        verify(modulesObserver).onChanged(dummyModules);
+        viewModel.modules.observeForever(modulesObserver);
+        verify(modulesObserver).onChanged(resource);
     }
 
     @Test
-    public void getSelectedModule(){
-        MutableLiveData<ModuleEntity> module = new MutableLiveData<>();
-        module.setValue(dummyModules.get(0));
-        when(academyRepository.getContent(courseId, moduleId)).thenReturn(module);
-        ModuleEntity moduleEntity = viewModel.getSelectedModule().getValue();
-        verify(academyRepository).getContent(courseId, moduleId);
-        assertNotNull(moduleEntity);
-        ContentEntity contentEntity = moduleEntity.contentEntity;
-        assertNotNull(contentEntity);
-        String content = contentEntity.getContent();
-        assertNotNull(content);
-        assertEquals(content,  dummyModules.get(0).contentEntity.getContent());
+    public void getSelectedModule() {
+        MutableLiveData<Resource<ModuleEntity>> module = new MutableLiveData<>();
+        Resource<ModuleEntity> resource = Resource.success(dummyModules.get(0));
+        module.setValue(resource);
+        when(academyRepository.getContent(moduleId)).thenReturn(module);
 
-        viewModel.getModules().observeForever(modulesObserver);
-        verify(moduleObserver).onChanged(dummyModules.get(0));
-
+        viewModel.selectedModule.observeForever(moduleObserver);
+        verify(moduleObserver).onChanged(resource);
     }
-
-
-
 }
 
 

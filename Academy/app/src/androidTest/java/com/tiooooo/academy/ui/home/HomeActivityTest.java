@@ -10,9 +10,10 @@ import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 
-import java.util.List;
+import java.util.ArrayList;
 
 import androidx.test.espresso.IdlingRegistry;
+import androidx.test.espresso.action.ViewActions;
 import androidx.test.espresso.contrib.RecyclerViewActions;
 import androidx.test.rule.ActivityTestRule;
 
@@ -20,28 +21,29 @@ import static androidx.test.espresso.Espresso.onView;
 import static androidx.test.espresso.action.ViewActions.click;
 import static androidx.test.espresso.assertion.ViewAssertions.matches;
 import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
+import static androidx.test.espresso.matcher.ViewMatchers.isRoot;
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
 import static androidx.test.espresso.matcher.ViewMatchers.withText;
 
 public class HomeActivityTest {
 
-    private List<CourseEntity> dummyCourse = DataDummy.generateDummyCourses();
+    private ArrayList<CourseEntity> dummyCourse = DataDummy.generateDummyCourses();
 
     @Rule
-    public ActivityTestRule activityTestRule = new ActivityTestRule<>(HomeActivity.class);
+    public ActivityTestRule activityRule = new ActivityTestRule<>(HomeActivity.class);
 
     @Before
-    public void setUp(){
+    public void setUp() {
         IdlingRegistry.getInstance().register(EspressoIdlingResource.getEspressoIdlingResource());
     }
 
     @After
-    public void tearDown(){
+    public void tearDown() {
         IdlingRegistry.getInstance().unregister(EspressoIdlingResource.getEspressoIdlingResource());
     }
 
     @Test
-    public void loadCourses(){
+    public void loadCourses() {
         onView(withId(R.id.rv_academy)).check(matches(isDisplayed()));
         onView(withId(R.id.rv_academy)).perform(RecyclerViewActions.scrollToPosition(dummyCourse.size()));
     }
@@ -72,17 +74,17 @@ public class HomeActivityTest {
 
     @Test
     public void loadBookmarks() {
+        onView(withId(R.id.rv_academy)).perform(RecyclerViewActions.actionOnItemAtPosition(0, click()));
+        onView(withId(R.id.action_bookmark)).perform(click());
+        onView(isRoot()).perform(ViewActions.pressBack());
         onView(withText("Bookmark")).perform(click());
         onView(withId(R.id.rv_bookmark)).check(matches(isDisplayed()));
-        onView(withId(R.id.rv_bookmark)).perform(RecyclerViewActions.scrollToPosition(dummyCourse.size()));
-    }
-
-    private void delay2seconds() {
-        try {
-            Thread.sleep(2000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+        onView(withId(R.id.rv_bookmark)).perform(RecyclerViewActions.actionOnItemAtPosition(0, click()));
+        onView(withId(R.id.text_title)).check(matches(isDisplayed()));
+        onView(withId(R.id.text_date)).check(matches(isDisplayed()));
+        onView(withId(R.id.action_bookmark)).perform(click());
+        onView(isRoot()).perform(ViewActions.pressBack());
     }
 }
+
 

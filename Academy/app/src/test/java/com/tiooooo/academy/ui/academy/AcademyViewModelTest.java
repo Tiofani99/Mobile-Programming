@@ -3,6 +3,7 @@ package com.tiooooo.academy.ui.academy;
 import com.tiooooo.academy.data.source.local.entity.CourseEntity;
 import com.tiooooo.academy.data.source.AcademyRepository;
 import com.tiooooo.academy.utils.DataDummy;
+import com.tiooooo.academy.vo.Resource;
 
 import org.junit.Before;
 import org.junit.Rule;
@@ -24,37 +25,35 @@ import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
 public class AcademyViewModelTest {
-
     private AcademyViewModel viewModel;
 
     @Rule
-    public InstantTaskExecutorRule instantTaskExecutorRule;
+    public InstantTaskExecutorRule instantTaskExecutorRule = new InstantTaskExecutorRule();
 
     @Mock
     private AcademyRepository academyRepository;
 
     @Mock
-    private Observer<List<CourseEntity>> observer;
+    private Observer<Resource<List<CourseEntity>>> observer;
 
     @Before
-    public void setUp(){
+    public void setUp() {
         viewModel = new AcademyViewModel(academyRepository);
     }
 
     @Test
-    public void getCourses(){
-        ArrayList<CourseEntity> dummyCourse = DataDummy.generateDummyCourses();
-        MutableLiveData<List<CourseEntity>> courses = new MutableLiveData<>();
-        courses.setValue(dummyCourse);
+    public void getCourses() {
+        Resource<List<CourseEntity>> dummyCourses = Resource.success(DataDummy.generateDummyCourses());
+        MutableLiveData<Resource<List<CourseEntity>>> courses = new MutableLiveData<>();
+        courses.setValue(dummyCourses);
 
         when(academyRepository.getAllCourses()).thenReturn(courses);
-        List<CourseEntity> courseEntities = viewModel.getCourses().getValue();
+        List<CourseEntity> courseEntities = viewModel.getCourses().getValue().data;
         verify(academyRepository).getAllCourses();
         assertNotNull(courseEntities);
         assertEquals(5, courseEntities.size());
 
         viewModel.getCourses().observeForever(observer);
-        verify(observer).onChanged(dummyCourse);
+        verify(observer).onChanged(dummyCourses);
     }
-
 }
