@@ -3,6 +3,8 @@ package com.tiooooo.academy.ui.detail;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -17,8 +19,10 @@ import com.tiooooo.academy.data.source.local.entity.CourseEntity;
 import com.tiooooo.academy.ui.reader.CourseReaderActivity;
 import com.tiooooo.academy.viewmodel.ViewModelFactory;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.content.ContextCompat;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -27,6 +31,8 @@ import androidx.recyclerview.widget.RecyclerView;
 public class DetailCourseActivity extends AppCompatActivity {
 
     public static final String EXTRA_COURSE = "extra course";
+    DetailCourseViewModel viewModel;
+    private Menu menu;
     private Button btnStart;
     private TextView textTitle;
     private TextView textDesc;
@@ -58,7 +64,7 @@ public class DetailCourseActivity extends AppCompatActivity {
         DetailCourseAdapter adapter = new DetailCourseAdapter();
 
         ViewModelFactory factory = ViewModelFactory.getInstance(this);
-        DetailCourseViewModel viewModel = new ViewModelProvider(this, factory).get(DetailCourseViewModel.class);
+        viewModel = new ViewModelProvider(this, factory).get(DetailCourseViewModel.class);
         Bundle extras = getIntent().getExtras();
 
         if (extras != null) {
@@ -124,4 +130,53 @@ public class DetailCourseActivity extends AppCompatActivity {
 
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_item,menu);
+        this.menu = menu;
+
+        viewModel.courseModule.observe(this,courseWithModule ->{
+            if(courseWithModule != null){
+                switch (courseWithModule.status){
+                    case LOADING:
+                        progressBar.setVisibility(View.VISIBLE);
+                        break;
+
+                    case SUCCESS:
+                        if(courseWithModule.data != null){
+                            progressBar.setVisibility(View.GONE);
+                            boolean state = courseWithModule.data.mCourse.isBookmarked();
+                            setBookmarkState(state);
+                        }
+                        break;
+
+                    case ERROR:
+                        progressBar.setVisibility(View.GONE);
+                        Toast.makeText(this, "Terjadi Kesalahan", Toast.LENGTH_SHORT).show();
+                        break;
+                }
+            }
+        });
+
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        if(item.getItemId() == R.id.action_bookmark){
+            viewModel.setBookmark();
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    private void setBookmarkState(Boolean state){
+        if(menu == null) return;
+        MenuItem menuItem = menu.findItem(R.id.action_bookmark);
+        if(state){
+            menuItem.setIcon(ContextCompat.getDrawable(this, R.drawable.ic_bookmarked_white));
+        }else{
+            menuItem.setIcon(ContextCompat.getDrawable(this, R.drawable.ic_bookmark_white));
+        }
+    }
 }
