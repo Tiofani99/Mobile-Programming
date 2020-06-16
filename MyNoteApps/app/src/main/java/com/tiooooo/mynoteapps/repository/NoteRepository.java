@@ -11,6 +11,7 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 import androidx.lifecycle.LiveData;
+import androidx.paging.DataSource;
 
 public class NoteRepository {
     private NoteDao mNotesDao;
@@ -22,7 +23,7 @@ public class NoteRepository {
         mNotesDao = db.noteDao();
     }
 
-    public LiveData<List<Note>> getAllNotes(){
+    public DataSource.Factory<Integer,Note>getAllNotes(){
         return mNotesDao.getAllNotes();
     }
 
