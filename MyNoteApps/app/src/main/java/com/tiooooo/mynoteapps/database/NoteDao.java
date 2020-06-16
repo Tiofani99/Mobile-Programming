@@ -1,5 +1,7 @@
 package com.tiooooo.mynoteapps.database;
 
+import java.util.List;
+
 import androidx.paging.DataSource;
 import androidx.room.Dao;
 import androidx.room.Delete;
@@ -21,4 +23,7 @@ public interface NoteDao {
 
     @Query("SELECT * from note ORDER BY id ASC")
     DataSource.Factory<Integer,Note> getAllNotes();
+
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
+    void insertAll(List<Note> list);
 }

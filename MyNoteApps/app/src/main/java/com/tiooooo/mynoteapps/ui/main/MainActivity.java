@@ -35,13 +35,12 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        adapter = new NoteAdapter(this);
         notePagedListAdapter = new NotePagedListAdapter(this);
 
         recyclerView = findViewById(R.id.rv_notes);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setHasFixedSize(true);
-        recyclerView.setAdapter(adapter);
+        recyclerView.setAdapter(notePagedListAdapter);
 
         FloatingActionButton fabAdd = findViewById(R.id.fab_add);
         fabAdd.setOnClickListener(new View.OnClickListener() {
