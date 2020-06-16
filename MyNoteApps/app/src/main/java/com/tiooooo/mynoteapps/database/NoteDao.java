@@ -8,7 +8,9 @@ import androidx.room.Delete;
 import androidx.room.Insert;
 import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
+import androidx.room.RawQuery;
 import androidx.room.Update;
+import androidx.sqlite.db.SupportSQLiteQuery;
 
 @Dao
 public interface NoteDao {
@@ -21,8 +23,8 @@ public interface NoteDao {
     @Delete
     void delete(Note note);
 
-    @Query("SELECT * from note ORDER BY id ASC")
-    DataSource.Factory<Integer,Note> getAllNotes();
+    @RawQuery(observedEntities = Note.class)
+    DataSource.Factory<Integer,Note> getAllNotes(SupportSQLiteQuery query);
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     void insertAll(List<Note> list);
