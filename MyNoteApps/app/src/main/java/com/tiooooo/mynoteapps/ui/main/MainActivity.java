@@ -17,6 +17,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 import com.tiooooo.mynoteapps.R;
 import com.tiooooo.mynoteapps.database.Note;
+import com.tiooooo.mynoteapps.helper.SortUtils;
 import com.tiooooo.mynoteapps.ui.ViewModelFactory;
 import com.tiooooo.mynoteapps.ui.insert.NoteAddUpdateActivity;
 
@@ -54,7 +55,7 @@ public class MainActivity extends AppCompatActivity {
         });
 
         mainViewModel = obtainViewModel(MainActivity.this);
-        mainViewModel.getAllNotes().observe(this,noteObserver);
+        mainViewModel.getAllNotes(SortUtils.NEWEST).observe(this,noteObserver);
 
     }
 
