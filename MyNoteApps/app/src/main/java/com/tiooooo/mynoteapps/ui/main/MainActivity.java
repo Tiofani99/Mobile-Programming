@@ -11,6 +11,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -93,5 +95,33 @@ public class MainActivity extends AppCompatActivity {
 
     private void showSnackBarMessage(String string) {
         Snackbar.make(recyclerView,string,Snackbar.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_main,menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        String sort = "";
+        switch (item.getItemId()){
+            case R.id.action_newest:
+                sort = SortUtils.NEWEST;
+                break;
+
+            case R.id.action_oldest:
+                sort = SortUtils.OLDEST;
+                break;
+
+            case R.id.action_random:
+                sort = SortUtils.RANDOM;
+                break;
+        }
+
+        mainViewModel.getAllNotes(sort).observe(this,noteObserver);
+        item.setChecked(true);
+        return super.onOptionsItemSelected(item);
     }
 }
