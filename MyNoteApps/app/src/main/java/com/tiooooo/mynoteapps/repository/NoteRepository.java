@@ -5,6 +5,7 @@ import android.app.Application;
 import com.tiooooo.mynoteapps.database.Note;
 import com.tiooooo.mynoteapps.database.NoteDao;
 import com.tiooooo.mynoteapps.database.NoteRoomDatabase;
+import com.tiooooo.mynoteapps.helper.SortUtils;
 
 import java.util.List;
 import java.util.concurrent.ExecutorService;
@@ -12,6 +13,7 @@ import java.util.concurrent.Executors;
 
 import androidx.lifecycle.LiveData;
 import androidx.paging.DataSource;
+import androidx.sqlite.db.SimpleSQLiteQuery;
 
 public class NoteRepository {
     private NoteDao mNotesDao;
@@ -23,8 +25,9 @@ public class NoteRepository {
         mNotesDao = db.noteDao();
     }
 
-    public DataSource.Factory<Integer,Note>getAllNotes(){
-        return mNotesDao.getAllNotes();
+    public DataSource.Factory<Integer,Note>getAllNotes(String sort){
+        SimpleSQLiteQuery query = SortUtils.getSortedQuery(sort);
+        return mNotesDao.getAllNotes(query);
     }
 
     public void insert(final Note note){
