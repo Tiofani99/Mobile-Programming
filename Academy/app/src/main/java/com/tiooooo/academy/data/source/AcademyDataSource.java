@@ -8,10 +8,11 @@ import com.tiooooo.academy.vo.Resource;
 import java.util.List;
 
 import androidx.lifecycle.LiveData;
+import androidx.paging.PagedList;
 
 public interface AcademyDataSource {
 
-    LiveData<Resource<List<CourseEntity>>> getAllCourses();
+    LiveData<Resource<PagedList<CourseEntity>>> getAllCourses();
 
     LiveData<Resource<CourseWithModule>> getCourseWithModules(String courseId);
 
@@ -19,7 +20,7 @@ public interface AcademyDataSource {
 
     LiveData<Resource<ModuleEntity>> getContent(String moduleId);
 
-    LiveData<List<CourseEntity>> getBookmarkedCourses();
+    LiveData<PagedList<CourseEntity>> getBookmarkedCourses();
 
     void setCourseBookmark(CourseEntity course, boolean state);
 
