@@ -8,6 +8,7 @@ import com.tiooooo.academy.data.source.local.room.AcademyDao;
 import java.util.List;
 
 import androidx.lifecycle.LiveData;
+import androidx.paging.DataSource;
 
 public class LocalDataSource {
 
@@ -25,11 +26,11 @@ public class LocalDataSource {
         return INSTANCE;
     }
 
-    public LiveData<List<CourseEntity>> getAllCourses() {
+    public DataSource.Factory<Integer, CourseEntity> getAllCourses() {
         return mAcademyDao.getCourses();
     }
 
-    public LiveData<List<CourseEntity>> getBookmarkedCourses() {
+    public DataSource.Factory<Integer, CourseEntity> getBookmarkedCourses() {
         return mAcademyDao.getBookmarkedCourse();
     }
 

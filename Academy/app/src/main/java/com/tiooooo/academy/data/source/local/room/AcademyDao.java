@@ -7,6 +7,7 @@ import com.tiooooo.academy.data.source.local.entity.ModuleEntity;
 import java.util.List;
 
 import androidx.lifecycle.LiveData;
+import androidx.paging.DataSource;
 import androidx.room.Dao;
 import androidx.room.Insert;
 import androidx.room.OnConflictStrategy;
@@ -18,10 +19,10 @@ import androidx.room.Update;
 public interface AcademyDao {
 
     @Query("SELECT * FROM courseentities")
-    LiveData<List<CourseEntity>> getCourses();
+    DataSource.Factory<Integer,CourseEntity> getCourses();
 
     @Query("SELECT * FROM courseentities where bookmarked = 1")
-    LiveData<List<CourseEntity>> getBookmarkedCourse();
+    DataSource.Factory<Integer,CourseEntity> getBookmarkedCourse();
 
     @Transaction
     @Query("SELECT * FROM courseentities WHERE courseId = :courseId")
