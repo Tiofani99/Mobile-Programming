@@ -17,4 +17,9 @@ public class BookmarkViewModel extends ViewModel {
     public LiveData<PagedList<CourseEntity>> getBookmarks(){
         return academyRepository.getBookmarkedCourses();
     }
+
+    void setBookmark(CourseEntity courseEntity){
+        final boolean newState = !courseEntity.isBookmarked();
+        academyRepository.setCourseBookmark(courseEntity,newState);
+    }
 }

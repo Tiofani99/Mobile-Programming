@@ -7,6 +7,7 @@ import androidx.annotation.Nullable;
 import androidx.core.app.ShareCompat;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -15,6 +16,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
 
+import com.google.android.material.snackbar.BaseTransientBottomBar;
+import com.google.android.material.snackbar.Snackbar;
 import com.tiooooo.academy.R;
 import com.tiooooo.academy.data.source.local.entity.CourseEntity;
 import com.tiooooo.academy.viewmodel.ViewModelFactory;
@@ -28,6 +31,9 @@ public class BookmarkFragment extends Fragment implements BookmarkFragmentCallba
 
     private RecyclerView rvBookmark;
     private ProgressBar progressBar;
+    private BookmarkViewModel viewModel;
+    private BookmarkAdapter bookmarkAdapter;
+
 
     public BookmarkFragment() {
         // Required empty public constructor
@@ -44,6 +50,7 @@ public class BookmarkFragment extends Fragment implements BookmarkFragmentCallba
         super.onViewCreated(view, savedInstanceState);
         rvBookmark = view.findViewById(R.id.rv_bookmark);
         progressBar = view.findViewById(R.id.progress_bar);
+        itemTouchHelper.attachToRecyclerView(rvBookmark);
     }
 
     @Override
@@ -51,9 +58,9 @@ public class BookmarkFragment extends Fragment implements BookmarkFragmentCallba
         super.onActivityCreated(savedInstanceState);
         if(getActivity() != null){
             ViewModelFactory factory = ViewModelFactory.getInstance(getActivity());
-            BookmarkViewModel viewModel = new ViewModelProvider(this,factory).get(BookmarkViewModel.class);
+            viewModel = new ViewModelProvider(this,factory).get(BookmarkViewModel.class);
 
-            BookmarkAdapter bookmarkAdapter = new BookmarkAdapter(this);
+            bookmarkAdapter = new BookmarkAdapter(this);
             progressBar.setVisibility(View.VISIBLE);
             viewModel.getBookmarks().observe(getViewLifecycleOwner(), courses ->{
                 progressBar.setVisibility(View.GONE);
@@ -80,6 +87,30 @@ public class BookmarkFragment extends Fragment implements BookmarkFragmentCallba
 
         }
     }
+
+    private ItemTouchHelper itemTouchHelper = new ItemTouchHelper(new ItemTouchHelper.Callback() {
+        @Override
+        public int getMovementFlags(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder) {
+            return makeMovementFlags(0,ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT);
+        }
+
+        @Override
+        public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
+            return true;
+        }
+
+        @Override
+        public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
+            if(getView() != null){
+                int swipedPosition = viewHolder.getAdapterPosition();
+                CourseEntity courseEntity = bookmarkAdapter.getSwipedData(swipedPosition);
+                viewModel.setBookmark(courseEntity);
+                Snackbar snackbar = Snackbar.make(getView(),R.string.message_undo, BaseTransientBottomBar.LENGTH_LONG);
+                snackbar.setAction(R.string.message_ok, v -> viewModel.setBookmark(courseEntity));
+                snackbar.show();
+            }
+        }
+    });
 
 
 }

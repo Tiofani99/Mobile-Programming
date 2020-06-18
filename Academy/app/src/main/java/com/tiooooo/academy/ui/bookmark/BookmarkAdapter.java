@@ -31,6 +31,10 @@ public class BookmarkAdapter extends PagedListAdapter<CourseEntity,BookmarkAdapt
         this.callback = callback;
     }
 
+    public CourseEntity getSwipedData(int swipedPosition){
+        return getItem(swipedPosition);
+    }
+
     private static DiffUtil.ItemCallback<CourseEntity> DIFF_CALLBACK =
             new DiffUtil.ItemCallback<CourseEntity>() {
                 @Override
