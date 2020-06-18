@@ -57,7 +57,7 @@ public class BookmarkFragment extends Fragment implements BookmarkFragmentCallba
             progressBar.setVisibility(View.VISIBLE);
             viewModel.getBookmarks().observe(getViewLifecycleOwner(), courses ->{
                 progressBar.setVisibility(View.GONE);
-                bookmarkAdapter.setCourses(courses);
+                bookmarkAdapter.submitList(courses);
                 bookmarkAdapter.notifyDataSetChanged();
             });
 
