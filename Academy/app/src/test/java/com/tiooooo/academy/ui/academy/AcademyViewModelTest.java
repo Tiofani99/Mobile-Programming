@@ -18,6 +18,7 @@ import java.util.List;
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Observer;
+import androidx.paging.PagedList;
 
 import static org.junit.Assert.*;
 import static org.mockito.Mockito.verify;
@@ -34,7 +35,10 @@ public class AcademyViewModelTest {
     private AcademyRepository academyRepository;
 
     @Mock
-    private Observer<Resource<List<CourseEntity>>> observer;
+    private Observer<Resource<PagedList<CourseEntity>>> observer;
+
+    @Mock
+    private PagedList<CourseEntity> pagedList;
 
     @Before
     public void setUp() {
@@ -43,8 +47,9 @@ public class AcademyViewModelTest {
 
     @Test
     public void getCourses() {
-        Resource<List<CourseEntity>> dummyCourses = Resource.success(DataDummy.generateDummyCourses());
-        MutableLiveData<Resource<List<CourseEntity>>> courses = new MutableLiveData<>();
+        Resource<PagedList<CourseEntity>> dummyCourses = Resource.success(pagedList);
+        when(dummyCourses.data.size()).thenReturn(5);
+        MutableLiveData<Resource<PagedList<CourseEntity>>> courses = new MutableLiveData<>();
         courses.setValue(dummyCourses);
 
         when(academyRepository.getAllCourses()).thenReturn(courses);

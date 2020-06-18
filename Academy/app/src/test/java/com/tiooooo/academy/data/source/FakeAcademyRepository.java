@@ -20,6 +20,8 @@ import java.util.List;
 import androidx.annotation.NonNull;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
+import androidx.paging.LivePagedListBuilder;
+import androidx.paging.PagedList;
 
 public class FakeAcademyRepository implements AcademyDataSource {
 
@@ -34,14 +36,19 @@ public class FakeAcademyRepository implements AcademyDataSource {
     }
 
     @Override
-    public LiveData<Resource<List<CourseEntity>>> getAllCourses() {
-        return new NetworkBoundResource<List<CourseEntity>, List<CourseResponse>>(appExecutors) {
+    public LiveData<Resource<PagedList<CourseEntity>>> getAllCourses() {
+        return new NetworkBoundResource<PagedList<CourseEntity>, List<CourseResponse>>(appExecutors) {
             @Override
-            public LiveData<List<CourseEntity>> loadFromDB() {
-                return localDataSource.getAllCourses();
+            public LiveData<PagedList<CourseEntity>> loadFromDB() {
+                PagedList.Config config = new PagedList.Config.Builder()
+                        .setEnablePlaceholders(false)
+                        .setInitialLoadSizeHint(4)
+                        .setPageSize(4)
+                        .build();
+                return new LivePagedListBuilder<>(localDataSource.getAllCourses(), config).build();
             }
             @Override
-            public Boolean shouldFetch(List<CourseEntity> data) {
+            public Boolean shouldFetch(PagedList<CourseEntity> data) {
                 return (data == null) || (data.size() == 0);
             }
             @Override
@@ -51,7 +58,8 @@ public class FakeAcademyRepository implements AcademyDataSource {
             @Override
             public void saveCallResult(List<CourseResponse> courseResponses) {
                 ArrayList<CourseEntity> courseList = new ArrayList<>();
-                for (CourseResponse response : courseResponses) {
+                for (int i = 0; i < courseResponses.size(); i++) {
+                    CourseResponse response = courseResponses.get(i);
                     CourseEntity course = new CourseEntity(response.getId(),
                             response.getTitle(),
                             response.getDescription(),
@@ -65,8 +73,13 @@ public class FakeAcademyRepository implements AcademyDataSource {
         }.asLiveData();
     }
     @Override
-    public LiveData<List<CourseEntity>> getBookmarkedCourses() {
-        return localDataSource.getBookmarkedCourses();
+    public LiveData<PagedList<CourseEntity>> getBookmarkedCourses() {
+        PagedList.Config config = new PagedList.Config.Builder()
+                .setEnablePlaceholders(false)
+                .setInitialLoadSizeHint(4)
+                .setPageSize(4)
+                .build();
+        return new LivePagedListBuilder<>(localDataSource.getBookmarkedCourses(), config).build();
     }
     @Override
     public LiveData<Resource<CourseWithModule>> getCourseWithModules(final String courseId) {

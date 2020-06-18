@@ -11,6 +11,7 @@ import com.tiooooo.academy.data.source.remote.response.ModuleResponse;
 import com.tiooooo.academy.utils.AppExecutors;
 import com.tiooooo.academy.utils.DataDummy;
 import com.tiooooo.academy.utils.LiveDataTestUtil;
+import com.tiooooo.academy.utils.PagedListUtil;
 import com.tiooooo.academy.vo.Resource;
 
 import org.junit.Rule;
@@ -22,11 +23,14 @@ import java.util.List;
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule;
 import androidx.lifecycle.MutableLiveData;
+import androidx.paging.DataSource;
+import androidx.paging.PagedList;
 
 import static org.junit.Assert.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.doAnswer;
+import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -35,9 +39,9 @@ public class AcademyRepositoryTest {
     @Rule
     public InstantTaskExecutorRule instantTaskExecutorRule = new InstantTaskExecutorRule();
 
-    private RemoteDataSource remote = Mockito.mock(RemoteDataSource.class);
-    private LocalDataSource local = Mockito.mock(LocalDataSource.class);
-    private AppExecutors appExecutors = Mockito.mock(AppExecutors.class);
+    private RemoteDataSource remote = mock(RemoteDataSource.class);
+    private LocalDataSource local = mock(LocalDataSource.class);
+    private AppExecutors appExecutors = mock(AppExecutors.class);
 
     private FakeAcademyRepository academyRepository = new FakeAcademyRepository(remote, local, appExecutors);
 
@@ -47,13 +51,11 @@ public class AcademyRepositoryTest {
     private String moduleId = moduleResponses.get(0).getModuleId();
     private ContentResponse content = DataDummy.generateRemoteDummyContent(moduleId);
 
-    @Test
     public void getAllCourses() {
-        MutableLiveData<List<CourseEntity>> dummyCourses = new MutableLiveData<>();
-        dummyCourses.setValue(DataDummy.generateDummyCourses());
-        when(local.getAllCourses()).thenReturn(dummyCourses);
-
-        Resource<List<CourseEntity>> courseEntities = LiveDataTestUtil.getValue(academyRepository.getAllCourses());
+        DataSource.Factory<Integer, CourseEntity> dataSourceFactory = mock(DataSource.Factory.class);
+        when(local.getAllCourses()).thenReturn(dataSourceFactory);
+        academyRepository.getAllCourses();
+        Resource<PagedList<CourseEntity>> courseEntities = Resource.success(PagedListUtil.mockPagedList(DataDummy.generateDummyCourses()));
         verify(local).getAllCourses();
         assertNotNull(courseEntities.data);
         assertEquals(courseResponses.size(), courseEntities.data.size());
@@ -73,14 +75,14 @@ public class AcademyRepositoryTest {
 
     @Test
     public void getBookmarkedCourses() {
-        MutableLiveData<List<CourseEntity>> dummyCourses = new MutableLiveData<>();
-        dummyCourses.setValue(DataDummy.generateDummyCourses());
-        when(local.getBookmarkedCourses()).thenReturn(dummyCourses);
+        DataSource.Factory<Integer, CourseEntity> dataSourceFactory = mock(DataSource.Factory.class);
+        when(local.getBookmarkedCourses()).thenReturn(dataSourceFactory);
+        academyRepository.getBookmarkedCourses();
 
-        List<CourseEntity> courseEntities = LiveDataTestUtil.getValue(academyRepository.getBookmarkedCourses());
+        Resource<PagedList<CourseEntity>> courseEntities = Resource.success(PagedListUtil.mockPagedList(DataDummy.generateDummyCourses()));
         verify(local).getBookmarkedCourses();
         assertNotNull(courseEntities);
-        assertEquals(courseResponses.size(), courseEntities.size());
+        assertEquals(courseResponses.size(), courseEntities.data.size());
     }
 
     @Test

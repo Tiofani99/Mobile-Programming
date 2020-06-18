@@ -17,6 +17,7 @@ import java.util.List;
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Observer;
+import androidx.paging.PagedList;
 
 import static org.junit.Assert.*;
 import static org.mockito.Mockito.verify;
@@ -33,7 +34,10 @@ public class BookmarkViewModelTest {
     private AcademyRepository academyRepository;
 
     @Mock
-    private Observer<List<CourseEntity>> observer;
+    private Observer<PagedList<CourseEntity>> observer;
+
+    @Mock
+    private PagedList<CourseEntity> pagedList;
 
     @Before
     public void setUp() {
@@ -42,8 +46,9 @@ public class BookmarkViewModelTest {
 
     @Test
     public void getBookmark() {
-        ArrayList<CourseEntity> dummyCourses = DataDummy.generateDummyCourses();
-        MutableLiveData<List<CourseEntity>> courses = new MutableLiveData<>();
+        PagedList<CourseEntity> dummyCourses = pagedList;
+        when(dummyCourses.size()).thenReturn(5);
+        MutableLiveData<PagedList<CourseEntity>> courses = new MutableLiveData<>();
         courses.setValue(dummyCourses);
 
         when(academyRepository.getBookmarkedCourses()).thenReturn(courses);
