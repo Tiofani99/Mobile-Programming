@@ -85,4 +85,8 @@ dependencies {
 
     //Mockito
     testImplementation "org.mockito:mockito-core:$mockitoVersion"
+
+    //Room
+    implementation "androidx.room:room-runtime:$roomVersion"
+    annotationProcessor "androidx.room:room-compiler:$roomVersion"
 }
