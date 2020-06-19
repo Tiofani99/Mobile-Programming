@@ -28,11 +28,11 @@ public class TvSeriesAdapter extends RecyclerView.Adapter<TvSeriesAdapter.TvSeri
     private final Context context;
     private static final int EXTRA_CATEGORY = 2;
 
-    TvSeriesAdapter(Context context){
+    public TvSeriesAdapter(Context context){
         this.context = context;
     }
 
-    void setTvSeries(ArrayList<TvSeriesResponse> list){
+    public void setTvSeries(ArrayList<TvSeriesResponse> list){
         listTvSeries.clear();
         listTvSeries.addAll(list);
         notifyDataSetChanged();

@@ -78,10 +78,13 @@ public class FragmentTvSeries extends Fragment {
         ViewModelFactory factory = ViewModelFactory.getInstance(getActivity());
         TvSeriesViewModel viewModel = new ViewModelProvider(this, factory).get(TvSeriesViewModel.class);
         viewModel.getTvSeries().observe(getViewLifecycleOwner(),tvSeries -> {
+            showLoading(false);
             adapter.setTvSeries((ArrayList<TvSeriesResponse>) tvSeries);
             rvTvSeries.setAdapter(adapter);
         });
-        showLoading(false);
+
 
     }
+
+
 }
