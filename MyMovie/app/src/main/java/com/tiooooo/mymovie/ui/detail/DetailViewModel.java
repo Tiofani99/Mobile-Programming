@@ -1,8 +1,8 @@
 package com.tiooooo.mymovie.ui.detail;
 
 import com.tiooooo.mymovie.data.DataRepository;
-import com.tiooooo.mymovie.entity.Movie;
-import com.tiooooo.mymovie.entity.TvSeries;
+import com.tiooooo.mymovie.data.rest.response.MovieResponse;
+import com.tiooooo.mymovie.data.rest.response.TvSeriesResponse;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModel;
@@ -15,11 +15,11 @@ public class DetailViewModel extends ViewModel {
         this.repository = repository;
     }
 
-    public LiveData<Movie> getMovieDetails() {
+    public LiveData<MovieResponse> getMovieDetails() {
         return repository.getMovieDetail(id);
     }
 
-    public LiveData<TvSeries> getTvSeriesDetails() {
+    public LiveData<TvSeriesResponse> getTvSeriesDetails() {
         return repository.getTvSeriesDetail(id);
     }
 

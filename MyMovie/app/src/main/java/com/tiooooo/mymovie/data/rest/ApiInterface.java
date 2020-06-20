@@ -1,7 +1,7 @@
 package com.tiooooo.mymovie.data.rest;
 
-import com.tiooooo.mymovie.entity.Movie;
-import com.tiooooo.mymovie.entity.TvSeries;
+import com.tiooooo.mymovie.data.rest.response.MovieResponse;
+import com.tiooooo.mymovie.data.rest.response.TvSeriesResponse;
 
 import retrofit2.Call;
 import retrofit2.http.GET;
@@ -11,24 +11,24 @@ import retrofit2.http.Query;
 public interface ApiInterface {
 
     @GET("discover/movie")
-    Call<Movie> getMovies(
+    Call<MovieResponse> getMovies(
             @Query("api_key") String apiKey
     );
 
     @GET("movie/{movie_id}")
-    Call<Movie> getMovieById(
+    Call<MovieResponse> getMovieById(
             @Path("movie_id") int id,
             @Query("api_key") String apiKey
     );
 
     @GET("discover/tv")
-    Call<TvSeries> getTvSeries(
+    Call<TvSeriesResponse> getTvSeries(
             @Query("api_key") String apiKey
     );
 
 
     @GET("tv/{tv_id}")
-    Call<TvSeries> getTvSeriesById(
+    Call<TvSeriesResponse> getTvSeriesById(
             @Path("tv_id") int id,
             @Query("api_key") String apiKey);
 }

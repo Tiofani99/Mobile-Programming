@@ -1,4 +1,4 @@
-package com.tiooooo.mymovie.entity;
+package com.tiooooo.mymovie.data.rest.response;
 
 import android.os.Parcel;
 import android.os.Parcelable;
@@ -7,54 +7,55 @@ import com.google.gson.annotations.SerializedName;
 
 import java.util.ArrayList;
 
-import androidx.annotation.NonNull;
-import androidx.room.ColumnInfo;
-import androidx.room.Entity;
-import androidx.room.PrimaryKey;
 
-@Entity
-public class Movie implements Parcelable {
+public class TvSeriesResponse implements Parcelable {
+
 
     @SerializedName("id")
-    @PrimaryKey
-    @NonNull
     private int id;
 
-    @SerializedName("title")
-    @ColumnInfo(name = "title")
-    private String title;
+    @SerializedName("name")
+    private String name;
 
     @SerializedName("poster_path")
-    @ColumnInfo(name = "poster_path")
     private String img;
 
     @SerializedName("vote_count")
-    @ColumnInfo(name = "vote_count")
     private String vote_count;
 
     @SerializedName("vote_average")
-    @ColumnInfo(name = "vote_average")
     private Double vote_avg;
 
     @SerializedName("overview")
-    @ColumnInfo(name = "overview")
     private String desc;
 
-    @SerializedName("release_date")
-    @ColumnInfo(name = "release_date")
-    private String release_date;
+    @SerializedName("first_air_date")
+    private String first_air_date;
 
     @SerializedName("popularity")
-    @ColumnInfo(name = "popularity")
     private Double popularity;
 
-
     @SerializedName("results")
-    private ArrayList<Movie> list;
+    private ArrayList<TvSeriesResponse> tvSeriesList;
 
-    protected Movie(Parcel in) {
+
+    public TvSeriesResponse(int id, String name, String img, String vote_count, Double vote_avg, String desc, String first_air_date, Double popularity) {
+        this.id = id;
+        this.name = name;
+        this.img = img;
+        this.vote_count = vote_count;
+        this.vote_avg = vote_avg;
+        this.desc = desc;
+        this.first_air_date = first_air_date;
+        this.popularity = popularity;
+    }
+
+    public TvSeriesResponse() {
+    }
+
+    protected TvSeriesResponse(Parcel in) {
         id = in.readInt();
-        title = in.readString();
+        name = in.readString();
         img = in.readString();
         vote_count = in.readString();
         if (in.readByte() == 0) {
@@ -63,48 +64,26 @@ public class Movie implements Parcelable {
             vote_avg = in.readDouble();
         }
         desc = in.readString();
-        release_date = in.readString();
+        first_air_date = in.readString();
         if (in.readByte() == 0) {
             popularity = null;
         } else {
             popularity = in.readDouble();
         }
-        list = in.createTypedArrayList(Movie.CREATOR);
+        tvSeriesList = in.createTypedArrayList(TvSeriesResponse.CREATOR);
     }
 
-    public static final Creator<Movie> CREATOR = new Creator<Movie>() {
+    public static final Creator<TvSeriesResponse> CREATOR = new Creator<TvSeriesResponse>() {
         @Override
-        public Movie createFromParcel(Parcel in) {
-            return new Movie(in);
+        public TvSeriesResponse createFromParcel(Parcel in) {
+            return new TvSeriesResponse(in);
         }
 
         @Override
-        public Movie[] newArray(int size) {
-            return new Movie[size];
+        public TvSeriesResponse[] newArray(int size) {
+            return new TvSeriesResponse[size];
         }
     };
-
-    public ArrayList<Movie> getList() {
-        return list;
-    }
-
-    public void setList(ArrayList<Movie> list) {
-        this.list = list;
-    }
-
-    public Movie(int id, String title, String img, String vote_count, Double vote_avg, String desc, String release_date, Double popularity) {
-        this.id = id;
-        this.title = title;
-        this.img = img;
-        this.vote_count = vote_count;
-        this.vote_avg = vote_avg;
-        this.desc = desc;
-        this.release_date = release_date;
-        this.popularity = popularity;
-    }
-
-    public Movie() {
-    }
 
     public int getId() {
         return id;
@@ -114,12 +93,12 @@ public class Movie implements Parcelable {
         this.id = id;
     }
 
-    public String getTitle() {
-        return title;
+    public String getName() {
+        return name;
     }
 
-    public void setTitle(String title) {
-        this.title = title;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getImg() {
@@ -154,12 +133,12 @@ public class Movie implements Parcelable {
         this.desc = desc;
     }
 
-    public String getRelease_date() {
-        return release_date;
+    public String getFirst_air_date() {
+        return first_air_date;
     }
 
-    public void setRelease_date(String release_date) {
-        this.release_date = release_date;
+    public void setFirst_air_date(String first_air_date) {
+        this.first_air_date = first_air_date;
     }
 
     public Double getPopularity() {
@@ -170,6 +149,14 @@ public class Movie implements Parcelable {
         this.popularity = popularity;
     }
 
+    public ArrayList<TvSeriesResponse> getTvSeriesList() {
+        return tvSeriesList;
+    }
+
+    public void setTvSeriesList(ArrayList<TvSeriesResponse> tvSeriesList) {
+        this.tvSeriesList = tvSeriesList;
+    }
+
     @Override
     public int describeContents() {
         return 0;
@@ -178,7 +165,7 @@ public class Movie implements Parcelable {
     @Override
     public void writeToParcel(Parcel parcel, int i) {
         parcel.writeInt(id);
-        parcel.writeString(title);
+        parcel.writeString(name);
         parcel.writeString(img);
         parcel.writeString(vote_count);
         if (vote_avg == null) {
@@ -188,13 +175,13 @@ public class Movie implements Parcelable {
             parcel.writeDouble(vote_avg);
         }
         parcel.writeString(desc);
-        parcel.writeString(release_date);
+        parcel.writeString(first_air_date);
         if (popularity == null) {
             parcel.writeByte((byte) 0);
         } else {
             parcel.writeByte((byte) 1);
             parcel.writeDouble(popularity);
         }
-        parcel.writeTypedList(list);
+        parcel.writeTypedList(tvSeriesList);
     }
 }

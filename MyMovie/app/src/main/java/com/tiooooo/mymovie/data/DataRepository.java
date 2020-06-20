@@ -1,7 +1,7 @@
 package com.tiooooo.mymovie.data;
 
-import com.tiooooo.mymovie.entity.Movie;
-import com.tiooooo.mymovie.entity.TvSeries;
+import com.tiooooo.mymovie.data.rest.response.MovieResponse;
+import com.tiooooo.mymovie.data.rest.response.TvSeriesResponse;
 import com.tiooooo.mymovie.data.rest.ApiCall;
 
 import java.util.List;
@@ -29,22 +29,22 @@ public class DataRepository implements DataSource {
     }
 
     @Override
-    public LiveData<List<Movie>> getMovies() {
+    public LiveData<List<MovieResponse>> getMovies() {
         return apiCall.getMovies();
     }
 
     @Override
-    public LiveData<List<TvSeries>> getTvSeries() {
+    public LiveData<List<TvSeriesResponse>> getTvSeries() {
         return apiCall.getTvSeries();
     }
 
     @Override
-    public LiveData<Movie> getMovieDetail(int id) {
+    public LiveData<MovieResponse> getMovieDetail(int id) {
         return apiCall.getMoviesDetail(id);
     }
 
     @Override
-    public LiveData<TvSeries> getTvSeriesDetail(int id) {
+    public LiveData<TvSeriesResponse> getTvSeriesDetail(int id) {
         return apiCall.getTvSeriesDetail(id);
     }
 }

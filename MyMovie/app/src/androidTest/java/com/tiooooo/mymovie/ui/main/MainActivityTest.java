@@ -1,8 +1,8 @@
 package com.tiooooo.mymovie.ui.main;
 
 import com.tiooooo.mymovie.R;
-import com.tiooooo.mymovie.entity.Movie;
-import com.tiooooo.mymovie.entity.TvSeries;
+import com.tiooooo.mymovie.data.rest.response.MovieResponse;
+import com.tiooooo.mymovie.data.rest.response.TvSeriesResponse;
 import com.tiooooo.mymovie.utils.EspressoIdlingResource;
 import com.tiooooo.mymovie.utils.FakeDataDummy;
 
@@ -28,8 +28,8 @@ import static androidx.test.espresso.matcher.ViewMatchers.withText;
 
 public class MainActivityTest {
 
-    private ArrayList<Movie> dummyMovies = FakeDataDummy.generateDummyMovies();
-    private ArrayList<TvSeries> dummyTvSeries = FakeDataDummy.generateDummyTvSeries();
+    private ArrayList<MovieResponse> dummyMovies = FakeDataDummy.generateDummyMovies();
+    private ArrayList<TvSeriesResponse> dummyTvSeries = FakeDataDummy.generateDummyTvSeries();
 
 
     @Rule

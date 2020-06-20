@@ -1,7 +1,7 @@
 package com.tiooooo.mymovie.ui.main.fragment.tv;
 
 import com.tiooooo.mymovie.data.DataRepository;
-import com.tiooooo.mymovie.entity.TvSeries;
+import com.tiooooo.mymovie.data.rest.response.TvSeriesResponse;
 import com.tiooooo.mymovie.ui.main.tv.TvSeriesViewModel;
 import com.tiooooo.mymovie.utils.FakeDataDummy;
 
@@ -35,7 +35,7 @@ public class TvViewModelTest {
     private DataRepository dataRepository;
 
     @Mock
-    private Observer<List<TvSeries>> observer;
+    private Observer<List<TvSeriesResponse>> observer;
 
     @Before
     public void setUp(){
@@ -44,12 +44,12 @@ public class TvViewModelTest {
 
     @Test
     public void getDataTv(){
-        ArrayList<TvSeries> dummyTvSeries = FakeDataDummy.generateDummyTvSeries();
-        MutableLiveData<List<TvSeries>> tvSeries = new MutableLiveData<>();
+        ArrayList<TvSeriesResponse> dummyTvSeries = FakeDataDummy.generateDummyTvSeries();
+        MutableLiveData<List<TvSeriesResponse>> tvSeries = new MutableLiveData<>();
         tvSeries.setValue(dummyTvSeries);
 
         when(dataRepository.getTvSeries()).thenReturn(tvSeries);
-        List<TvSeries> tvSeriesResponses = viewModel.getTvSeries().getValue();
+        List<TvSeriesResponse> tvSeriesResponses = viewModel.getTvSeries().getValue();
         verify(dataRepository).getTvSeries();
         assertNotNull(tvSeriesResponses);
         assertEquals(FAKE_DATA_LENGTH,tvSeriesResponses.size());
