@@ -8,13 +8,13 @@
     <fragment
         android:id="@+id/navigation_home"
         android:name="com.tiooooo.mymovie.ui.main.fragment.movie.FragmentMovies"
-        android:label="@string/title_home"
+        android:label="@string/movie"
         tools:layout="@layout/fragment_movies" />
 
     <fragment
         android:id="@+id/navigation_dashboard"
         android:name="com.tiooooo.mymovie.ui.main.fragment.tv.FragmentTvSeries"
-        android:label="@string/title_dashboard"
+        android:label="@string/tv_series"
         tools:layout="@layout/fragment_tv_series" />
 
     <fragment

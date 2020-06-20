@@ -3,6 +3,8 @@ package com.tiooooo.mymovie.ui.favorite;
 import android.content.Context;
 
 import com.tiooooo.mymovie.R;
+import com.tiooooo.mymovie.ui.favorite.movie.FragmentMovieFavorite;
+import com.tiooooo.mymovie.ui.favorite.tv.FragmentTvSeriesFavorite;
 import com.tiooooo.mymovie.ui.main.fragment.movie.FragmentMovies;
 import com.tiooooo.mymovie.ui.main.fragment.tv.FragmentTvSeries;
 
@@ -27,9 +29,9 @@ public class SectionsPagerAdapter extends FragmentStatePagerAdapter {
     @Override
     public Fragment getItem(int position) {
         if (position == 0) {
-            return new FragmentMovies();
+            return new FragmentMovieFavorite();
         } else {
-            return new FragmentTvSeries();
+            return new FragmentTvSeriesFavorite();
         }
     }
 

@@ -1,15 +1,16 @@
-package com.tiooooo.mymovie.data.source;
+package com.tiooooo.mymovie.entity;
 
 import com.google.gson.annotations.SerializedName;
 
 import java.util.ArrayList;
 
-public class MovieResponse {
+public class TvSeries {
+
     @SerializedName("id")
     private int id;
 
-    @SerializedName("title")
-    private String title;
+    @SerializedName("name")
+    private String name;
 
     @SerializedName("poster_path")
     private String img;
@@ -23,36 +24,28 @@ public class MovieResponse {
     @SerializedName("overview")
     private String desc;
 
-    @SerializedName("release_date")
-    private String release_date;
+    @SerializedName("first_air_date")
+    private String first_air_date;
 
     @SerializedName("popularity")
     private Double popularity;
 
-
     @SerializedName("results")
-    private ArrayList<MovieResponse> list;
+    private ArrayList<TvSeries> tvSeriesList;
 
-    public ArrayList<MovieResponse> getList() {
-        return list;
-    }
 
-    public void setList(ArrayList<MovieResponse> list) {
-        this.list = list;
-    }
-
-    public MovieResponse(int id, String title, String img, String vote_count, Double vote_avg, String desc, String release_date, Double popularity) {
+    public TvSeries(int id, String name, String img, String vote_count, Double vote_avg, String desc, String first_air_date, Double popularity) {
         this.id = id;
-        this.title = title;
+        this.name = name;
         this.img = img;
         this.vote_count = vote_count;
         this.vote_avg = vote_avg;
         this.desc = desc;
-        this.release_date = release_date;
+        this.first_air_date = first_air_date;
         this.popularity = popularity;
     }
 
-    public MovieResponse() {
+    public TvSeries() {
     }
 
     public int getId() {
@@ -63,12 +56,12 @@ public class MovieResponse {
         this.id = id;
     }
 
-    public String getTitle() {
-        return title;
+    public String getName() {
+        return name;
     }
 
-    public void setTitle(String title) {
-        this.title = title;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getImg() {
@@ -103,12 +96,12 @@ public class MovieResponse {
         this.desc = desc;
     }
 
-    public String getRelease_date() {
-        return release_date;
+    public String getFirst_air_date() {
+        return first_air_date;
     }
 
-    public void setRelease_date(String release_date) {
-        this.release_date = release_date;
+    public void setFirst_air_date(String first_air_date) {
+        this.first_air_date = first_air_date;
     }
 
     public Double getPopularity() {
@@ -117,5 +110,13 @@ public class MovieResponse {
 
     public void setPopularity(Double popularity) {
         this.popularity = popularity;
+    }
+
+    public ArrayList<TvSeries> getTvSeriesList() {
+        return tvSeriesList;
+    }
+
+    public void setTvSeriesList(ArrayList<TvSeries> tvSeriesList) {
+        this.tvSeriesList = tvSeriesList;
     }
 }

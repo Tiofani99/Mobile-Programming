@@ -13,8 +13,8 @@ import com.facebook.shimmer.ShimmerFrameLayout;
 import com.google.android.material.appbar.AppBarLayout;
 import com.google.android.material.appbar.CollapsingToolbarLayout;
 import com.tiooooo.mymovie.R;
-import com.tiooooo.mymovie.data.source.MovieResponse;
-import com.tiooooo.mymovie.data.source.TvSeriesResponse;
+import com.tiooooo.mymovie.entity.Movie;
+import com.tiooooo.mymovie.entity.TvSeries;
 import com.tiooooo.mymovie.viewmodel.ViewModelFactory;
 
 import java.util.Objects;
@@ -146,7 +146,7 @@ public class DetailActivity extends AppCompatActivity {
         return part3 + " " + monthConvert + " " + part1;
     }
 
-    private void setDataMovie(MovieResponse movies) {
+    private void setDataMovie(Movie movies) {
         setCollapsing(movies.getTitle());
         String popularity = Double.toString(movies.getPopularity());
         Double rating = movies.getVote_avg() / 2;
@@ -179,7 +179,7 @@ public class DetailActivity extends AppCompatActivity {
 
     }
 
-    private void setDataTVSeries(TvSeriesResponse tvSeries) {
+    private void setDataTVSeries(TvSeries tvSeries) {
 
         setCollapsing(tvSeries.getName());
         String popularity = Double.toString(tvSeries.getPopularity());

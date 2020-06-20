@@ -1,8 +1,8 @@
 package com.tiooooo.mymovie.ui.detail;
 
 import com.tiooooo.mymovie.data.DataRepository;
-import com.tiooooo.mymovie.data.source.MovieResponse;
-import com.tiooooo.mymovie.data.source.TvSeriesResponse;
+import com.tiooooo.mymovie.entity.Movie;
+import com.tiooooo.mymovie.entity.TvSeries;
 import com.tiooooo.mymovie.utils.FakeDataDummy;
 
 import org.junit.Before;
@@ -23,8 +23,8 @@ import static org.mockito.Mockito.when;
 @RunWith(MockitoJUnitRunner.class)
 public class DetailViewModelTest {
     private DetailViewModel viewModel;
-    private MovieResponse dummyMovie = FakeDataDummy.generateDummyMovies().get(0);
-    private TvSeriesResponse dummyTvSeries =FakeDataDummy.generateDummyTvSeries().get(0);
+    private Movie dummyMovie = FakeDataDummy.generateDummyMovies().get(0);
+    private TvSeries dummyTvSeries =FakeDataDummy.generateDummyTvSeries().get(0);
     private int movieID = dummyMovie.getId();
     private int tvSeriesID = dummyTvSeries.getId();
 
@@ -35,10 +35,10 @@ public class DetailViewModelTest {
     private DataRepository dataRepository;
 
     @Mock
-    private Observer<MovieResponse> movieObserver;
+    private Observer<Movie> movieObserver;
 
     @Mock
-    private Observer<TvSeriesResponse> tvSeriesObserver;
+    private Observer<TvSeries> tvSeriesObserver;
 
     @Before
     public void setUp(){
@@ -48,10 +48,10 @@ public class DetailViewModelTest {
     @Test
     public void getMovieDetails(){
         viewModel.setId(movieID);
-        MutableLiveData<MovieResponse> movies = new MutableLiveData<>();
+        MutableLiveData<Movie> movies = new MutableLiveData<>();
         movies.setValue(dummyMovie);
         when(dataRepository.getMovieDetail(movieID)).thenReturn(movies);
-        MovieResponse movie = viewModel.getMovieDetails().getValue();
+        Movie movie = viewModel.getMovieDetails().getValue();
         verify(dataRepository).getMovieDetail(movieID);
         assertNotNull(movie);
         assertEquals(dummyMovie.getId(),movie.getId());
@@ -67,10 +67,10 @@ public class DetailViewModelTest {
     @Test
     public void getTvSeriesDetail(){
         viewModel.setId(tvSeriesID);
-        MutableLiveData<TvSeriesResponse> tvSeriesResponse = new MutableLiveData<>();
+        MutableLiveData<TvSeries> tvSeriesResponse = new MutableLiveData<>();
         tvSeriesResponse.setValue(dummyTvSeries);
         when(dataRepository.getTvSeriesDetail(tvSeriesID)).thenReturn(tvSeriesResponse);
-        TvSeriesResponse tvSeries = viewModel.getTvSeriesDetails().getValue();
+        TvSeries tvSeries = viewModel.getTvSeriesDetails().getValue();
         assertNotNull(tvSeries);
         assertEquals(dummyTvSeries.getId(),tvSeries.getId());
         assertEquals(dummyTvSeries.getName(),tvSeries.getName());

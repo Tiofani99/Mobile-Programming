@@ -1,16 +1,16 @@
 package com.tiooooo.mymovie.utils;
 
-import com.tiooooo.mymovie.data.source.MovieResponse;
-import com.tiooooo.mymovie.data.source.TvSeriesResponse;
+import com.tiooooo.mymovie.entity.Movie;
+import com.tiooooo.mymovie.entity.TvSeries;
 
 import java.util.ArrayList;
 
 public class FakeDataDummy {
-    public static ArrayList<MovieResponse> generateDummyMovies() {
+    public static ArrayList<Movie> generateDummyMovies() {
 
-        ArrayList<MovieResponse> movies = new ArrayList<>();
+        ArrayList<Movie> movies = new ArrayList<>();
 
-        movies.add(new MovieResponse(
+        movies.add(new Movie(
                 419704,
                 "Ad Astra",
                 "/xBHvZcjRiWyobQ9kxBhO6B2dtRI.jpg",
@@ -23,11 +23,11 @@ public class FakeDataDummy {
         return movies;
     }
 
-    public static ArrayList<TvSeriesResponse> generateDummyTvSeries() {
+    public static ArrayList<TvSeries> generateDummyTvSeries() {
 
-        ArrayList<TvSeriesResponse> tvSeries = new ArrayList<>();
+        ArrayList<TvSeries> tvSeries = new ArrayList<>();
 
-        tvSeries.add(new TvSeriesResponse(
+        tvSeries.add(new TvSeries(
                 60735,
                 "The Flash",
                 "/wHa6KOJAoNTFLFtp7wguUJKSnju.jpg",

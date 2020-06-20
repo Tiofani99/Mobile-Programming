@@ -1,7 +1,7 @@
 package com.tiooooo.mymovie.ui.main.fragment.movie;
 
 import com.tiooooo.mymovie.data.DataRepository;
-import com.tiooooo.mymovie.data.source.MovieResponse;
+import com.tiooooo.mymovie.entity.Movie;
 import com.tiooooo.mymovie.utils.FakeDataDummy;
 
 import org.junit.Before;
@@ -35,7 +35,7 @@ public class MovieViewModelTest {
     private DataRepository dataRepository;
 
     @Mock
-    private Observer<List<MovieResponse>> observer;
+    private Observer<List<Movie>> observer;
 
     @Before
     public void setUp(){
@@ -44,12 +44,12 @@ public class MovieViewModelTest {
 
     @Test
     public void getDataMovie(){
-        ArrayList<MovieResponse> dummyMovies = FakeDataDummy.generateDummyMovies();
-        MutableLiveData<List<MovieResponse>> movies = new MutableLiveData<>();
+        ArrayList<Movie> dummyMovies = FakeDataDummy.generateDummyMovies();
+        MutableLiveData<List<Movie>> movies = new MutableLiveData<>();
         movies.setValue(dummyMovies);
 
         when(dataRepository.getMovies()).thenReturn(movies);
-        List<MovieResponse> movieResponses = viewModel.getMovies().getValue();
+        List<Movie> movieResponses = viewModel.getMovies().getValue();
         verify(dataRepository).getMovies();
         assertNotNull(movieResponses);
         assertEquals(FAKE_DATA_LENGTH, movieResponses.size() );

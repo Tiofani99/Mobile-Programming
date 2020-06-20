@@ -9,7 +9,7 @@ import android.widget.TextView;
 import com.facebook.shimmer.ShimmerFrameLayout;
 import com.tiooooo.mymovie.R;
 import com.tiooooo.mymovie.viewmodel.ViewModelFactory;
-import com.tiooooo.mymovie.data.source.MovieResponse;
+import com.tiooooo.mymovie.entity.Movie;
 
 import java.util.ArrayList;
 
@@ -79,7 +79,7 @@ public class FragmentMovies extends Fragment {
         MovieViewModel viewModel = new ViewModelProvider(this, factory).get(MovieViewModel.class);
         viewModel.getMovies().observe(getViewLifecycleOwner(),movies -> {
             showLoading(false);
-            adapter.setMovies((ArrayList<MovieResponse>) movies);
+            adapter.setMovies((ArrayList<Movie>) movies);
             rvMovies.setAdapter(adapter);
 
         });

@@ -1,18 +1,18 @@
 package com.tiooooo.mymovie.data;
 
-import com.tiooooo.mymovie.data.source.MovieResponse;
-import com.tiooooo.mymovie.data.source.TvSeriesResponse;
+import com.tiooooo.mymovie.entity.Movie;
+import com.tiooooo.mymovie.entity.TvSeries;
 
 import java.util.List;
 
 import androidx.lifecycle.LiveData;
 
 public interface DataSource {
-    LiveData<List<MovieResponse>> getMovies();
+    LiveData<List<Movie>> getMovies();
 
-    LiveData<List<TvSeriesResponse>> getTvSeries();
+    LiveData<List<TvSeries>> getTvSeries();
 
-    LiveData<MovieResponse> getMovieDetail(int id);
+    LiveData<Movie> getMovieDetail(int id);
 
-    LiveData<TvSeriesResponse> getTvSeriesDetail(int id);
+    LiveData<TvSeries> getTvSeriesDetail(int id);
 }

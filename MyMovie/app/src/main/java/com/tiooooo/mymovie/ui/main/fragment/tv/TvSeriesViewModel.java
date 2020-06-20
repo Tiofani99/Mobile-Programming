@@ -1,7 +1,7 @@
 package com.tiooooo.mymovie.ui.main.fragment.tv;
 
 import com.tiooooo.mymovie.data.DataRepository;
-import com.tiooooo.mymovie.data.source.TvSeriesResponse;
+import com.tiooooo.mymovie.entity.TvSeries;
 
 import java.util.List;
 
@@ -15,7 +15,7 @@ public class TvSeriesViewModel extends ViewModel {
         this.dataRepository = dataRepository;
     }
 
-    public LiveData<List<TvSeriesResponse>> getTvSeries(){
+    public LiveData<List<TvSeries>> getTvSeries(){
         return dataRepository.getTvSeries();
     }
 }
