@@ -14,14 +14,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.google.android.material.tabs.TabLayout;
-import com.ogaclejapan.smarttablayout.SmartTabLayout;
-import com.ogaclejapan.smarttablayout.utils.v4.FragmentPagerItemAdapter;
-import com.ogaclejapan.smarttablayout.utils.v4.FragmentPagerItems;
 import com.tiooooo.mymovie.R;
-import com.tiooooo.mymovie.ui.main.fragment.movie.FragmentMovies;
-import com.tiooooo.mymovie.ui.main.fragment.tv.FragmentTvSeries;
-
-import java.util.Objects;
 
 
 public class FragmentFavorites extends Fragment {

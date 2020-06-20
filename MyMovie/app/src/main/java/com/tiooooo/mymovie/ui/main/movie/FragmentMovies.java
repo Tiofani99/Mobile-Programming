@@ -1,4 +1,4 @@
-package com.tiooooo.mymovie.ui.main.fragment.movie;
+package com.tiooooo.mymovie.ui.main.movie;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;

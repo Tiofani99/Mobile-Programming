@@ -2,6 +2,7 @@ package com.tiooooo.mymovie.ui.main.fragment.movie;
 
 import com.tiooooo.mymovie.data.DataRepository;
 import com.tiooooo.mymovie.entity.Movie;
+import com.tiooooo.mymovie.ui.main.movie.MovieViewModel;
 import com.tiooooo.mymovie.utils.FakeDataDummy;
 
 import org.junit.Before;

@@ -2,6 +2,7 @@ package com.tiooooo.mymovie.ui.main.fragment.tv;
 
 import com.tiooooo.mymovie.data.DataRepository;
 import com.tiooooo.mymovie.entity.TvSeries;
+import com.tiooooo.mymovie.ui.main.tv.TvSeriesViewModel;
 import com.tiooooo.mymovie.utils.FakeDataDummy;
 
 import org.junit.Before;

@@ -5,8 +5,6 @@ import android.content.Context;
 import com.tiooooo.mymovie.R;
 import com.tiooooo.mymovie.ui.favorite.movie.FragmentMovieFavorite;
 import com.tiooooo.mymovie.ui.favorite.tv.FragmentTvSeriesFavorite;
-import com.tiooooo.mymovie.ui.main.fragment.movie.FragmentMovies;
-import com.tiooooo.mymovie.ui.main.fragment.tv.FragmentTvSeries;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;

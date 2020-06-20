@@ -1,13 +1,12 @@
 package com.tiooooo.mymovie.viewmodel;
 
-import android.app.Application;
 import android.content.Context;
 
 import com.tiooooo.mymovie.data.DataRepository;
 import com.tiooooo.mymovie.di.Injection;
 import com.tiooooo.mymovie.ui.detail.DetailViewModel;
-import com.tiooooo.mymovie.ui.main.fragment.movie.MovieViewModel;
-import com.tiooooo.mymovie.ui.main.fragment.tv.TvSeriesViewModel;
+import com.tiooooo.mymovie.ui.main.movie.MovieViewModel;
+import com.tiooooo.mymovie.ui.main.tv.TvSeriesViewModel;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.ViewModel;

@@ -1,4 +1,4 @@
-package com.tiooooo.mymovie.ui.main.fragment.tv;
+package com.tiooooo.mymovie.ui.main.tv;
 
 import com.tiooooo.mymovie.data.DataRepository;
 import com.tiooooo.mymovie.entity.TvSeries;

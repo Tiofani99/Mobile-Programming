@@ -1,4 +1,4 @@
-package com.tiooooo.mymovie.ui.main.fragment.tv;
+package com.tiooooo.mymovie.ui.main.tv;
 
 import android.content.Context;
 import android.content.Intent;

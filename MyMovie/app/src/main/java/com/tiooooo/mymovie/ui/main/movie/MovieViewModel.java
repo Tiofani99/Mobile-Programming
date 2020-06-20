@@ -1,4 +1,4 @@
-package com.tiooooo.mymovie.ui.main.fragment.movie;
+package com.tiooooo.mymovie.ui.main.movie;
 
 import com.tiooooo.mymovie.data.DataRepository;
 import com.tiooooo.mymovie.entity.Movie;
