@@ -1,12 +1,11 @@
-package com.tiooooo.mymovie.rest;
+package com.tiooooo.mymovie.data.rest;
 
-import android.app.Application;
 import android.content.Context;
 import android.util.Log;
 
 import com.tiooooo.mymovie.BuildConfig;
-import com.tiooooo.mymovie.data.source.MovieResponse;
-import com.tiooooo.mymovie.data.source.TvSeriesResponse;
+import com.tiooooo.mymovie.entity.Movie;
+import com.tiooooo.mymovie.entity.TvSeries;
 import com.tiooooo.mymovie.utils.EspressoIdlingResource;
 
 import java.util.List;
@@ -36,20 +35,20 @@ public class ApiCall {
         return INSTANCE;
     }
 
-    public LiveData<List<MovieResponse>> getMovies() {
+    public LiveData<List<Movie>> getMovies() {
         EspressoIdlingResource.increment();
-        MutableLiveData<List<MovieResponse>> listMovies = new MutableLiveData<>();
-        Call<MovieResponse> movieResponseCall = apiClient.getMovies(BuildConfig.API_KEY);
-        movieResponseCall.enqueue(new Callback<MovieResponse>() {
+        MutableLiveData<List<Movie>> listMovies = new MutableLiveData<>();
+        Call<Movie> movieResponseCall = apiClient.getMovies(BuildConfig.API_KEY);
+        movieResponseCall.enqueue(new Callback<Movie>() {
             @Override
-            public void onResponse(Call<MovieResponse> call, Response<MovieResponse> response) {
+            public void onResponse(Call<Movie> call, Response<Movie> response) {
                 if (response.body() != null) {
                     listMovies.postValue(response.body().getList());
                 }
             }
 
             @Override
-            public void onFailure(Call<MovieResponse> call, Throwable t) {
+            public void onFailure(Call<Movie> call, Throwable t) {
                 Log.d(TAG,"Empty Data");
             }
         });
@@ -58,20 +57,20 @@ public class ApiCall {
         return listMovies;
     }
 
-    public LiveData<MovieResponse> getMoviesDetail(int id) {
+    public LiveData<Movie> getMoviesDetail(int id) {
         EspressoIdlingResource.increment();
-        MutableLiveData<MovieResponse> movieDetail = new MutableLiveData<>();
-        Call<MovieResponse> movieDetailResponseCall = apiClient.getMovieById(id, BuildConfig.API_KEY);
-        movieDetailResponseCall.enqueue(new Callback<MovieResponse>() {
+        MutableLiveData<Movie> movieDetail = new MutableLiveData<>();
+        Call<Movie> movieDetailResponseCall = apiClient.getMovieById(id, BuildConfig.API_KEY);
+        movieDetailResponseCall.enqueue(new Callback<Movie>() {
             @Override
-            public void onResponse(Call<MovieResponse> call, Response<MovieResponse> response) {
+            public void onResponse(Call<Movie> call, Response<Movie> response) {
                 if (response.body() != null) {
                     movieDetail.postValue(response.body());
                 }
             }
 
             @Override
-            public void onFailure(Call<MovieResponse> call, Throwable t) {
+            public void onFailure(Call<Movie> call, Throwable t) {
                 Log.d(TAG,"Empty Data");
             }
         });
@@ -81,20 +80,20 @@ public class ApiCall {
     }
 
 
-    public LiveData<List<TvSeriesResponse>> getTvSeries() {
+    public LiveData<List<TvSeries>> getTvSeries() {
         EspressoIdlingResource.increment();
-        MutableLiveData<List<TvSeriesResponse>> listTvSeries = new MutableLiveData<>();
-        Call<TvSeriesResponse> movieResponseCall = apiClient.getTvSeries(BuildConfig.API_KEY);
-        movieResponseCall.enqueue(new Callback<TvSeriesResponse>() {
+        MutableLiveData<List<TvSeries>> listTvSeries = new MutableLiveData<>();
+        Call<TvSeries> movieResponseCall = apiClient.getTvSeries(BuildConfig.API_KEY);
+        movieResponseCall.enqueue(new Callback<TvSeries>() {
             @Override
-            public void onResponse(Call<TvSeriesResponse> call, Response<TvSeriesResponse> response) {
+            public void onResponse(Call<TvSeries> call, Response<TvSeries> response) {
                 if (response.body() != null) {
                     listTvSeries.postValue(response.body().getTvSeriesList());
                 }
             }
 
             @Override
-            public void onFailure(Call<TvSeriesResponse> call, Throwable t) {
+            public void onFailure(Call<TvSeries> call, Throwable t) {
                 Log.d(TAG,"Empty Data");
             }
         });
@@ -103,19 +102,19 @@ public class ApiCall {
         return listTvSeries;
     }
 
-    public LiveData<TvSeriesResponse> getTvSeriesDetail(int id) {
+    public LiveData<TvSeries> getTvSeriesDetail(int id) {
         EspressoIdlingResource.increment();
-        MutableLiveData<TvSeriesResponse> tvSeriesDetail = new MutableLiveData<>();
-        Call<TvSeriesResponse> tvSeriesResponseCall = apiClient.getTvSeriesById(id, BuildConfig.API_KEY);
-        tvSeriesResponseCall.enqueue(new Callback<TvSeriesResponse>() {
+        MutableLiveData<TvSeries> tvSeriesDetail = new MutableLiveData<>();
+        Call<TvSeries> tvSeriesResponseCall = apiClient.getTvSeriesById(id, BuildConfig.API_KEY);
+        tvSeriesResponseCall.enqueue(new Callback<TvSeries>() {
             @Override
-            public void onResponse(Call<TvSeriesResponse> call, Response<TvSeriesResponse> response) {
+            public void onResponse(Call<TvSeries> call, Response<TvSeries> response) {
                 if(response.body() != null);
                 tvSeriesDetail.postValue(response.body());
             }
 
             @Override
-            public void onFailure(Call<TvSeriesResponse> call, Throwable t) {
+            public void onFailure(Call<TvSeries> call, Throwable t) {
                 Log.d(TAG,"Empty Data");
             }
         });

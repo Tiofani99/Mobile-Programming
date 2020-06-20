@@ -1,4 +1,4 @@
-package com.tiooooo.mymovie.rest;
+package com.tiooooo.mymovie.data.rest;
 
 import com.tiooooo.mymovie.BuildConfig;
 
