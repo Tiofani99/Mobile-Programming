@@ -1,14 +1,16 @@
 package com.tiooooo.mymovie.ui.main.movie;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.facebook.shimmer.ShimmerFrameLayout;
 import com.tiooooo.mymovie.R;
-import com.tiooooo.mymovie.data.rest.response.MovieResponse;
+import com.tiooooo.mymovie.data.local.entitiy.Movie;
 import com.tiooooo.mymovie.viewmodel.ViewModelFactory;
 
 import java.util.ArrayList;
@@ -74,16 +76,32 @@ public class FragmentMovies extends Fragment {
 
 
     private void getMovies() {
-        showLoading(true);
-        ViewModelFactory factory = ViewModelFactory.getInstance(getActivity());
+        ViewModelFactory factory = ViewModelFactory.getInstance(getActivity().getApplication());
         MovieViewModel viewModel = new ViewModelProvider(this, factory).get(MovieViewModel.class);
-        viewModel.getMovies().observe(getViewLifecycleOwner(),movies -> {
-            showLoading(false);
-            adapter.setMovies((ArrayList<MovieResponse>) movies);
-            rvMovies.setAdapter(adapter);
+        viewModel.getMovies().observe(getViewLifecycleOwner(), listMovies -> {
+            if (listMovies != null) {
+                switch (listMovies.status) {
+                    case LOADING:
+                        showLoading(true);
+                        Log.d("Coba","Loading");
+                        break;
 
+                    case SUCCESS:
+                        showLoading(false);
+                        adapter.setMovies((ArrayList<Movie>) listMovies.data);
+                        Log.d("Coba","Jalan "+listMovies.data.size());
+                        adapter.notifyDataSetChanged();
+                        break;
+
+                    case ERROR:
+                        showLoading(false);
+                        Toast.makeText(getContext(), "Terjadi Kesalahan", Toast.LENGTH_SHORT).show();
+                        break;
+                }
+            }
         });
 
+        rvMovies.setAdapter(adapter);
 
     }
 

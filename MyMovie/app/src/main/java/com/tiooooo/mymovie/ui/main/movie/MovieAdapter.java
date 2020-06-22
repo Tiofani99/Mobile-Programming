@@ -13,10 +13,11 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.tiooooo.mymovie.BuildConfig;
 import com.tiooooo.mymovie.R;
-import com.tiooooo.mymovie.data.rest.response.MovieResponse;
+import com.tiooooo.mymovie.data.local.entitiy.Movie;
 import com.tiooooo.mymovie.ui.detail.DetailActivity;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -25,7 +26,7 @@ import butterknife.ButterKnife;
 
 public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHolder> {
 
-    private ArrayList<MovieResponse> listMovies = new ArrayList<>();
+    private ArrayList<Movie> listMovies = new ArrayList<>();
     private final Context context;
     private static final int EXTRA_CATEGORY = 1;
 
@@ -33,7 +34,7 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHol
         this.context = context;
     }
 
-    public void setMovies(ArrayList<MovieResponse> items){
+    public void setMovies(ArrayList<Movie> items){
         listMovies.clear();
         listMovies.addAll(items);
         notifyDataSetChanged();
@@ -79,7 +80,7 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHol
             itemView.setOnClickListener(this);
         }
 
-        void bind(MovieResponse movies) {
+        void bind(Movie movies) {
 
             String ratingTen = Double.toString(movies.getVote_avg());
             Double rating = movies.getVote_avg()/2;
@@ -113,7 +114,7 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHol
         @Override
         public void onClick(View view) {
             int position = getAdapterPosition();
-            MovieResponse movie = listMovies.get(position);
+            Movie movie = listMovies.get(position);
             Intent intent = new Intent(context, DetailActivity.class);
             Log.d("Coba","Movie ID "+movie.getId());
 

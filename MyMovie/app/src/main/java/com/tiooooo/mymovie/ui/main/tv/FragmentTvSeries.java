@@ -5,13 +5,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.facebook.shimmer.ShimmerFrameLayout;
 import com.tiooooo.mymovie.R;
-import com.tiooooo.mymovie.data.rest.response.TvSeriesResponse;
 import com.tiooooo.mymovie.viewmodel.ViewModelFactory;
-
-import java.util.ArrayList;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -52,7 +50,7 @@ public class FragmentTvSeries extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         ButterKnife.bind(this, view);
-        if(getActivity()!= null){
+        if (getActivity() != null) {
             initAdapter();
             getTvSeries();
         }
@@ -74,14 +72,30 @@ public class FragmentTvSeries extends Fragment {
     }
 
     private void getTvSeries() {
-        showLoading(true);
-        ViewModelFactory factory = ViewModelFactory.getInstance(getActivity());
+        ViewModelFactory factory = ViewModelFactory.getInstance(getActivity().getApplication());
         TvSeriesViewModel viewModel = new ViewModelProvider(this, factory).get(TvSeriesViewModel.class);
-        viewModel.getTvSeries().observe(getViewLifecycleOwner(),tvSeries -> {
-            showLoading(false);
-            adapter.setTvSeries((ArrayList<TvSeriesResponse>) tvSeries);
-            rvTvSeries.setAdapter(adapter);
+        viewModel.getTvSeries().observe(getViewLifecycleOwner(), tvSeries -> {
+            if (tvSeries != null) {
+                switch (tvSeries.status) {
+                    case LOADING:
+                        showLoading(true);
+                        break;
+
+                    case SUCCESS:
+                        showLoading(false);
+                        adapter.setTvSeries(tvSeries.data);
+                        adapter.notifyDataSetChanged();
+                        break;
+
+                    case ERROR:
+                        showLoading(false);
+                        Toast.makeText(getContext(), "Terjadi Kesalahan", Toast.LENGTH_SHORT).show();
+                        break;
+                }
+            }
         });
+
+        rvTvSeries.setAdapter(adapter);
 
 
     }

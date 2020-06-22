@@ -1,11 +1,15 @@
 package com.tiooooo.mymovie.ui.detail;
 
+import android.appwidget.AppWidgetManager;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
+import android.widget.Toast;
+import android.widget.ToggleButton;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
@@ -13,8 +17,8 @@ import com.facebook.shimmer.ShimmerFrameLayout;
 import com.google.android.material.appbar.AppBarLayout;
 import com.google.android.material.appbar.CollapsingToolbarLayout;
 import com.tiooooo.mymovie.R;
-import com.tiooooo.mymovie.data.rest.response.MovieResponse;
-import com.tiooooo.mymovie.data.rest.response.TvSeriesResponse;
+import com.tiooooo.mymovie.data.local.entitiy.Movie;
+import com.tiooooo.mymovie.data.local.entitiy.TvSeries;
 import com.tiooooo.mymovie.viewmodel.ViewModelFactory;
 
 import java.util.Objects;
@@ -32,6 +36,8 @@ public class DetailActivity extends AppCompatActivity {
 
     public static final String EXTRA_MOVIE = "Movies";
     public static final String EXTRA_CATEGORY = "extra_category";
+    public static final String EXTRA_FAVORITE = "extra_favorite";
+    public static final String EXTRA_ROOM = "extra_favorite";
 
     @BindView(R.id.tv_title_detail)
     TextView tvTitle;
@@ -53,6 +59,11 @@ public class DetailActivity extends AppCompatActivity {
     ShimmerFrameLayout shimmerFrameLayout;
     @BindView(R.id.constraint_detail)
     ConstraintLayout constraintLayout;
+    @BindView(R.id.btn_favorite)
+    ToggleButton btnFavorite;
+
+    DetailViewModel detailViewModel;
+    Movie selectedMovie;
 
 
     @Override
@@ -65,29 +76,67 @@ public class DetailActivity extends AppCompatActivity {
         Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
 
         ViewModelFactory factory = ViewModelFactory.getInstance(this.getApplication());
-        DetailViewModel detailViewModel = new ViewModelProvider(this, factory).get(DetailViewModel.class);
+        detailViewModel = new ViewModelProvider(this, factory).get(DetailViewModel.class);
 
         Bundle extra = getIntent().getExtras();
         if (extra != null) {
             int type = getIntent().getIntExtra(EXTRA_CATEGORY, 0);
-            int id = getIntent().getIntExtra(EXTRA_MOVIE, 0);
+            String id = getIntent().getStringExtra(EXTRA_MOVIE);
+            int favorite = getIntent().getIntExtra(EXTRA_FAVORITE, 0);
+            int room = getIntent().getIntExtra(EXTRA_ROOM, 0);
             showLoading(true);
 
             switch (type) {
                 case 1:
                     detailViewModel.setId(id);
-                    detailViewModel.getMovieDetails().observe(this, movieResponse -> {
-                        showLoading(false);
-                        setDataMovie(movieResponse);
+                    setFavorite(1);
+                    detailViewModel.movieDetail.observe(this, movieResource -> {
+                        if (movieResource != null) {
+                            switch (movieResource.status) {
+                                case LOADING:
+                                    showLoading(true);
+                                    break;
+
+                                case SUCCESS:
+                                    if (movieResource.data != null) {
+                                        showLoading(false);
+                                        setDataMovie(movieResource.data);
+                                    }
+                                    break;
+
+                                case ERROR:
+                                    showLoading(false);
+                                    Toast.makeText(this, "Terjadi Kesalahan", Toast.LENGTH_SHORT).show();
+                                    break;
+                            }
+                        }
                     });
 
                     break;
 
                 case 2:
                     detailViewModel.setId(id);
-                    detailViewModel.getTvSeriesDetails().observe(this, tvSeriesResponse -> {
-                        showLoading(false);
-                        setDataTVSeries(tvSeriesResponse);
+                    setFavorite(2);
+                    detailViewModel.tvDetail.observe(this, tvSeriesResource -> {
+                        if(tvSeriesResource != null){
+                            switch (tvSeriesResource.status){
+                                case LOADING:
+                                    showLoading(true);
+                                    break;
+
+                                case SUCCESS:
+                                    if(tvSeriesResource.data != null){
+                                        showLoading(false);
+                                        setDataTVSeries(tvSeriesResource.data);
+                                    }
+                                    break;
+
+                                case ERROR:
+                                    showLoading(false);
+                                    Toast.makeText(this, "Terjadi kesalahan", Toast.LENGTH_SHORT).show();
+                                    break;
+                            }
+                        }
                     });
 
                     break;
@@ -146,7 +195,7 @@ public class DetailActivity extends AppCompatActivity {
         return part3 + " " + monthConvert + " " + part1;
     }
 
-    private void setDataMovie(MovieResponse movies) {
+    private void setDataMovie(Movie movies) {
         setCollapsing(movies.getTitle());
         String popularity = Double.toString(movies.getPopularity());
         Double rating = movies.getVote_avg() / 2;
@@ -179,7 +228,7 @@ public class DetailActivity extends AppCompatActivity {
 
     }
 
-    private void setDataTVSeries(TvSeriesResponse tvSeries) {
+    private void setDataTVSeries(TvSeries tvSeries) {
 
         setCollapsing(tvSeries.getName());
         String popularity = Double.toString(tvSeries.getPopularity());
@@ -219,6 +268,79 @@ public class DetailActivity extends AppCompatActivity {
             shimmerFrameLayout.setVisibility(View.GONE);
             constraintLayout.setVisibility(View.VISIBLE);
         }
+    }
+
+    private void favorite(int type){
+        if(type == 1){
+            detailViewModel.movieDetail.observe(this, movieResource -> {
+                if(movieResource != null){
+                    switch (movieResource.status){
+                        case LOADING:
+                            showLoading(true);
+                            break;
+
+                        case SUCCESS:
+                            if(movieResource.data != null){
+                                showLoading(false);
+                                boolean status = movieResource.data.isBookmarked();
+                            }
+                            break;
+
+                        case ERROR:
+                            showLoading(false);
+                            Toast.makeText(this, "Terjadi Kesalahan", Toast.LENGTH_SHORT).show();
+                            break;
+                    }
+                }
+            });
+
+        }else{
+            detailViewModel.tvDetail.observe(this, tvSeriesResource -> {
+                if(tvSeriesResource != null){
+                    switch (tvSeriesResource.status){
+                        case LOADING:
+                            showLoading(true);
+                            break;
+
+                        case SUCCESS:
+                            if(tvSeriesResource.data != null){
+                                showLoading(false);
+                                boolean status = tvSeriesResource.data.isBookmarked();
+                            }
+                            break;
+
+                        case ERROR:
+                            showLoading(false);
+                            Toast.makeText(this, "Terjadi Kesalahan", Toast.LENGTH_SHORT).show();
+                            break;
+                    }
+                }
+            });
+
+        }
+    }
+
+    private void setFavorite(int type) {
+        if(type == 1){
+            btnFavorite.setOnCheckedChangeListener((compoundButton, b) -> {
+                if (b) {
+                    detailViewModel.setMovieFavorite();
+                } else {
+                    detailViewModel.setMovieFavorite();
+                }
+
+            });
+        }else{
+            btnFavorite.setOnCheckedChangeListener((compoundButton, b) -> {
+                if (b) {
+                    detailViewModel.setTvSeriesFavorite();
+                } else {
+                    detailViewModel.setTvSeriesFavorite();
+                }
+
+            });
+        }
+
     }
 
 

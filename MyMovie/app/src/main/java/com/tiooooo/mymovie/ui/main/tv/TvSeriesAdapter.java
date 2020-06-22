@@ -12,10 +12,12 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.tiooooo.mymovie.BuildConfig;
 import com.tiooooo.mymovie.R;
+import com.tiooooo.mymovie.data.local.entitiy.TvSeries;
 import com.tiooooo.mymovie.data.rest.response.TvSeriesResponse;
 import com.tiooooo.mymovie.ui.detail.DetailActivity;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -24,7 +26,7 @@ import butterknife.ButterKnife;
 
 public class TvSeriesAdapter extends RecyclerView.Adapter<TvSeriesAdapter.TvSeriesViewHolder> {
 
-    private ArrayList<TvSeriesResponse> listTvSeries = new ArrayList<>();
+    private List<TvSeries> listTvSeries = new ArrayList<>();
     private final Context context;
     private static final int EXTRA_CATEGORY = 2;
 
@@ -32,7 +34,7 @@ public class TvSeriesAdapter extends RecyclerView.Adapter<TvSeriesAdapter.TvSeri
         this.context = context;
     }
 
-    public void setTvSeries(ArrayList<TvSeriesResponse> list){
+    public void setTvSeries(List<TvSeries> list){
         listTvSeries.clear();
         listTvSeries.addAll(list);
         notifyDataSetChanged();
@@ -76,7 +78,7 @@ public class TvSeriesAdapter extends RecyclerView.Adapter<TvSeriesAdapter.TvSeri
             itemView.setOnClickListener(this);
         }
 
-        void bind(TvSeriesResponse tvSeries) {
+        void bind(TvSeries tvSeries) {
             String ratingTen = Double.toString(tvSeries.getVote_avg());
             Double rating = tvSeries.getVote_avg() / 2;
             String rate = String.valueOf(rating);
@@ -100,7 +102,7 @@ public class TvSeriesAdapter extends RecyclerView.Adapter<TvSeriesAdapter.TvSeri
         @Override
         public void onClick(View view) {
             int position = getAdapterPosition();
-            TvSeriesResponse tvSeries = listTvSeries.get(position);
+            TvSeries tvSeries = listTvSeries.get(position);
             Intent intent = new Intent(context, DetailActivity.class);
             intent.putExtra(DetailActivity.EXTRA_MOVIE,tvSeries.getId());
             intent.putExtra(DetailActivity.EXTRA_CATEGORY,EXTRA_CATEGORY);
