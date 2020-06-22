@@ -17,7 +17,7 @@ public interface ApiInterface {
 
     @GET("movie/{movie_id}")
     Call<MovieResponse> getMovieById(
-            @Path("movie_id") int id,
+            @Path("movie_id") String id,
             @Query("api_key") String apiKey
     );
 
@@ -29,6 +29,6 @@ public interface ApiInterface {
 
     @GET("tv/{tv_id}")
     Call<TvSeriesResponse> getTvSeriesById(
-            @Path("tv_id") int id,
+            @Path("tv_id") String id,
             @Query("api_key") String apiKey);
 }

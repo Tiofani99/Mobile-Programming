@@ -35,15 +35,15 @@ public class ApiCall {
         return INSTANCE;
     }
 
-    public LiveData<List<MovieResponse>> getMovies() {
+    public LiveData<ApiResponse<List<MovieResponse>>> getMovies() {
         EspressoIdlingResource.increment();
-        MutableLiveData<List<MovieResponse>> listMovies = new MutableLiveData<>();
+        MutableLiveData<ApiResponse<List<MovieResponse>>> listMovies = new MutableLiveData<>();
         Call<MovieResponse> movieResponseCall = apiClient.getMovies(BuildConfig.API_KEY);
         movieResponseCall.enqueue(new Callback<MovieResponse>() {
             @Override
             public void onResponse(Call<MovieResponse> call, Response<MovieResponse> response) {
                 if (response.body() != null) {
-                    listMovies.postValue(response.body().getList());
+                    listMovies.setValue(ApiResponse.success(response.body().getList()));
                 }
             }
 
@@ -57,15 +57,15 @@ public class ApiCall {
         return listMovies;
     }
 
-    public LiveData<MovieResponse> getMoviesDetail(int id) {
+    public LiveData<ApiResponse<MovieResponse>> getMoviesDetail(String id) {
         EspressoIdlingResource.increment();
-        MutableLiveData<MovieResponse> movieDetail = new MutableLiveData<>();
+        MutableLiveData<ApiResponse<MovieResponse>> movieDetail = new MutableLiveData<>();
         Call<MovieResponse> movieDetailResponseCall = apiClient.getMovieById(id, BuildConfig.API_KEY);
         movieDetailResponseCall.enqueue(new Callback<MovieResponse>() {
             @Override
             public void onResponse(Call<MovieResponse> call, Response<MovieResponse> response) {
                 if (response.body() != null) {
-                    movieDetail.postValue(response.body());
+                    movieDetail.setValue(ApiResponse.success(response.body()));
                 }
             }
 
@@ -80,15 +80,15 @@ public class ApiCall {
     }
 
 
-    public LiveData<List<TvSeriesResponse>> getTvSeries() {
+    public LiveData<ApiResponse<List<TvSeriesResponse>>> getTvSeries() {
         EspressoIdlingResource.increment();
-        MutableLiveData<List<TvSeriesResponse>> listTvSeries = new MutableLiveData<>();
+        MutableLiveData<ApiResponse<List<TvSeriesResponse>>> listTvSeries = new MutableLiveData<>();
         Call<TvSeriesResponse> movieResponseCall = apiClient.getTvSeries(BuildConfig.API_KEY);
         movieResponseCall.enqueue(new Callback<TvSeriesResponse>() {
             @Override
             public void onResponse(Call<TvSeriesResponse> call, Response<TvSeriesResponse> response) {
                 if (response.body() != null) {
-                    listTvSeries.postValue(response.body().getTvSeriesList());
+                    listTvSeries.setValue(ApiResponse.success(response.body().getTvSeriesList()));
                 }
             }
 
@@ -102,15 +102,15 @@ public class ApiCall {
         return listTvSeries;
     }
 
-    public LiveData<TvSeriesResponse> getTvSeriesDetail(int id) {
+    public LiveData<ApiResponse<TvSeriesResponse>> getTvSeriesDetail(String id) {
         EspressoIdlingResource.increment();
-        MutableLiveData<TvSeriesResponse> tvSeriesDetail = new MutableLiveData<>();
+        MutableLiveData<ApiResponse<TvSeriesResponse>> tvSeriesDetail = new MutableLiveData<>();
         Call<TvSeriesResponse> tvSeriesResponseCall = apiClient.getTvSeriesById(id, BuildConfig.API_KEY);
         tvSeriesResponseCall.enqueue(new Callback<TvSeriesResponse>() {
             @Override
             public void onResponse(Call<TvSeriesResponse> call, Response<TvSeriesResponse> response) {
                 if(response.body() != null);
-                tvSeriesDetail.postValue(response.body());
+                tvSeriesDetail.setValue(ApiResponse.success(response.body()));
             }
 
             @Override
