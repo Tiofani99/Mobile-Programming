@@ -12,7 +12,7 @@ public class TvSeriesResponse implements Parcelable {
 
 
     @SerializedName("id")
-    private int id;
+    private String id;
 
     @SerializedName("name")
     private String name;
@@ -39,7 +39,7 @@ public class TvSeriesResponse implements Parcelable {
     private ArrayList<TvSeriesResponse> tvSeriesList;
 
 
-    public TvSeriesResponse(int id, String name, String img, String vote_count, Double vote_avg, String desc, String first_air_date, Double popularity) {
+    public TvSeriesResponse(String id, String name, String img, String vote_count, Double vote_avg, String desc, String first_air_date, Double popularity) {
         this.id = id;
         this.name = name;
         this.img = img;
@@ -54,7 +54,7 @@ public class TvSeriesResponse implements Parcelable {
     }
 
     protected TvSeriesResponse(Parcel in) {
-        id = in.readInt();
+        id = in.readString();
         name = in.readString();
         img = in.readString();
         vote_count = in.readString();
@@ -85,11 +85,11 @@ public class TvSeriesResponse implements Parcelable {
         }
     };
 
-    public int getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(String id) {
         this.id = id;
     }
 
@@ -164,7 +164,7 @@ public class TvSeriesResponse implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel parcel, int i) {
-        parcel.writeInt(id);
+        parcel.writeString(id);
         parcel.writeString(name);
         parcel.writeString(img);
         parcel.writeString(vote_count);
