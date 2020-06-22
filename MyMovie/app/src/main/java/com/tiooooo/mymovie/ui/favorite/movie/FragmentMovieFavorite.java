@@ -1,66 +1,95 @@
 package com.tiooooo.mymovie.ui.favorite.movie;
 
 import android.os.Bundle;
-
-import androidx.fragment.app.Fragment;
-
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
+import android.widget.Toast;
 
+import com.facebook.shimmer.ShimmerFrameLayout;
 import com.tiooooo.mymovie.R;
+import com.tiooooo.mymovie.data.local.entitiy.Movie;
+import com.tiooooo.mymovie.ui.favorite.FavoriteFragmentCallback;
+import com.tiooooo.mymovie.ui.main.movie.MovieViewModel;
+import com.tiooooo.mymovie.viewmodel.ViewModelFactory;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link FragmentMovieFavorite#newInstance} factory method to
- * create an instance of this fragment.
- */
-public class FragmentMovieFavorite extends Fragment {
+import java.util.ArrayList;
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import butterknife.BindView;
+import butterknife.ButterKnife;
 
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
+
+public class FragmentMovieFavorite extends Fragment implements FavoriteFragmentCallback {
+
+    private PagedListMovieAdapter adapter;
+
+    @BindView(R.id.rv_movies)
+    RecyclerView rvMovies;
+    @BindView(R.id.tv_information)
+    TextView tvInformationData;
+    @BindView(R.id.shimmerFrameLayout)
+    ShimmerFrameLayout shimmerFrameLayout;
+    MovieFavoriteViewModel viewModel;
 
     public FragmentMovieFavorite() {
         // Required empty public constructor
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment FragmentMovieFavorite.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static FragmentMovieFavorite newInstance(String param1, String param2) {
-        FragmentMovieFavorite fragment = new FragmentMovieFavorite();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        return inflater.inflate(R.layout.fragment_movies, container, false);
     }
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        ButterKnife.bind(this, view);
+        if (getActivity() != null) {
+            initAdapter();
+            showLoading(true);
+            getMovies();
         }
     }
 
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_movie_favorite, container, false);
+    private void initAdapter() {
+        rvMovies.setLayoutManager(new LinearLayoutManager(this.getContext()));
+        adapter = new PagedListMovieAdapter(this);
+        adapter.notifyDataSetChanged();
     }
+
+    private void showLoading(Boolean state) {
+        if (state) {
+            shimmerFrameLayout.setVisibility(View.VISIBLE);
+            shimmerFrameLayout.startShimmer();
+        } else {
+            shimmerFrameLayout.stopShimmer();
+            shimmerFrameLayout.setVisibility(View.GONE);
+        }
+    }
+
+    private void getMovies() {
+        ViewModelFactory factory = ViewModelFactory.getInstance(getActivity().getApplication());
+        viewModel = new ViewModelProvider(this, factory).get(MovieFavoriteViewModel.class);
+        showLoading(true);
+        viewModel.getMovieFavorite().observe(getViewLifecycleOwner(),movies -> {
+            showLoading(false);
+            adapter.submitList(movies);
+            adapter.notifyDataSetChanged();
+        });
+
+        rvMovies.setAdapter(adapter);
+
+
+    }
+
+
 }
