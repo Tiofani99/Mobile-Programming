@@ -13,6 +13,7 @@ import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 
 import java.util.List;
+import java.util.Objects;
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule;
 import androidx.lifecycle.MutableLiveData;
@@ -47,19 +48,19 @@ public class TvViewModelTest {
 
     @Test
     public void getDataTv() {
-        Resource<PagedList<TvSeries>> dummyCourses = Resource.success(pagedList);
-        when(dummyCourses.data.size()).thenReturn(5);
-        MutableLiveData<Resource<PagedList<TvSeries>>> courses = new MutableLiveData<>();
-        courses.setValue(dummyCourses);
+        Resource<PagedList<TvSeries>> dummyTvSeries = Resource.success(pagedList);
+        when(dummyTvSeries.data.size()).thenReturn(5);
+        MutableLiveData<Resource<PagedList<TvSeries>>> tvSeries = new MutableLiveData<>();
+        tvSeries.setValue(dummyTvSeries);
 
-        when(dataRepository.getTvSeries()).thenReturn(courses);
-        List<TvSeries> courseEntities = viewModel.getTvSeries().getValue().data;
+        when(dataRepository.getTvSeries()).thenReturn(tvSeries);
+        List<TvSeries> courseEntities = Objects.requireNonNull(viewModel.getTvSeries().getValue()).data;
         verify(dataRepository).getTvSeries();
         assertNotNull(courseEntities);
         assertEquals(5, courseEntities.size());
 
         viewModel.getTvSeries().observeForever(observer);
-        verify(observer).onChanged(dummyCourses);
+        verify(observer).onChanged(dummyTvSeries);
     }
 
 }

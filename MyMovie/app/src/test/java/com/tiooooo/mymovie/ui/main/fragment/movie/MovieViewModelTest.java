@@ -13,6 +13,7 @@ import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 
 import java.util.List;
+import java.util.Objects;
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule;
 import androidx.lifecycle.MutableLiveData;
@@ -47,19 +48,19 @@ public class MovieViewModelTest {
 
     @Test
     public void getDataMovie(){
-        Resource<PagedList<Movie>> dummyCourses = Resource.success(pagedList);
-        when(dummyCourses.data.size()).thenReturn(5);
-        MutableLiveData<Resource<PagedList<Movie>>> courses = new MutableLiveData<>();
-        courses.setValue(dummyCourses);
+        Resource<PagedList<Movie>> movies = Resource.success(pagedList);
+        when(movies.data.size()).thenReturn(5);
+        MutableLiveData<Resource<PagedList<Movie>>> movie = new MutableLiveData<>();
+        movie.setValue(movies);
 
-        when(dataRepository.getMovies()).thenReturn(courses);
-        List<Movie> courseEntities = viewModel.getMovies().getValue().data;
+        when(dataRepository.getMovies()).thenReturn(movie);
+        List<Movie> courseEntities = Objects.requireNonNull(viewModel.getMovies().getValue()).data;
         verify(dataRepository).getMovies();
         assertNotNull(courseEntities);
         assertEquals(5, courseEntities.size());
 
         viewModel.getMovies().observeForever(observer);
-        verify(observer).onChanged(dummyCourses);
+        verify(observer).onChanged(movies);
 
     }
 
