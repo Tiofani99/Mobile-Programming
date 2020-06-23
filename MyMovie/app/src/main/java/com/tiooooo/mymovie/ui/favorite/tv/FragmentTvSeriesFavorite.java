@@ -2,65 +2,99 @@ package com.tiooooo.mymovie.ui.favorite.tv;
 
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import butterknife.BindView;
+import butterknife.ButterKnife;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
+import com.facebook.shimmer.ShimmerFrameLayout;
 import com.tiooooo.mymovie.R;
+import com.tiooooo.mymovie.ui.favorite.FavoriteFragmentCallback;
+import com.tiooooo.mymovie.ui.favorite.movie.MovieFavoriteViewModel;
+import com.tiooooo.mymovie.ui.favorite.movie.PagedListMovieAdapter;
+import com.tiooooo.mymovie.viewmodel.ViewModelFactory;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link FragmentTvSeriesFavorite#newInstance} factory method to
- * create an instance of this fragment.
- */
-public class FragmentTvSeriesFavorite extends Fragment {
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
+public class FragmentTvSeriesFavorite extends Fragment implements FavoriteFragmentCallback {
 
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
+    private PagedListTvSeriesAdapter adapter;
+    private TvSeriesFavoriteViewModel viewModel;
+
+    @BindView(R.id.rv_tv_series)
+    RecyclerView rvTvSeries;
+    @BindView(R.id.tv_information)
+    TextView tvInformationData;
+    @BindView(R.id.shimmerFrameLayout)
+    ShimmerFrameLayout shimmerFrameLayout;
+
+
+
 
     public FragmentTvSeriesFavorite() {
         // Required empty public constructor
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment FragmentTvSeriesFavorite.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static FragmentTvSeriesFavorite newInstance(String param1, String param2) {
-        FragmentTvSeriesFavorite fragment = new FragmentTvSeriesFavorite();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
+
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        ButterKnife.bind(this, view);
+        if (getActivity() != null) {
+            initAdapter();
+            showLoading(true);
+            getTvSeries();
         }
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         return inflater.inflate(R.layout.fragment_tv_series_favorite, container, false);
+    }
+
+    private void initAdapter() {
+        rvTvSeries.setLayoutManager(new LinearLayoutManager(this.getContext()));
+        adapter = new PagedListTvSeriesAdapter(this);
+        adapter.notifyDataSetChanged();
+    }
+
+    private void showLoading(Boolean state) {
+        if (state) {
+            shimmerFrameLayout.setVisibility(View.VISIBLE);
+            shimmerFrameLayout.startShimmer();
+        } else {
+            shimmerFrameLayout.stopShimmer();
+            shimmerFrameLayout.setVisibility(View.GONE);
+        }
+    }
+
+    private void getTvSeries() {
+        ViewModelFactory factory = ViewModelFactory.getInstance(getActivity().getApplication());
+        viewModel = new ViewModelProvider(this, factory).get(TvSeriesFavoriteViewModel.class);
+        showLoading(true);
+        viewModel.getMovieFavorite().observe(getViewLifecycleOwner(),tvSeries -> {
+            showLoading(false);
+            Log.d("COba","Jumlah "+tvSeries.size());
+            adapter.submitList(tvSeries);
+            adapter.notifyDataSetChanged();
+        });
+
+        rvTvSeries.setAdapter(adapter);
     }
 }
