@@ -13,6 +13,8 @@
     <string name="image_detail">Image Detail</string>
     <string name="release_date">Release Date</string>
     <string name="item_list_movie">Item list Movie</string>
+    <string name="success_add_favorite">Successfully added to my favorites</string>
+    <string name="success_delete_favorite">successfully deleted from my favorites</string>
 
     <string-array name="month">
         <item>January</item>
