@@ -9,6 +9,8 @@ import android.widget.Toast;
 
 import com.facebook.shimmer.ShimmerFrameLayout;
 import com.tiooooo.mymovie.R;
+import com.tiooooo.mymovie.ui.favorite.FavoriteFragmentCallback;
+import com.tiooooo.mymovie.ui.favorite.tv.PagedListTvSeriesAdapter;
 import com.tiooooo.mymovie.viewmodel.ViewModelFactory;
 
 import androidx.annotation.NonNull;
@@ -23,9 +25,9 @@ import butterknife.ButterKnife;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class FragmentTvSeries extends Fragment {
+public class FragmentTvSeries extends Fragment implements FavoriteFragmentCallback {
 
-    private TvSeriesAdapter adapter;
+    private PagedListTvSeriesAdapter adapter;
 
 
     @BindView(R.id.rv_tv_series)
@@ -59,7 +61,7 @@ public class FragmentTvSeries extends Fragment {
 
     private void initAdapter() {
         rvTvSeries.setLayoutManager(new LinearLayoutManager(this.getContext()));
-        adapter = new TvSeriesAdapter(this.getContext());
+        adapter = new PagedListTvSeriesAdapter(this);
         adapter.notifyDataSetChanged();
     }
 
@@ -83,7 +85,7 @@ public class FragmentTvSeries extends Fragment {
 
                     case SUCCESS:
                         showLoading(false);
-                        adapter.setTvSeries(tvSeries.data);
+                        adapter.submitList(tvSeries.data);
                         adapter.notifyDataSetChanged();
                         break;
 

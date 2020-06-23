@@ -9,6 +9,7 @@ import java.util.List;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModel;
+import androidx.paging.PagedList;
 
 public class MovieViewModel extends ViewModel {
 
@@ -18,7 +19,7 @@ public class MovieViewModel extends ViewModel {
         this.dataRepository = dataRepository;
     }
 
-    public LiveData<Resource<List<Movie>>> getMovies() {
+    public LiveData<Resource<PagedList<Movie>>> getMovies() {
         return dataRepository.getMovies();
     }
 }

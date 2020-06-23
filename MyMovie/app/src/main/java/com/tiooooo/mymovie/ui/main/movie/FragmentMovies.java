@@ -10,10 +10,9 @@ import android.widget.Toast;
 
 import com.facebook.shimmer.ShimmerFrameLayout;
 import com.tiooooo.mymovie.R;
-import com.tiooooo.mymovie.data.local.entitiy.Movie;
+import com.tiooooo.mymovie.ui.favorite.FavoriteFragmentCallback;
+import com.tiooooo.mymovie.ui.favorite.movie.PagedListMovieAdapter;
 import com.tiooooo.mymovie.viewmodel.ViewModelFactory;
-
-import java.util.ArrayList;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -25,10 +24,10 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 
-public class FragmentMovies extends Fragment {
+public class FragmentMovies extends Fragment implements FavoriteFragmentCallback {
 
 
-    private MovieAdapter adapter;
+    private PagedListMovieAdapter adapter;
 
     @BindView(R.id.rv_movies)
     RecyclerView rvMovies;
@@ -60,7 +59,7 @@ public class FragmentMovies extends Fragment {
 
     private void initAdapter() {
         rvMovies.setLayoutManager(new LinearLayoutManager(this.getContext()));
-        adapter = new MovieAdapter(getActivity());
+        adapter = new PagedListMovieAdapter(this);
         adapter.notifyDataSetChanged();
     }
 
@@ -88,7 +87,7 @@ public class FragmentMovies extends Fragment {
 
                     case SUCCESS:
                         showLoading(false);
-                        adapter.setMovies((ArrayList<Movie>) listMovies.data);
+                        adapter.submitList(listMovies.data);
                         Log.d("Coba","Jalan "+listMovies.data.size());
                         adapter.notifyDataSetChanged();
                         break;

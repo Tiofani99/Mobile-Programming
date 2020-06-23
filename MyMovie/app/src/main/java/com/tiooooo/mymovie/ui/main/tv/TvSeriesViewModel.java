@@ -9,6 +9,7 @@ import java.util.List;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModel;
+import androidx.paging.PagedList;
 
 public class TvSeriesViewModel extends ViewModel {
     private DataRepository dataRepository;
@@ -17,7 +18,7 @@ public class TvSeriesViewModel extends ViewModel {
         this.dataRepository = dataRepository;
     }
 
-    public LiveData<Resource<List<TvSeries>>> getTvSeries(){
+    public LiveData<Resource<PagedList<TvSeries>>> getTvSeries(){
         return dataRepository.getTvSeries();
     }
 }
