@@ -14,6 +14,7 @@ import org.junit.Test;
 import java.util.ArrayList;
 
 import androidx.test.espresso.IdlingRegistry;
+import androidx.test.espresso.action.ViewActions;
 import androidx.test.espresso.contrib.RecyclerViewActions;
 import androidx.test.rule.ActivityTestRule;
 
@@ -23,6 +24,7 @@ import static androidx.test.espresso.action.ViewActions.swipeLeft;
 import static androidx.test.espresso.action.ViewActions.swipeRight;
 import static androidx.test.espresso.assertion.ViewAssertions.matches;
 import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
+import static androidx.test.espresso.matcher.ViewMatchers.isRoot;
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
 import static androidx.test.espresso.matcher.ViewMatchers.withText;
 
@@ -48,6 +50,7 @@ public class MainActivityTest {
 
     @Test
     public void swipePage() {
+        onView(withId(R.id.navigation_favorites)).perform(click());
         onView(withId(R.id.viewpager))
                 .check(matches(isDisplayed()));
 
@@ -67,6 +70,7 @@ public class MainActivityTest {
     @Test
     public void loadDetailMovie(){
         onView(withId(R.id.rv_movies)).perform(RecyclerViewActions.actionOnItemAtPosition(0, click()));
+        onView(withId(R.id.action_favorite)).perform(click());
         onView(withId(R.id.tv_title)).check(matches(isDisplayed()));
         onView(withId(R.id.tv_title_detail)).check(matches(withText(dummyMovies.get(0).getTitle())));
         onView(withId(R.id.tv_desc_detail)).check(matches(withText(dummyMovies.get(0).getDesc())));
@@ -74,18 +78,42 @@ public class MainActivityTest {
 
     @Test
     public void loadTvSeries() {
-        onView(withId(R.id.viewpager)).perform(swipeLeft());
+        onView(withId(R.id.navigation_tv_series)).perform(click());
         onView(withId(R.id.rv_tv_series)).check(matches(isDisplayed()));
         onView(withId(R.id.rv_tv_series)).perform(RecyclerViewActions.scrollToPosition(dummyTvSeries.size()));
     }
 
     @Test
     public void loadDetailTvSeries(){
-        onView(withId(R.id.viewpager)).perform(swipeLeft());
+        onView(withId(R.id.navigation_tv_series)).perform(click());
         onView(withId(R.id.rv_tv_series)).perform(RecyclerViewActions.actionOnItemAtPosition(0, click()));
         onView(withId(R.id.tv_title)).check(matches(isDisplayed()));
         onView(withId(R.id.tv_title_detail)).check(matches(withText(dummyTvSeries.get(0).getName())));
         onView(withId(R.id.tv_desc_detail)).check(matches(withText(dummyTvSeries.get(0).getDesc())));
     }
+
+    @Test
+    public void loadMovieAndTvSeriesFavorite(){
+        onView(withId(R.id.navigation_favorites)).perform(click());
+        onView(withId(R.id.rv_movies)).check(matches(isDisplayed()));
+        onView(withId(R.id.rv_movies)).perform(RecyclerViewActions.scrollToPosition(dummyMovies.size()));
+        onView(withId(R.id.viewpager)).check(matches(isDisplayed()));
+        onView(withId(R.id.viewpager)).perform(swipeLeft());
+        onView(withId(R.id.rv_tv_series)).check(matches(isDisplayed()));
+        onView(withId(R.id.rv_tv_series)).perform(RecyclerViewActions.scrollToPosition(dummyTvSeries.size()));
+    }
+
+    @Test
+    public void loadMovieFavorite(){
+        onView(withId(R.id.rv_movies)).perform(RecyclerViewActions.actionOnItemAtPosition(0, click()));
+        onView(withId(R.id.action_favorite)).perform(click());
+        onView(isRoot()).perform(ViewActions.pressBack());
+        onView(withId(R.id.navigation_favorites)).perform(click());
+        onView(withId(R.id.rv_movies)).perform(RecyclerViewActions.actionOnItemAtPosition(0, click()));
+        onView(withId(R.id.tv_title)).check(matches(isDisplayed()));
+        onView(withId(R.id.tv_title_detail)).check(matches(withText(dummyMovies.get(0).getTitle())));
+        onView(withId(R.id.tv_desc_detail)).check(matches(withText(dummyMovies.get(0).getDesc())));
+    }
+
 
 }
