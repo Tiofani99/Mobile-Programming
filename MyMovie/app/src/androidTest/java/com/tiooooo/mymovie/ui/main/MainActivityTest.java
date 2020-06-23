@@ -70,7 +70,6 @@ public class MainActivityTest {
     @Test
     public void loadDetailMovie(){
         onView(withId(R.id.rv_movies)).perform(RecyclerViewActions.actionOnItemAtPosition(0, click()));
-        onView(withId(R.id.action_favorite)).perform(click());
         onView(withId(R.id.tv_title)).check(matches(isDisplayed()));
         onView(withId(R.id.tv_title_detail)).check(matches(withText(dummyMovies.get(0).getTitle())));
         onView(withId(R.id.tv_desc_detail)).check(matches(withText(dummyMovies.get(0).getDesc())));
