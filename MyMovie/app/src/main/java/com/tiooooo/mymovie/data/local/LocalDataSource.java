@@ -24,11 +24,11 @@ public class LocalDataSource {
         return INSTANCE;
     }
 
-    public LiveData<List<Movie>> getAllMovie() {
+    public DataSource.Factory<Integer, Movie> getAllMovie() {
         return favoriteDao.getAllMovie();
     }
 
-    public LiveData<List<TvSeries>> getAllTvSeries() {
+    public DataSource.Factory<Integer, TvSeries> getAllTvSeries() {
         return favoriteDao.getAllTvSeries();
     }
 

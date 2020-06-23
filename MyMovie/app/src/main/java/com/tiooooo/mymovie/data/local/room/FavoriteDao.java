@@ -19,10 +19,10 @@ import androidx.room.Update;
 public interface FavoriteDao {
 
     @Query("SELECT * from movie")
-    LiveData<List<Movie>> getAllMovie();
+    DataSource.Factory<Integer,Movie> getAllMovie();
 
     @Query("SELECT * from tvseries")
-    LiveData<List<TvSeries>> getAllTvSeries();
+    DataSource.Factory<Integer,TvSeries> getAllTvSeries();
 
     @Query("SELECT * FROM movie WHERE bookmarked = 1 ")
     DataSource.Factory<Integer, Movie> getMovieFavorite();

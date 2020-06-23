@@ -13,9 +13,9 @@ import androidx.paging.DataSource;
 import androidx.paging.PagedList;
 
 public interface MovieDataSource {
-    LiveData<Resource<List<Movie>>> getMovies();
+    LiveData<Resource<PagedList<Movie>>> getMovies();
 
-    LiveData<Resource<List<TvSeries>>> getTvSeries();
+    LiveData<Resource<PagedList<TvSeries>>> getTvSeries();
 
     LiveData<Resource<Movie>> getMovieDetail(String  id);
 

@@ -8,6 +8,7 @@ import com.tiooooo.mymovie.data.rest.ApiResponse;
 import com.tiooooo.mymovie.data.rest.NetworkBoundResource;
 import com.tiooooo.mymovie.data.rest.response.MovieResponse;
 import com.tiooooo.mymovie.data.rest.response.TvSeriesResponse;
+import com.tiooooo.mymovie.ui.favorite.tv.PagedListTvSeriesAdapter;
 import com.tiooooo.mymovie.utils.AppExecutors;
 import com.tiooooo.mymovie.vo.Resource;
 
@@ -44,16 +45,22 @@ public class DataRepository implements MovieDataSource {
     }
 
     @Override
-    public LiveData<Resource<List<Movie>>> getMovies() {
-        return new NetworkBoundResource<List<Movie>, List<MovieResponse>>(appExecutors) {
+    public LiveData<Resource<PagedList<Movie>>> getMovies() {
+        return new NetworkBoundResource<PagedList<Movie>, List<MovieResponse>>(appExecutors) {
 
             @Override
-            protected LiveData<List<Movie>> loadFromDB() {
-                return localDataSource.getAllMovie();
+            protected LiveData<PagedList<Movie>> loadFromDB() {
+                PagedList.Config config = new PagedList.Config.Builder()
+                        .setEnablePlaceholders(false)
+                        .setInitialLoadSizeHint(4)
+                        .setPageSize(4)
+                        .build();
+
+                return new LivePagedListBuilder<>(localDataSource.getAllMovie(),config).build();
             }
 
             @Override
-            protected Boolean shouldFetch(List<Movie> data) {
+            protected Boolean shouldFetch(PagedList<Movie> data) {
                 return (data == null) || (data.size() == 0);
             }
 
@@ -85,16 +92,22 @@ public class DataRepository implements MovieDataSource {
     }
 
     @Override
-    public LiveData<Resource<List<TvSeries>>> getTvSeries() {
-        return new NetworkBoundResource<List<TvSeries>,List<TvSeriesResponse>>(appExecutors){
+    public LiveData<Resource<PagedList<TvSeries>>> getTvSeries() {
+        return new NetworkBoundResource<PagedList<TvSeries>,List<TvSeriesResponse>>(appExecutors){
 
             @Override
-            protected LiveData<List<TvSeries>> loadFromDB() {
-                return localDataSource.getAllTvSeries();
+            protected LiveData<PagedList<TvSeries>> loadFromDB() {
+                PagedList.Config config = new PagedList.Config.Builder()
+                        .setEnablePlaceholders(false)
+                        .setInitialLoadSizeHint(4)
+                        .setPageSize(4)
+                        .build();
+
+                return new LivePagedListBuilder<>(localDataSource.getAllTvSeries(),config).build();
             }
 
             @Override
-            protected Boolean shouldFetch(List<TvSeries> data) {
+            protected Boolean shouldFetch(PagedList<TvSeries> data) {
                 return (data == null) || (data.size() == 0);
             }
 
