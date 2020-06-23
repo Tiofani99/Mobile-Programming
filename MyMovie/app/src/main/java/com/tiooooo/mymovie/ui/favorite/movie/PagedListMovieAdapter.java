@@ -27,7 +27,7 @@ public class PagedListMovieAdapter extends PagedListAdapter<Movie, PagedListMovi
 
     private final FavoriteFragmentCallback callback;
 
-    PagedListMovieAdapter(FavoriteFragmentCallback callback) {
+    public PagedListMovieAdapter(FavoriteFragmentCallback callback) {
         super(DIFF_CALLBACK);
         this.callback = callback;
     }

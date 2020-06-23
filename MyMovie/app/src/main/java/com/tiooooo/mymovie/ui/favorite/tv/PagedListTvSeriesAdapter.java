@@ -30,7 +30,7 @@ public class PagedListTvSeriesAdapter extends PagedListAdapter<TvSeries, PagedLi
 
     private final FavoriteFragmentCallback callback;
 
-    PagedListTvSeriesAdapter(FavoriteFragmentCallback callback) {
+    public PagedListTvSeriesAdapter(FavoriteFragmentCallback callback) {
         super(DIFF_CALLBACK);
         this.callback = callback;
     }
