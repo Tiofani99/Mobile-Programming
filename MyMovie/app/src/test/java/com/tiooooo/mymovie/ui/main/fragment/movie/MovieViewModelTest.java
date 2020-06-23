@@ -1,9 +1,9 @@
 package com.tiooooo.mymovie.ui.main.fragment.movie;
 
 import com.tiooooo.mymovie.data.DataRepository;
-import com.tiooooo.mymovie.data.rest.response.MovieResponse;
+import com.tiooooo.mymovie.data.local.entitiy.Movie;
 import com.tiooooo.mymovie.ui.main.movie.MovieViewModel;
-import com.tiooooo.mymovie.utils.FakeDataDummy;
+import com.tiooooo.mymovie.vo.Resource;
 
 import org.junit.Before;
 import org.junit.Rule;
@@ -12,22 +12,21 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Observer;
+import androidx.paging.PagedList;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
 public class MovieViewModelTest {
     private MovieViewModel viewModel;
-    private static final int FAKE_DATA_LENGTH = 1;
-    //Karena saya memakai DataDummy dimana hanya memiliki 1 data saja
 
     @Rule
     public InstantTaskExecutorRule instantTaskExecutorRule = new InstantTaskExecutorRule();
@@ -36,7 +35,10 @@ public class MovieViewModelTest {
     private DataRepository dataRepository;
 
     @Mock
-    private Observer<List<MovieResponse>> observer;
+    private Observer<Resource<PagedList<Movie>>> observer;
+
+    @Mock
+    private PagedList<Movie> pagedList;
 
     @Before
     public void setUp(){
@@ -45,18 +47,19 @@ public class MovieViewModelTest {
 
     @Test
     public void getDataMovie(){
-        ArrayList<MovieResponse> dummyMovies = FakeDataDummy.generateDummyMovies();
-        MutableLiveData<List<MovieResponse>> movies = new MutableLiveData<>();
-        movies.setValue(dummyMovies);
+        Resource<PagedList<Movie>> dummyCourses = Resource.success(pagedList);
+        when(dummyCourses.data.size()).thenReturn(5);
+        MutableLiveData<Resource<PagedList<Movie>>> courses = new MutableLiveData<>();
+        courses.setValue(dummyCourses);
 
-        when(dataRepository.getMovies()).thenReturn(movies);
-        List<MovieResponse> movieResponses = viewModel.getMovies().getValue();
+        when(dataRepository.getMovies()).thenReturn(courses);
+        List<Movie> courseEntities = viewModel.getMovies().getValue().data;
         verify(dataRepository).getMovies();
-        assertNotNull(movieResponses);
-        assertEquals(FAKE_DATA_LENGTH, movieResponses.size() );
+        assertNotNull(courseEntities);
+        assertEquals(5, courseEntities.size());
 
         viewModel.getMovies().observeForever(observer);
-        verify(observer).onChanged(dummyMovies);
+        verify(observer).onChanged(dummyCourses);
 
     }
 
