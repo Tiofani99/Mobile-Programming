@@ -7,6 +7,7 @@ import com.tiooooo.mymovie.data.DataRepository;
 import com.tiooooo.mymovie.di.Injection;
 import com.tiooooo.mymovie.ui.detail.DetailViewModel;
 import com.tiooooo.mymovie.ui.favorite.movie.MovieFavoriteViewModel;
+import com.tiooooo.mymovie.ui.favorite.tv.TvSeriesFavoriteViewModel;
 import com.tiooooo.mymovie.ui.main.movie.MovieViewModel;
 import com.tiooooo.mymovie.ui.main.tv.TvSeriesViewModel;
 
@@ -46,6 +47,8 @@ public class ViewModelFactory extends ViewModelProvider.NewInstanceFactory {
             return (T) new DetailViewModel(dataRepository);
         }else if(modelClass.isAssignableFrom(MovieFavoriteViewModel.class)){
             return (T) new MovieFavoriteViewModel(dataRepository);
+        }else if(modelClass.isAssignableFrom(TvSeriesFavoriteViewModel.class)){
+            return (T) new TvSeriesFavoriteViewModel(dataRepository);
         }
 
         throw new IllegalArgumentException("Unknown ViewModel class: " + modelClass.getName());
