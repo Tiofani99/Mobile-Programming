@@ -24,7 +24,7 @@ public interface FavoriteDao {
     @Query("SELECT * from tvseries")
     LiveData<List<TvSeries>> getAllTvSeries();
 
-    @Query("SELECT * FROM movie")
+    @Query("SELECT * FROM movie WHERE bookmarked = 1 ")
     DataSource.Factory<Integer, Movie> getMovieFavorite();
 
     @Query("SELECT * FROM tvseries where bookmarked = 1")
