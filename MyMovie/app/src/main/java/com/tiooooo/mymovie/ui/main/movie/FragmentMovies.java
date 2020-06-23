@@ -82,13 +82,14 @@ public class FragmentMovies extends Fragment implements FavoriteFragmentCallback
                 switch (listMovies.status) {
                     case LOADING:
                         showLoading(true);
-                        Log.d("Coba","Loading");
+                        Log.d("Coba", "Loading");
                         break;
 
                     case SUCCESS:
                         showLoading(false);
                         adapter.submitList(listMovies.data);
-                        Log.d("Coba","Jalan "+listMovies.data.size());
+                        assert listMovies.data != null;
+                        Log.d("Coba", "Jalan " + listMovies.data.size());
                         adapter.notifyDataSetChanged();
                         break;
 

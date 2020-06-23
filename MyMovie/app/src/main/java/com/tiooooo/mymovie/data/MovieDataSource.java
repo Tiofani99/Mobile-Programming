@@ -2,14 +2,9 @@ package com.tiooooo.mymovie.data;
 
 import com.tiooooo.mymovie.data.local.entitiy.Movie;
 import com.tiooooo.mymovie.data.local.entitiy.TvSeries;
-import com.tiooooo.mymovie.data.rest.response.MovieResponse;
-import com.tiooooo.mymovie.data.rest.response.TvSeriesResponse;
 import com.tiooooo.mymovie.vo.Resource;
 
-import java.util.List;
-
 import androidx.lifecycle.LiveData;
-import androidx.paging.DataSource;
 import androidx.paging.PagedList;
 
 public interface MovieDataSource {

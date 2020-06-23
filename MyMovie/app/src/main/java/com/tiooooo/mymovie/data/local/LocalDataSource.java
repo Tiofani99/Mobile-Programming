@@ -58,7 +58,7 @@ public class LocalDataSource {
     }
 
     public void updateTvSeriesDetail(String id, String name, String img, String vote_count, Double vote_avg, String desc, String first_air_date, Double popularity){
-        favoriteDao.updateDetailMovie(id,name,img,vote_count,vote_avg,desc,first_air_date,popularity);
+        favoriteDao.updateTvSeriesDetail(id,name,img,vote_count,vote_avg,desc,first_air_date,popularity);
     }
 
     public void setTvSeriesFavorite(TvSeries tvSeries, Boolean newState) {

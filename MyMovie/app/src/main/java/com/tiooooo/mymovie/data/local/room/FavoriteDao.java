@@ -57,11 +57,4 @@ public interface FavoriteDao {
 
     @Update
     void updateTvSeries(TvSeries tvSeries);
-
-
-    @Delete
-    void deleteMovieFavorite(Movie movies);
-
-    @Delete
-    void deleteTvFavorite(TvSeries tvSeries);
 }

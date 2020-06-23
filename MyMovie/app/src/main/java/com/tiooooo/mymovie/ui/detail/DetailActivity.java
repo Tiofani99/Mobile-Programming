@@ -78,8 +78,6 @@ public class DetailActivity extends AppCompatActivity {
         if (extra != null) {
             int type = getIntent().getIntExtra(EXTRA_CATEGORY, 0);
             String id = getIntent().getStringExtra(EXTRA_MOVIE);
-            int favorite = getIntent().getIntExtra(EXTRA_FAVORITE, 0);
-            int room = getIntent().getIntExtra(EXTRA_ROOM, 0);
             showLoading(true);
 
             switch (type) {

@@ -75,41 +75,22 @@ public class Movie implements Parcelable {
         return img;
     }
 
-    public void setImg(String img) {
-        this.img = img;
-    }
-
     public String getVote_count() {
         return vote_count;
-    }
-
-    public void setVote_count(String vote_count) {
-        this.vote_count = vote_count;
     }
 
     public Double getVote_avg() {
         return vote_avg;
     }
 
-    public void setVote_avg(Double vote_avg) {
-        this.vote_avg = vote_avg;
-    }
-
     public String getDesc() {
         return desc;
-    }
-
-    public void setDesc(String desc) {
-        this.desc = desc;
     }
 
     public String getRelease_date() {
         return release_date;
     }
 
-    public void setRelease_date(String release_date) {
-        this.release_date = release_date;
-    }
 
     public Double getPopularity() {
         return popularity;

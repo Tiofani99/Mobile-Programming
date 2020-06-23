@@ -105,40 +105,20 @@ public class TvSeriesResponse implements Parcelable {
         return img;
     }
 
-    public void setImg(String img) {
-        this.img = img;
-    }
-
     public String getVote_count() {
         return vote_count;
-    }
-
-    public void setVote_count(String vote_count) {
-        this.vote_count = vote_count;
     }
 
     public Double getVote_avg() {
         return vote_avg;
     }
 
-    public void setVote_avg(Double vote_avg) {
-        this.vote_avg = vote_avg;
-    }
-
     public String getDesc() {
         return desc;
     }
 
-    public void setDesc(String desc) {
-        this.desc = desc;
-    }
-
     public String getFirst_air_date() {
         return first_air_date;
-    }
-
-    public void setFirst_air_date(String first_air_date) {
-        this.first_air_date = first_air_date;
     }
 
     public Double getPopularity() {
@@ -151,10 +131,6 @@ public class TvSeriesResponse implements Parcelable {
 
     public ArrayList<TvSeriesResponse> getTvSeriesList() {
         return tvSeriesList;
-    }
-
-    public void setTvSeriesList(ArrayList<TvSeriesResponse> tvSeriesList) {
-        this.tvSeriesList = tvSeriesList;
     }
 
     @Override

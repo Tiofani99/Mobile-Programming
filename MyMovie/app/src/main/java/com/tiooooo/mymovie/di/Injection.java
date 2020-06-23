@@ -1,6 +1,5 @@
 package com.tiooooo.mymovie.di;
 
-import android.app.Application;
 import android.content.Context;
 
 import com.tiooooo.mymovie.data.DataRepository;

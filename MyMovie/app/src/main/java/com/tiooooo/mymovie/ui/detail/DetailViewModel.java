@@ -38,6 +38,7 @@ public class DetailViewModel extends ViewModel {
     void setMovieFavorite() {
         if (movieDetail.getValue() != null) {
             Movie movie = movieDetail.getValue().data;
+            assert movie != null;
             final boolean newState = !movie.isBookmarked();
             repository.setMovieFavorite(movie, newState);
         }
@@ -46,6 +47,7 @@ public class DetailViewModel extends ViewModel {
     void setTvSeriesFavorite() {
         if (tvDetail.getValue() != null) {
             TvSeries tvSeries = tvDetail.getValue().data;
+            assert tvSeries != null;
             final boolean newState = !tvSeries.isBookmarked();
             repository.setTvSeriesFavorite(tvSeries, newState);
         }

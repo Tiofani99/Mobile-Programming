@@ -1,7 +1,6 @@
 package com.tiooooo.mymovie.viewmodel;
 
 import android.app.Application;
-import android.content.Context;
 
 import com.tiooooo.mymovie.data.DataRepository;
 import com.tiooooo.mymovie.di.Injection;

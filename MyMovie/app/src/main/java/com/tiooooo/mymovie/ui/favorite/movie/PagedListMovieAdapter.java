@@ -58,6 +58,7 @@ public class PagedListMovieAdapter extends PagedListAdapter<Movie, PagedListMovi
     @Override
     public void onBindViewHolder(@NonNull PagedListMovieAdapter.MovieViewHolder holder, int position) {
         Movie movie = getItem(position);
+        assert movie != null;
         holder.bind(movie);
     }
 
@@ -119,6 +120,7 @@ public class PagedListMovieAdapter extends PagedListAdapter<Movie, PagedListMovi
             int position = getAdapterPosition();
             Movie movie = getItem(position);
             Intent intent = new Intent(itemView.getContext(), DetailActivity.class);
+            assert movie != null;
             intent.putExtra(DetailActivity.EXTRA_MOVIE, movie.getId());
             intent.putExtra(DetailActivity.EXTRA_CATEGORY, 1);
             itemView.getContext().startActivity(intent);

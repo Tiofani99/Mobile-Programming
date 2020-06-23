@@ -1,21 +1,15 @@
 package com.tiooooo.mymovie.ui.favorite.movie;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.facebook.shimmer.ShimmerFrameLayout;
 import com.tiooooo.mymovie.R;
-import com.tiooooo.mymovie.data.local.entitiy.Movie;
 import com.tiooooo.mymovie.ui.favorite.FavoriteFragmentCallback;
-import com.tiooooo.mymovie.ui.main.movie.MovieViewModel;
 import com.tiooooo.mymovie.viewmodel.ViewModelFactory;
-
-import java.util.ArrayList;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;

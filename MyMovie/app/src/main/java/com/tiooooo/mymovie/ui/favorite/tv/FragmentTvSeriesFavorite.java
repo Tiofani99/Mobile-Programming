@@ -1,6 +1,16 @@
 package com.tiooooo.mymovie.ui.favorite.tv;
 
 import android.os.Bundle;
+import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.TextView;
+
+import com.facebook.shimmer.ShimmerFrameLayout;
+import com.tiooooo.mymovie.R;
+import com.tiooooo.mymovie.ui.favorite.FavoriteFragmentCallback;
+import com.tiooooo.mymovie.viewmodel.ViewModelFactory;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -11,24 +21,10 @@ import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.TextView;
-
-import com.facebook.shimmer.ShimmerFrameLayout;
-import com.tiooooo.mymovie.R;
-import com.tiooooo.mymovie.ui.favorite.FavoriteFragmentCallback;
-import com.tiooooo.mymovie.ui.favorite.movie.MovieFavoriteViewModel;
-import com.tiooooo.mymovie.ui.favorite.movie.PagedListMovieAdapter;
-import com.tiooooo.mymovie.viewmodel.ViewModelFactory;
-
 
 public class FragmentTvSeriesFavorite extends Fragment implements FavoriteFragmentCallback {
 
     private PagedListTvSeriesAdapter adapter;
-    private TvSeriesFavoriteViewModel viewModel;
 
     @BindView(R.id.rv_tv_series)
     RecyclerView rvTvSeries;
@@ -38,12 +34,9 @@ public class FragmentTvSeriesFavorite extends Fragment implements FavoriteFragme
     ShimmerFrameLayout shimmerFrameLayout;
 
 
-
-
     public FragmentTvSeriesFavorite() {
         // Required empty public constructor
     }
-
 
 
     @Override
@@ -86,11 +79,11 @@ public class FragmentTvSeriesFavorite extends Fragment implements FavoriteFragme
 
     private void getTvSeries() {
         ViewModelFactory factory = ViewModelFactory.getInstance(getActivity().getApplication());
-        viewModel = new ViewModelProvider(this, factory).get(TvSeriesFavoriteViewModel.class);
+        TvSeriesFavoriteViewModel viewModel = new ViewModelProvider(this, factory).get(TvSeriesFavoriteViewModel.class);
         showLoading(true);
-        viewModel.getMovieFavorite().observe(getViewLifecycleOwner(),tvSeries -> {
+        viewModel.getMovieFavorite().observe(getViewLifecycleOwner(), tvSeries -> {
             showLoading(false);
-            Log.d("COba","Jumlah "+tvSeries.size());
+            Log.d("COba", "Jumlah " + tvSeries.size());
             adapter.submitList(tvSeries);
             adapter.notifyDataSetChanged();
         });

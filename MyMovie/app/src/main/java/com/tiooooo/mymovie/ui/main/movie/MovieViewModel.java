@@ -2,10 +2,7 @@ package com.tiooooo.mymovie.ui.main.movie;
 
 import com.tiooooo.mymovie.data.DataRepository;
 import com.tiooooo.mymovie.data.local.entitiy.Movie;
-import com.tiooooo.mymovie.data.rest.response.MovieResponse;
 import com.tiooooo.mymovie.vo.Resource;
-
-import java.util.List;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModel;

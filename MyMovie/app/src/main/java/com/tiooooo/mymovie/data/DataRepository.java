@@ -8,7 +8,6 @@ import com.tiooooo.mymovie.data.rest.ApiResponse;
 import com.tiooooo.mymovie.data.rest.NetworkBoundResource;
 import com.tiooooo.mymovie.data.rest.response.MovieResponse;
 import com.tiooooo.mymovie.data.rest.response.TvSeriesResponse;
-import com.tiooooo.mymovie.ui.favorite.tv.PagedListTvSeriesAdapter;
 import com.tiooooo.mymovie.utils.AppExecutors;
 import com.tiooooo.mymovie.vo.Resource;
 
