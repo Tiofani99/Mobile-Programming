@@ -46,7 +46,7 @@ public class FragmentMovieFavorite extends Fragment implements FavoriteFragmentC
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_movies, container, false);
+        return inflater.inflate(R.layout.fragment_movie_favorite, container, false);
     }
 
     @Override
