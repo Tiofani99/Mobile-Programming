@@ -1,15 +1,13 @@
 package com.tiooooo.mymovie.ui.detail;
 
-import android.appwidget.AppWidgetManager;
-import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
-import android.widget.ToggleButton;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
@@ -59,11 +57,9 @@ public class DetailActivity extends AppCompatActivity {
     ShimmerFrameLayout shimmerFrameLayout;
     @BindView(R.id.constraint_detail)
     ConstraintLayout constraintLayout;
-    @BindView(R.id.btn_favorite)
-    ToggleButton btnFavorite;
 
     DetailViewModel detailViewModel;
-    Movie selectedMovie;
+    private Menu menu;
 
 
     @Override
@@ -89,6 +85,7 @@ public class DetailActivity extends AppCompatActivity {
             switch (type) {
                 case 1:
                     detailViewModel.setId(id);
+                    favorite(1);
                     setFavorite(1);
                     detailViewModel.movieDetail.observe(this, movieResource -> {
                         if (movieResource != null) {
@@ -116,6 +113,7 @@ public class DetailActivity extends AppCompatActivity {
 
                 case 2:
                     detailViewModel.setId(id);
+                    favorite(2);
                     setFavorite(2);
                     detailViewModel.tvDetail.observe(this, tvSeriesResource -> {
                         if(tvSeriesResource != null){
@@ -283,6 +281,7 @@ public class DetailActivity extends AppCompatActivity {
                             if(movieResource.data != null){
                                 showLoading(false);
                                 boolean status = movieResource.data.isBookmarked();
+                                setButtonFavorite(status);
                             }
                             break;
 
@@ -306,6 +305,7 @@ public class DetailActivity extends AppCompatActivity {
                             if(tvSeriesResource.data != null){
                                 showLoading(false);
                                 boolean status = tvSeriesResource.data.isBookmarked();
+                                setButtonFavorite(status);
                             }
                             break;
 
@@ -320,27 +320,22 @@ public class DetailActivity extends AppCompatActivity {
         }
     }
 
+    private void setButtonFavorite(boolean status) {
+        if(menu == null) return;
+        MenuItem menuItem = menu.findItem(R.id.action_favorite);
+        if(status){
+            menuItem.setIcon(ContextCompat.getDrawable(this, R.drawable.ic_favorite_white));
+        }else{
+            menuItem.setIcon(ContextCompat.getDrawable(this, R.drawable.ic_n_favorite_white));
+        }
+    }
+
     private void setFavorite(int type) {
         if(type == 1){
-            btnFavorite.setOnCheckedChangeListener((compoundButton, b) -> {
-                if (b) {
-                    detailViewModel.setMovieFavorite();
-                } else {
-                    detailViewModel.setMovieFavorite();
-                }
-
-            });
+                detailViewModel.setMovieFavorite();
         }else{
-            btnFavorite.setOnCheckedChangeListener((compoundButton, b) -> {
-                if (b) {
-                    detailViewModel.setTvSeriesFavorite();
-                } else {
-                    detailViewModel.setTvSeriesFavorite();
-                }
-
-            });
+                detailViewModel.setTvSeriesFavorite();
         }
-
     }
 
 
@@ -348,7 +343,20 @@ public class DetailActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         if (item.getItemId() == android.R.id.home) {
             finish();
+        }else if(item.getItemId() == R.id.action_favorite){
+            int type = getIntent().getIntExtra(EXTRA_CATEGORY, 0);
+            setFavorite(type);
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_item,menu);
+        this.menu = menu;
+        int type = getIntent().getIntExtra(EXTRA_CATEGORY, 0);
+        favorite(type);
+
+        return true;
     }
 }
