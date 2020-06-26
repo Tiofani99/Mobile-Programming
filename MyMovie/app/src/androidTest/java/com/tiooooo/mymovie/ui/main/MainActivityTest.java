@@ -69,10 +69,10 @@ public class MainActivityTest {
 
     @Test
     public void loadDetailMovie(){
-        onView(withId(R.id.rv_movies)).perform(RecyclerViewActions.actionOnItemAtPosition(0, click()));
+        onView(withId(R.id.rv_movies)).perform(RecyclerViewActions.actionOnItemAtPosition(3, click()));
+        onView(withId(R.id.action_favorite)).perform(click());
         onView(withId(R.id.tv_title)).check(matches(isDisplayed()));
-        onView(withId(R.id.tv_title_detail)).check(matches(withText(dummyMovies.get(0).getTitle())));
-        onView(withId(R.id.tv_desc_detail)).check(matches(withText(dummyMovies.get(0).getDesc())));
+        onView(withId(R.id.tv_desc_detail)).check(matches(isDisplayed()));
     }
 
     @Test
@@ -85,10 +85,10 @@ public class MainActivityTest {
     @Test
     public void loadDetailTvSeries(){
         onView(withId(R.id.navigation_tv_series)).perform(click());
-        onView(withId(R.id.rv_tv_series)).perform(RecyclerViewActions.actionOnItemAtPosition(0, click()));
+        onView(withId(R.id.rv_tv_series)).perform(RecyclerViewActions.actionOnItemAtPosition(3, click()));
+        onView(withId(R.id.action_favorite)).perform(click());
         onView(withId(R.id.tv_title)).check(matches(isDisplayed()));
-        onView(withId(R.id.tv_title_detail)).check(matches(withText(dummyTvSeries.get(0).getName())));
-        onView(withId(R.id.tv_desc_detail)).check(matches(withText(dummyTvSeries.get(0).getDesc())));
+        onView(withId(R.id.tv_desc_detail)).check(matches(isDisplayed()));
     }
 
     @Test
@@ -107,11 +107,16 @@ public class MainActivityTest {
         onView(withId(R.id.rv_movies)).perform(RecyclerViewActions.actionOnItemAtPosition(0, click()));
         onView(withId(R.id.action_favorite)).perform(click());
         onView(isRoot()).perform(ViewActions.pressBack());
+        onView(withId(R.id.rv_movies)).perform(RecyclerViewActions.actionOnItemAtPosition(5, click()));
+        onView(withId(R.id.action_favorite)).perform(click());
+        onView(isRoot()).perform(ViewActions.pressBack());
+        onView(withId(R.id.rv_movies)).perform(RecyclerViewActions.actionOnItemAtPosition(7, click()));
+        onView(withId(R.id.action_favorite)).perform(click());
+        onView(isRoot()).perform(ViewActions.pressBack());
         onView(withId(R.id.navigation_favorites)).perform(click());
         onView(withId(R.id.rv_movies)).perform(RecyclerViewActions.actionOnItemAtPosition(0, click()));
         onView(withId(R.id.tv_title)).check(matches(isDisplayed()));
-        onView(withId(R.id.tv_title_detail)).check(matches(withText(dummyMovies.get(0).getTitle())));
-        onView(withId(R.id.tv_desc_detail)).check(matches(withText(dummyMovies.get(0).getDesc())));
+        onView(withId(R.id.tv_desc_detail)).check(matches(isDisplayed()));
     }
 
 
