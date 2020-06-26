@@ -26,7 +26,6 @@ import static androidx.test.espresso.assertion.ViewAssertions.matches;
 import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static androidx.test.espresso.matcher.ViewMatchers.isRoot;
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
-import static androidx.test.espresso.matcher.ViewMatchers.withText;
 
 public class MainActivityTest {
 
@@ -107,10 +106,10 @@ public class MainActivityTest {
         onView(withId(R.id.rv_movies)).perform(RecyclerViewActions.actionOnItemAtPosition(0, click()));
         onView(withId(R.id.action_favorite)).perform(click());
         onView(isRoot()).perform(ViewActions.pressBack());
-        onView(withId(R.id.rv_movies)).perform(RecyclerViewActions.actionOnItemAtPosition(5, click()));
+        onView(withId(R.id.rv_movies)).perform(RecyclerViewActions.actionOnItemAtPosition(2, click()));
         onView(withId(R.id.action_favorite)).perform(click());
         onView(isRoot()).perform(ViewActions.pressBack());
-        onView(withId(R.id.rv_movies)).perform(RecyclerViewActions.actionOnItemAtPosition(7, click()));
+        onView(withId(R.id.rv_movies)).perform(RecyclerViewActions.actionOnItemAtPosition(3, click()));
         onView(withId(R.id.action_favorite)).perform(click());
         onView(isRoot()).perform(ViewActions.pressBack());
         onView(withId(R.id.navigation_favorites)).perform(click());
